@@ -16,7 +16,7 @@
                 <p class="alert alert-info">{{ Session::get('error-message') }}</p>
             @endif
             <form action="{{ route('login') }}" method="POST" class="container w-50 mt-5 shadow border rounded p-5">
-
+                @csrf
 
                 <div class="row ">
                     <label class="g-2 col-md-12 fw-bold" for="username">اسم المستخدم</label>

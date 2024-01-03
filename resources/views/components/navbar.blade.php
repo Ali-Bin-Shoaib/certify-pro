@@ -19,7 +19,7 @@
 </nav> --}}
 
 <!-- Navigation -->
-<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light py-4 " aria-label="Main navigation">
+<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light py-4 shadow-sm" aria-label="Main navigation">
     <div class="container">
 
         <!-- Image Logo -->
@@ -52,7 +52,7 @@
                 --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
-                </li> 
+                </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('verifiy') }}">التحقق من الشهادة</a>
                 </li> --}}
@@ -69,10 +69,12 @@
                     </li> --}}
             </ul>
             <span class="nav-item">
-                {{-- @if ()
-                    
-                @endif --}}
-                <a class="btn-solid-sm" href="login">تسجيل الدخول</a>
+                @guest
+
+                    <a class="btn-solid-sm" href="{{ route('login') }}">تسجيل الدخول</a>
+                @else
+                    <a class="btn-solid-sm" href="{{ route('logout') }}">تسجيل الخروج</a>
+                @endguest
             </span>
         </div> <!-- end of navbar-collapse -->
     </div> <!-- end of container -->

@@ -29,7 +29,8 @@ Route::redirect('/index', '/');
 Route::redirect('/home', '/');
 Route::get('/verify', [PDFController::class, 'verify'])->name('verify');
 
-Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
+Route::get('/signup', [ AuthController::class, 'signup'])->name('signup');
+Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 // Route::post('/login', function (){
@@ -37,7 +38,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 // });
 
 
-Route::group(['middleware' => 'member'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::resource('programs', ProgramController::class);
     Route::resource('participants', ParticipantController::class);
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

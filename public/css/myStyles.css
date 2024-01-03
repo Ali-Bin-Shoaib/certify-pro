@@ -2,6 +2,7 @@ main {
 	padding-top: 82px;
 	/* padding-bottom: 3rem; */
 }
-.form-bg {
+form {
 	background-color: #eff4fd;
+	padding: 2rem !important;
 }
