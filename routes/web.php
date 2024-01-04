@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProgramController;
@@ -38,11 +39,12 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 // });
 
 
-Route::group(['middleware' => 'auth'], function () {
+// Route::group(['middleware' => 'auth'], function () {
     Route::resource('programs', ProgramController::class);
+    Route::resource('members',MemberController::class);
     Route::resource('participants', ParticipantController::class);
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');
     Route::get('/preview', [PDFController::class, 'previewPdf'])->name('preview');
-});
+// });
 // Auth::routes();

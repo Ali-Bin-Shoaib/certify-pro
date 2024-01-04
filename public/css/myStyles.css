@@ -1,8 +1,8 @@
 main {
-	padding-top: 82px;
-	/* padding-bottom: 3rem; */
+	padding-top: 7rem;
+	padding-bottom: 7rem;
 }
-form {
+.container>form {
 	background-color: #eff4fd;
 	padding: 2rem !important;
 }

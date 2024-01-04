@@ -28,11 +28,12 @@ class AuthController extends Controller
                     "phone" => "required",
                     "address" => "required",
                 ]);
-                $organizationData = $request->only(["name", "email", "phone", "address"]);
-                $userData = $request->only(['username', 'password']);
-                $user = User::create([...$userData, 'isOrganization' => true]);
+                // $organizationData = $request->only(["name", "email", "phone", "address"]);
+                $organizationData = $request->all();
+                // $userData = $request->only(['username', 'password']);
+                // $user = User::create([...$userData, 'isOrganization' => true]);
                 // VarDumper::dump($user);
-                $organization = Organization::create([...$organizationData, 'user_id' => $user->id]);
+                $organization = Organization::create($organizationData);
                 // VarDumper::dump([$user, $organization, $request->all()]);
                 if (Member::where('organization_id', $organization->id)->exists())
                     return redirect()->route('members.index')->with('success', 'You have signed in');
@@ -57,6 +58,7 @@ class AuthController extends Controller
                     'password' => 'required',
                 ]);
                 $credentials = $request->only("username", "password");
+                dd(Auth::attempt($credentials));
                 if (Auth::attempt($credentials)) {
                     return redirect()->intended(route("programs.index"))->with("success", "Logged in");
                 }

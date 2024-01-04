@@ -20,6 +20,7 @@ class Organization extends User
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
         'address',
         'phone',

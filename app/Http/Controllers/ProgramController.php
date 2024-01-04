@@ -59,9 +59,8 @@ class ProgramController extends Controller
     public function show(string $id)
     {
         //
-        // $program = Program::find($id);
-        // return view('programs.show')->with('id', $id);
-        return view('programs.show');
+        $program = Program::find($id);
+        return view('programs.show', compact('program'));
     }
 
     /**

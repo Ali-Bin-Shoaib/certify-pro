@@ -36,6 +36,9 @@
             <ul class="navbar-nav ms-auto navbar-nav-scroll">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">الصفحة الرئيسية</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('members.index') }}">أعضاء المنظمة</a>
+                </li>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('programs.index') }}">الدورات</a>

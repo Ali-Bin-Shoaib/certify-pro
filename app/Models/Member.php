@@ -18,6 +18,7 @@ class Member extends User
     protected $fillable = [
         'username',
         'password',
+        'organization_id',
     ];
 
     /**
