@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Participant;
 use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
@@ -11,6 +12,8 @@ class ParticipantController extends Controller
      */
     public function index()
     {
+        $participants = Participant::all();
+        return view("participants.index", compact("participants"));
         //
     }
 
@@ -19,7 +22,7 @@ class ParticipantController extends Controller
      */
     public function create()
     {
-        //
+        return view("participants.create");
     }
 
     /**
@@ -27,7 +30,24 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        // try {
+        $request->validate([
+            "name" => "required",
+            "email" => "required",
+            'gender' => 'required',
+            'phone' => 'required',
+            // 'member_id' => 'required'
+        ]);
+        $participant=$request->all();
+        $participant['member_id']=1;;
+        Participant::create($participant);
+
+        //     return 'ok';
+        return redirect()->route('participants.index')->with('success', 'participant created successfully');
+        // } catch (\Throwable $th) {
+        //     throw $th;
+        // }
     }
 
     /**

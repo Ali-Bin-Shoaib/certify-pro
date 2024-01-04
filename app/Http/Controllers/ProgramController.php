@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,7 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        //show all programs
         $programs = Program::all();
-        // foreach ($programs as $program) {
-        //     $program->
-        // }
-        // dd($programs);
         return view('programs.index', compact('programs'));
     }
 
@@ -35,7 +31,6 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        // try {
         $this->validate($request, [
             'title' => 'required',
             'category_id' => 'required',
@@ -47,10 +42,6 @@ class ProgramController extends Controller
         $newProgram['member_id'] = 1;
         Program::create($newProgram);
         return redirect()->route('programs.index')->with('success', 'program is created successfully');
-        // } catch (\Throwable $th) {
-        //     // throw $th;
-        //      return 'error';
-        // }
     }
 
     /**
@@ -68,8 +59,9 @@ class ProgramController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        return view('programs.edit');
+        $program = Program::find($id);
+        $categories = Category::all();
+        return view('programs.edit', compact('program', 'categories'));
     }
 
     /**
@@ -77,7 +69,18 @@ class ProgramController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'category_id' => 'required',
+            'location' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
+        $program = Program::find($id);
+        $toUpdate = $request->all();
+        $toUpdate['member_id'] = 1;
+        $program->update($toUpdate);
+        return redirect()->route('programs.index')->with('success', 'program is updated successfully');
     }
 
     /**

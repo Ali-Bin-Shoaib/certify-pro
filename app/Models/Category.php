@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['title,member_id'];
     public function member(): BelongsTo
     {
         return $this->belongsTo(Member::class, 'member_id', 'id');

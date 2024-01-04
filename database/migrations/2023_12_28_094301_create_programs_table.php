@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained('members', 'id');
-            $table->foreignId('category_id')->constrained('categories', 'id');
+            $table->foreignId('member_id')->nullable()->constrained('members', 'id')->nullOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('categories', 'id')->nullOnDelete();
             $table->string('title');
             $table->string('location');
             $table->timestamp('start_date');
             $table->timestamp('end_date');
             $table->timestamps();
-        });    }
+        });
+    }
 
     /**
      * Reverse the migrations.

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained('members', 'id');
+            $table->foreignId('member_id')->nullable()->constrained('members', 'id')->nullOnDelete();
             $table->string('name');
-            $table->enum('gender', ['MALE', 'FEMALE']);
-            // $table->string('degree',20);
-            $table->string('phone', 13);
+            $table->enum('gender', ['ذكر', 'أنثى']);
+            // $table->enum('degree',['دكتور']);
+            $table->string('phone', 25);
             $table->timestamps();
         });
     }

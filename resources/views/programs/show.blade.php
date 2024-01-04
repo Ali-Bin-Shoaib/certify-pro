@@ -7,21 +7,21 @@
         <div class="container form-bg row  py-5 shadow-sm">
 
             <h5 class=" col-md-5">تمت الإضافة بواسطة: </h5>
-            <b class="col-md-7 fs-4">عبدالله أحمد</b>
+            <b class="col-md-7 fs-4">{{$program->member->username}}</b>
             <h5 class=" col-md-5">التصنيف: </h5>
-            <b class="col-md-7 fs-4">برمجي</b>
+            <b class="col-md-7 fs-4">{{$program->category->title}}</b>
 
             <h5 class=" col-md-5">العنوان: </h5>
-            <b class="col-md-7 fs-4">أساسيات البرمجة</b>
+            <b class="col-md-7 fs-4">{{$program->title}}</b>
 
             <h5 class=" col-md-5">الموقع: </h5>
-            <b class="col-md-7 fs-4">اليمن- حضرموت - المكلا</b>
+            <b class="col-md-7 fs-4">{{$program->location}}</b>
 
             <h5 class=" col-md-5">تاريخ البداية: </h5>
-            <b class="col-md-7 fs-4">{{ date('Y-m-d') }}</b>
+            <b class="col-md-7 fs-4">{{ date('Y-m-d' ,strtotime($program->start_date)) }}</b>
 
             <h5 class=" col-md-5">تاريخ النهاية: </h5>
-            <b class="col-md-7 fs-4">{{ date('Y-m-d', strtotime('+1 week')) }}</b>
+            <b class="col-md-7 fs-4">{{ date('Y-m-d' ,strtotime($program->end_date)) }}</b>
 
             <div class="text-end ">
                 <a class="btn btn-sm btn-warning text-white" href="{{ route('programs.edit', 1) }}"><i class="fa fa-pen "></i></a>
@@ -30,10 +30,10 @@
             </div>
 
         </div>
-        <div class="text-center mt-3">
+        {{-- <div class="text-center mt-3">
 
             <a class="btn-solid-lg " href="{{ route('participants.create') }}">إضافة مشاركين للدورة؟</a>
-        </div>
+        </div> --}}
 
     </div>
 
