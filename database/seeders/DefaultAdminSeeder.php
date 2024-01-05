@@ -19,15 +19,31 @@ class DefaultAdminSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => fake()->name(),
+            'name' => 'admin',
             'username' => 'admin',
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('admin'),
             'email' => 'admin@admin.com',
-            // 'password' => bcrypt('admin'),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
             'role' => 'admin',
-
+        ]);
+        User::create([
+            'name' => 'organization',
+            'username' => 'organization',
+            'password' => static::$password ??= Hash::make('org'),
+            'email' => 'org@org.org',
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+            'role' => 'organization',
+        ]);
+        User::create([
+            'name' => 'member',
+            'username' => 'member',
+            'password' => static::$password ??= Hash::make('member'),
+            'email' => 'member@member.com',
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+            'role' => 'member',
         ]);
     }
 }
