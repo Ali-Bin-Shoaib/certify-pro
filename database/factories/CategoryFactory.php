@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->words(2, true),
+            'title' => fake()->randomElement(['تطوير الذات', 'برمجية', 'علمية', 'لغة إنجليزية', 'مهنية', 'ثقافية']),
             'member_id' => Member::pluck('id')->random()
         ];
     }

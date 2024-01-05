@@ -25,7 +25,10 @@ class MemberFactory extends Factory
             // 'name' => fake()->name(),
             'user_id' => User::pluck('id')->random(),
             'organization_id' => Organization::pluck('id')->random(),
-            'job_title' => fake()->jobTitle(),
+            // 'job_title' => fake()->jobTitle(),
+            'job_title' => fake()->randomElement(['مدير', 'نائب مدير', 'رئيس قسم', 'مدير مشروع', 'منسق', 'عضو']),
+
         ];
+
     }
 }

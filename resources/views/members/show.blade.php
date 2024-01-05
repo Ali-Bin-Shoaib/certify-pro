@@ -29,7 +29,7 @@
             <b class="col-md-7 fs-4">{{ date('Y/m/dD - h-i-s a',strtotime($member->created_at)) }}</b>
 
             <h5 class=" col-md-3">آخر تعديل: </h5>
-            <b class="col-md-7 fs-4">{{ $member->updated_at }}</b>
+            <b class="col-md-7 fs-4">{{ date('Y/m/dD - h-i-s a',strtotime($member->updated_at)) }}</b>
 
             <div class="d-flex flex-row align-items-end justify-content-end">
                 <a href="{{ route('members.edit', $member->id) }}" class="btn btn-warning btn-sm text-white">
