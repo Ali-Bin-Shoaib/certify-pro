@@ -45,7 +45,7 @@
                 @auth
                     @if (Auth::user()->role === 'organization')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('members.index') }}">أعضاء المنظمة</a>
+                            <a class="nav-link" href="{{ route('members.index') }}">الأعضاء</a>
                         </li>
                     @endif
                     <li class="nav-item">
@@ -54,13 +54,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('participants.index') }}">المشاركين</a>
                     </li>
-                    {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('trainers.index') }}">المدربين</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
-                </li>
-                --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('trainers.index') }}">المدربين</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
                     </li>

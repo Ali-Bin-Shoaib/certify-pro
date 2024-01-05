@@ -54,10 +54,11 @@
         <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <ul class="list-unstyled li-space-lg p-small">
-                    <li><a href="{{route('home')}}">الدورات</a></li>
-                    <li><a href="{{route('home')}}">المشاركين</a></li>
-                    <li><a href="{{route('home')}}">المدربين</a></li>
-                    <li><a href="{{route('home')}}">التصنيفات</a></li>
+                    <li><a href="{{ route('members.index') }}">الأعضاء</a></li>
+                    <li><a href="{{ route('programs.index') }}">الدورات</a></li>
+                    <li><a href="{{ route('participants.index') }}">المشاركين</a></li>
+                    <li><a href="{{ route('trainers.index') }}">المدربين</a></li>
+                    <li><a href="{{ route('categories.index') }}">التصنيفات</a></li>
                 </ul>
             </div> <!-- end of col -->
             <div class="col-lg-3 col-md-12 col-sm-12">
@@ -75,6 +76,6 @@
 
 <!-- Back To Top Button -->
 <button onclick="topFunction()" id="myBtn">
-    <img src="{{asset('images/up-arrow.png')}}" alt="alternative">
+    <img src="{{ asset('images/up-arrow.png') }}" alt="alternative">
 </button>
 <!-- end of back to top button -->

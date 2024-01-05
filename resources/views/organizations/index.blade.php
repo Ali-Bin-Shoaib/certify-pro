@@ -5,8 +5,8 @@
     <div class="container">
         <h1 class="text-center text-decoration-underline">أعضاء المنظمة</h1>
         <a class="btn-solid-sm" href="{{ route('members.create') }}"> <i class="fa fa-plus"></i> إضافة عضو</a>
-        <table class="table table-bordered table-hover m-0 mt-3 ">
-            <thead class="table-secondary ">
+        <table class="table table-bordered table-hover m-0  mt-3">
+            <thead>
                 <th>#</th>
                 <th>اسم العضو</th>
                 <th>اسم المستخدم</th>
@@ -14,7 +14,7 @@
                 <th>المسمى الوظيفي</th>
                 <th></th>
             </thead>
-            <tbody class="table-group-divider">
+            <tbody>
                 @foreach ($members as $key => $member)
                     <tr>
                         <td>{{ ++$key }}</td>

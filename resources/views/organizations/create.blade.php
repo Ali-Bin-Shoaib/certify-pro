@@ -9,7 +9,7 @@
             {{-- @method('POST') --}}
             <h4 class="text-decoration-underline">معلومات العضو </h4>
             <div class="row g-3 my-3">
-                <label class="col-md-2 form-label" for="name">الاسم الكامل</label>
+                <label class="col-md-2 form-label" for="name">اسم العضو</label>
                 <div class="col-md-10">
                     <input class=" form-control" type="text" name="name" id="name" required>
                 </div>

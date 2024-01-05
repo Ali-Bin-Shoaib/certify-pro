@@ -67,13 +67,13 @@ class AuthController extends Controller
                 ]);
 
                 $user = User::where('username', '=', $credentials['username'])->first();
-                if (!$user && !Hash::check($credentials['password'], $user['password'])) {
+                if (!$user || !Hash::check($credentials['password'], $user['password'])) {
                     return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
                 }
                 $request->session()->regenerate();
-                Auth::login($user, true);
+                Auth::login($user);
                 if (Auth::user()->role === ('organization'))
-                    return redirect()->intended(route("members.index"))->with("success", "تسم تسجيل الدخول بنجاح");
+                    return redirect()->intended(route("members.index"))->with("success", "تم تسجيل الدخول بنجاح");
                 elseif (Auth::user()->role === 'member')
                     return redirect()->intended(route("programs.index"))->with("success", "تم تسجيل الدخول بنجاح");
                 elseif (Auth::user()->role === "admin")

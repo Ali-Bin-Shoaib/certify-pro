@@ -16,14 +16,12 @@ class DefaultAdminSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    protected static ?string $password;
-
     public function run(): void
     {
         User::create([
             'name' => 'admin',
             'username' => 'admin',
-            'password' => static::$password ??= Hash::make('admin'),
+            'password' =>  Hash::make('admin'),
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
@@ -31,14 +29,14 @@ class DefaultAdminSeeder extends Seeder
         ]);
         $orgUser = User::create([
             'name' => 'organization',
-            'username' => 'organization',
-            'password' => static::$password ??= Hash::make('org'),
+            'username' => 'org',
+            'password' =>  Hash::make('org'),
             'email' => 'org@org.org',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
             'role' => 'organization',
         ]);
-        $org=Organization::create([
+        $org = Organization::create([
             'user_id' => $orgUser->id,
             'address' => fake()->address(),
             'phone' => fake()->phoneNumber()
@@ -46,7 +44,7 @@ class DefaultAdminSeeder extends Seeder
         $member = User::create([
             'name' => 'member',
             'username' => 'member',
-            'password' => static::$password ??= Hash::make('member'),
+            'password' =>  Hash::make('member'),
             'email' => 'member@member.com',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
