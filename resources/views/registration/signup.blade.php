@@ -10,8 +10,7 @@
                 <div class="row g-3 my-3">
                     <label class="col-md-2 form-label fw-bold" for="name">اسم المنظمة</label>
                     <div class="col-md-10">
-                        <input class=" form-control" type="text" name="name" id="name"
-                            required>
+                        <input class=" form-control" type="text" name="name" id="name" required>
                     </div>
                 </div>
                 <div class="row g-3 my-3">
@@ -56,6 +55,10 @@
                         <input class="form-control" type="text" name="cid" id="cid" required>
                     </div>
                 </div> --}}
+                <div class="row text-center">
+                    <small class="g-2 ps-5">لديك حساب ؟ <a href="signup" class="fw-bold nav-link d-inline">سجّل دخول </a></small>
+                </div>
+
                 <div class="row g-5">
                     <div class="col-md-3"></div>
                     <button class="col-md-6 btn-solid-sm">إنشاء حساب</button>

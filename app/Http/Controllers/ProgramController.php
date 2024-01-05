@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Member;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ class ProgramController extends Controller
     public function index()
     {
         $programs = Program::all();
+        // dd($programs[0]->member->user);
         return view('programs.index', compact('programs'));
     }
 
@@ -39,7 +41,7 @@ class ProgramController extends Controller
             'end_date' => 'required',
         ]);
         $newProgram = $request->all();
-        $newProgram['member_id'] = 1;
+        $newProgram['member_id'] = Auth::user()->id ?? Member::findFirst()->id;
         Program::create($newProgram);
         return redirect()->route('programs.index')->with('success', 'program is created successfully');
     }
@@ -77,9 +79,8 @@ class ProgramController extends Controller
             'end_date' => 'required',
         ]);
         $program = Program::find($id);
-        $toUpdate = $request->all();
-        $toUpdate['member_id'] = 1;
-        $program->update($toUpdate);
+        // $toUpdate['member_id'] = Auth::user()->id ?? $program->member_id;;
+        $program->update($request->all());
         return redirect()->route('programs.index')->with('success', 'program is updated successfully');
     }
 

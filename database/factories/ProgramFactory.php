@@ -20,11 +20,11 @@ class ProgramFactory extends Factory
     {
         return [
             'member_id' => Member::pluck('id')->random(),
-            'category_id'=>Category::pluck('id')->random(),
-            'title'=> fake()->title,
-            'location'=>fake()->address(),
-            'start_date'=>fake()->dateTimeBetween('now','+10 months'),
-            'end_date'=>fake()->dateTimeBetween('now','+10 months')
+            'category_id' => Category::pluck('id')->random(),
+            'title' => fake()->word,
+            'location' => fake()->address(),
+            'start_date' => fake()->dateTimeBetween('now', '+10 months'),
+            'end_date' => fake()->dateTimeBetween('now', '+10 months')
 
         ];
     }

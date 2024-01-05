@@ -7,6 +7,7 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -15,7 +16,6 @@ class AuthController extends Controller
 
     public function signup(Request $request)
     {
-        // dd($request->all());
         if ($request->method() == "GET")
             return view("registration.signup");
         else if ($request->method() == "POST") {
@@ -28,17 +28,25 @@ class AuthController extends Controller
                     "phone" => "required",
                     "address" => "required",
                 ]);
-                // $organizationData = $request->only(["name", "email", "phone", "address"]);
-                $organizationData = $request->all();
-                // $userData = $request->only(['username', 'password']);
-                // $user = User::create([...$userData, 'isOrganization' => true]);
-                // VarDumper::dump($user);
-                $organization = Organization::create($organizationData);
-                // VarDumper::dump([$user, $organization, $request->all()]);
-                if (Member::where('organization_id', $organization->id)->exists())
-                    return redirect()->route('members.index')->with('success', 'You have signed in');
-                else
-                    return redirect()->route('members.create')->with('success', 'You have signed in');
+                $organizationData = $request->only(["phone", "address"]);
+                $userData = $request->only(['name', 'email', 'username', 'password']);
+                $userData['role'] = 'organization';
+                try {
+                    $user = User::create($userData);
+                    if ($user) {
+                        $organizationData['user_id'] = $user->id;
+                        $organization = Organization::create($organizationData);
+                        if ($organization) {
+                            Auth::login($user);
+                            return redirect()->route('members.index')->with('success', 'تم إنشاء الحساب بنجاح');
+                        }
+                    }
+                    throw new \Exception('error at creating an organization account.');
+                } catch (\Throwable $th) {
+                    if ($user) $user->delete();
+                    if ($organization) $organization->delete();
+                    back()->with('error', 'حصل خطأ عند عملية إنشاء الحساب .');
+                }
             } catch (\Throwable $th) {
                 throw $th;
             }
@@ -53,16 +61,25 @@ class AuthController extends Controller
                 return redirect(route('home'));
         } else if ($request->method() == "POST") {
             try {
-                $request->validate([
+                $credentials = $request->validate([
                     'username' => 'required',
                     'password' => 'required',
                 ]);
-                $credentials = $request->only("username", "password");
-                dd(Auth::attempt($credentials));
-                if (Auth::attempt($credentials)) {
-                    return redirect()->intended(route("programs.index"))->with("success", "Logged in");
+
+                $user = User::where('username', '=', $credentials['username'])->first();
+                if (!$user && !Hash::check($credentials['password'], $user['password'])) {
+                    return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
                 }
-                return redirect(route('login'))->withe('error', 'Invalid username or password');
+                $request->session()->regenerate();
+                Auth::login($user, true);
+                if (Auth::user()->role === ('organization'))
+                    return redirect()->intended(route("members.index"))->with("success", "تسم تسجيل الدخول بنجاح");
+                elseif (Auth::user()->role === 'member')
+                    return redirect()->intended(route("programs.index"))->with("success", "تم تسجيل الدخول بنجاح");
+                elseif (Auth::user()->role === "admin")
+                    return redirect()->intended(route("home"))->with("success", 'welcome admin');
+                return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
+                // return redirect(route('login'))->withe('error', 'Invalid username or password');
             } catch (\Throwable $th) {
                 throw $th;
             }
@@ -73,6 +90,10 @@ class AuthController extends Controller
         //logout 
         Session::flush();
         Auth::logout();
-        return redirect('/');
+        return redirect('/')->with('success', 'تم تسجيل الخروج بنجاح');
+    }
+    public function unAuthorized(Request $request)
+    {
+        return view('registration.unAuthorized');
     }
 }

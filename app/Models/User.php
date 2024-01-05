@@ -49,6 +49,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Member::class, 'user_id', 'id');
     }
+   
     public function organization(): HasOne
     {
         return $this->hasOne(Organization::class, 'user_id', 'id');

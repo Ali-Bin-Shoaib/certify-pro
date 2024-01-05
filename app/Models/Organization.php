@@ -19,10 +19,7 @@ class Organization extends User
      * @var array<int, string>
      */
     protected $fillable = [
-        // 'name',
-        // 'email',
-        // 'username',
-        // 'password',
+        'user_id',
         'address',
         'phone',
     ];

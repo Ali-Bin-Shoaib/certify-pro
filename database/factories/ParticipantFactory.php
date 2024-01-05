@@ -22,7 +22,7 @@ class ParticipantFactory extends Factory
             'member_id' => Member::pluck('id')->random(),
             'name'=>fake()->name(),
             'gender'=>fake()->randomElement(['ذكر','أنثى']),
-            'email'=> fake()->email(),
+            'email' => fake()->unique()->safeEmail(),
             'phone'=> fake()->phoneNumber(),
 
 

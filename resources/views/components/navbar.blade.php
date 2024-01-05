@@ -26,7 +26,12 @@
         {{-- <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>  --}}
 
         <!-- Text Logo - Use this if you don't have a graphic logo -->
-        <a class="navbar-brand logo-text text-capitalize" href="{{ route('home') }}">certify pro</a>
+        <ul class="navbar-nav ms-auto navbar-nav-scroll">
+            <li class="nav-item">
+
+                <a class="navbar-brand nav-link logo-text text-capitalize" href="{{ route('home') }}">certify pro</a>
+            </li>
+        </ul>
 
         <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,28 +39,32 @@
 
         <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ms-auto navbar-nav-scroll">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">الصفحة الرئيسية</a>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('members.index') }}">أعضاء المنظمة</a>
-                </li>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('programs.index') }}">الدورات</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('participants.index') }}">المشاركين</a>
-                </li>
                 {{-- <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">الصفحة الرئيسية</a>
+                </li> --}}
+                @auth
+                    @if (Auth::user()->role === 'organization')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('members.index') }}">أعضاء المنظمة</a>
+                        </li>
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('programs.index') }}">الدورات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('participants.index') }}">المشاركين</a>
+                    </li>
+                    {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('trainers.index') }}">المدربين</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
                 </li>
                 --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
+                    </li>
+                @endauth
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('verifiy') }}">التحقق من الشهادة</a>
                 </li> --}}
@@ -83,3 +92,21 @@
     </div> <!-- end of container -->
 </nav> <!-- end of navbar -->
 <!-- end of navigation -->
+{{-- @if ($errors)
+    <div class="position-absolute top-0  end-0   alert alet-danger"style='z-index:100000'>
+        <ul style='z-index:100001'>
+            @foreach ($errors as $error)
+                <li style='z-index:100002'>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+
+
+@endif
+
+<script>
+    setTimeout(() => {
+        alert = document.querySelector('div. alert')
+        alert.remove();
+    }, 10000);
+</script> --}}

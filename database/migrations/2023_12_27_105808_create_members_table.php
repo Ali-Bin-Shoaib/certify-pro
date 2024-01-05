@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete;
-            $table->foreignId('organization_id')->constrained('organizations', 'id')->cascadeOnDelete;
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
+            $table->foreignId('organization_id')->constrained('organizations', 'id')->cascadeOnDelete();
             $table->string('job_title');
             // $table->string('username')->unique();
             // $table->string('password');
