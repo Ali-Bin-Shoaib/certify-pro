@@ -1,39 +1,37 @@
 @extends('layouts.master')
-@section('title', 'أعضاء المنظمة')
+@section('title', 'المدربين')
 
 @section('main')
     <div class="container">
-        <h1 class="text-center text-decoration-underline">أعضاء المنظمة</h1>
-        <a class="btn-solid-sm" href="{{ route('members.create') }}"> <i class="fa fa-plus"></i> إضافة عضو</a>
-        <table class="table table-bordered table-hover m-0  mt-3">
-            <thead>
+        <h1 class="text-center text-decoration-underline">المدربين</h1>
+        <a class="btn-solid-sm" href="{{ route('trainers.create') }}"> <i class="fa fa-plus"></i> إضافة مدرب</a>
+        <table class="table table-bordered table-hover m-0 mt-3 ">
+            <thead class="table-secondary ">
                 <th>#</th>
                 <th>اسم العضو</th>
-                <th>اسم المستخدم</th>
-                <th>البريد الإلكتروني</th>
-                <th>المسمى الوظيفي</th>
+                <th>الجنس</th>
+                <th>رقم الجوال</th>
                 <th></th>
             </thead>
-            <tbody>
-                @foreach ($members as $key => $member)
+            <tbody class="table-group-divider">
+                @foreach ($trainers as $key => $trainer)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $member->user->name }}</td>
-                        <td>{{ $member->user->username }}</td>
-                        <td>{{ $member->user->email }}</td>
-                        <td>{{ $member->job_title }}</td>
+                        <td>{{ $trainer->name }}</td>
+                        <td>{{ $trainer->gender }}</td>
+                        <td>{{ $trainer->phone }}</td>
                         <td class="d-flex align-items-center justify-content-center gap-1">
-                            <a href="{{ route('members.edit', $member->id) }}" class="btn btn-warning btn-sm">
+                            <a href="{{ route('trainers.edit', $trainer->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fa fa-pen"></i>
                             </a>
-                            <form action="{{ route('members.destroy', $member->id) }}" method="POST">
+                            <form action="{{ route('trainers.destroy', $trainer->id) }}" method="POST">
                                 @method('Delete')
                                 @csrf
                                 <button class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
-                            <a href="{{ route('members.show', $member->id) }}" class="btn btn-secondary btn-sm">
+                            <a href="{{ route('trainers.show', $trainer->id) }}" class="btn btn-secondary btn-sm">
                                 <i class="fa fa-info-circle"></i>
                             </a>
                         </td>

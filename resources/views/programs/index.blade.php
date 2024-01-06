@@ -6,8 +6,8 @@
     <div class="container">
         <h1 class="text-center text-decoration-underline">الدورات</h1>
         <a class="btn-solid-sm" href="{{ route('programs.create') }}"> <i class="fa fa-plus"></i> إضافة دورة</a>
-        <table class="table table-bordered table-hover m-0  mt-3">
-            <thead>
+        <table class="table table-bordered table-hover m-0 mt-3 ">
+            <thead class="table-secondary ">
                 <th>#</th>
                 <th>عنوان الدورة</th>
                 <th>الموقع</th>
@@ -16,7 +16,7 @@
                 <th>تاريخ الإضافة</th>
                 <th></th>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
                 @foreach ($programs as $key => $program)
                     <tr>
                         <td>{{ ++$key }}</td>

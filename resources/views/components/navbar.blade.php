@@ -50,26 +50,27 @@
                     <a class="nav-link" aria-current="page" href="{{ route('home') }}">الصفحة الرئيسية</a>
                 </li> --}}
                 @auth
-                    @if (Auth::user()->role === 'organization')
+                    @if (Auth::user()->role === 'organization' || Auth::user()->role == 'admin')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('members.index') }}">الأعضاء</a>
                         </li>
+                    @elseif (Auth::user()->role == 'member' || Auth::user()->role == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('programs.index') }}">الدورات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('participants.index') }}">المشاركين</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('trainers.index') }}">المدربين</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
+                        </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('programs.index') }}">الدورات</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('participants.index') }}">المشاركين</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('trainers.index') }}">المدربين</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
-                    </li>
                 @endauth
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('verifiy') }}">التحقق من الشهادة</a>
@@ -86,20 +87,25 @@
                         </ul>
                     </li> --}}
             </ul>
-            <div class="nav-item ms-3 py-1">
-                <div><b>الاسم: {{ Auth::user()->name }}</b></div>
-                <div>نوع الحساب: {{ Auth::user()->role }}</div>
-            </div>
+            @auth
+
+                <div class="nav-item ms-3 py-1">
+                    <div><b>الاسم: {{ Auth::user()->name }}</b></div>
+                    <div>نوع الحساب: {{ Auth::user()->role }}</div>
+                </div>
+            @endauth
             <span class="nav-item">
 
-                @guest
+                @if (!str_contains(url()->current(), 'login'))
+                    @guest
 
-                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
-                        href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
-                @else
-                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
-                        href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
-                @endguest
+                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
+                            href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
+                    @else
+                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
+                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                    @endguest
+                @endif
             </span>
         </div> <!-- end of navbar-collapse -->
     </div> <!-- end of container -->

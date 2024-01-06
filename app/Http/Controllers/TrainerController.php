@@ -36,9 +36,10 @@ class TrainerController extends Controller
             'gender' => 'required',
             'phone' => 'required',
         ]);
-        $participant = $request->all();
-        $participant['member_id'] = Auth::user()->member->id;;
-        Trainer::create($participant);
+
+        $trainer = $request->all();
+        $trainer['member_id'] = Auth::user()->member->id;;
+        Trainer::create($trainer);
         return redirect()->route('trainers.index')->with('success', 'تمت الإضافة بنجاح');
     }
 
@@ -48,8 +49,8 @@ class TrainerController extends Controller
     public function show(string $id)
     {
 
-        $participant = Trainer::find($id);
-        return view('trainers.show', compact('participant'));
+        $trainer = Trainer::find($id);
+        return view('trainers.show', compact('trainer'));
     }
 
     /**
@@ -57,8 +58,8 @@ class TrainerController extends Controller
      */
     public function edit(string $id)
     {
-        $participant = Trainer::find($id);
-        return view('trainers.edit', compact('participant'));
+        $trainer = Trainer::find($id);
+        return view('trainers.edit', compact('trainer'));
     }
 
     /**
@@ -71,12 +72,12 @@ class TrainerController extends Controller
             'gender' => 'required',
             'phone' => 'required',
         ]);
-        $participant = Trainer::find($id);
-        if ($participant) {
-            $participant->update($request->all());
+        $trainer = Trainer::find($id);
+        if ($trainer) {
+            $trainer->update($request->all());
             return redirect()->route('trainers.index')->with('success', 'تم تحديث البيانات بنجاح');
         }
-        return back()->with('error', 'لم تتم علمية تحديث بيانات المشارك ');
+        return back()->with('error', 'لم تتم علمية تحديث بيانات المدرب ');
     }
 
     /**
@@ -84,11 +85,11 @@ class TrainerController extends Controller
      */
     public function destroy(string $id)
     {
-        $participant = Trainer::find($id);
-        if ($participant) {
-            $participant->delete();
+        $trainer = Trainer::find($id);
+        if ($trainer) {
+            $trainer->delete();
             return redirect()->route('trainers.index')->with('success', 'تم حذف البيانات بنجاح');
         }
-        return back()->with('error', 'عملية الحذف فشلت. لا يمكن العثور على بيانات المشارك ');
+        return back()->with('error', 'عملية الحذف فشلت. لا يمكن العثور على بيانات المدرب ');
     }
 }

@@ -47,7 +47,7 @@ Route::group(['middleware' => 'member'], function () {
     Route::resource('programs', ProgramController::class);
     Route::resource('participants', ParticipantController::class);
     Route::resource('trainers', TrainerController::class);
-    Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class)->except('show');
     Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');
     Route::get('/preview', [PDFController::class, 'previewPdf'])->name('preview');
 });
