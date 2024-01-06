@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Participant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ParticipantController extends Controller
 {
@@ -30,24 +31,16 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // try {
         $request->validate([
             "name" => "required",
             "email" => "required",
             'gender' => 'required',
             'phone' => 'required',
-            // 'member_id' => 'required'
         ]);
-        $participant=$request->all();
-        $participant['member_id']=1;;
+        $participant = $request->all();
+        $participant['member_id'] = Auth::user()->member->id;;
         Participant::create($participant);
-
-        //     return 'ok';
-        return redirect()->route('participants.index')->with('success', 'participant created successfully');
-        // } catch (\Throwable $th) {
-        //     throw $th;
-        // }
+        return redirect()->route('participants.index')->with('success', 'تمت الإضافة بنجاح');
     }
 
     /**
@@ -55,7 +48,9 @@ class ParticipantController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $participant = Participant::find($id);
+        return view('participants.show', compact('participant'));
     }
 
     /**
@@ -63,7 +58,8 @@ class ParticipantController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $participant = Participant::find($id);
+        return view('participants.edit', compact('participant'));
     }
 
     /**
@@ -71,7 +67,18 @@ class ParticipantController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            "name" => "required",
+            "email" => "required",
+            'gender' => 'required',
+            'phone' => 'required',
+        ]);
+        $participant = Participant::find($id);
+        if ($participant) {
+            $participant->update($request->all());
+            return redirect()->route('participants.index')->with('success', 'تم تحديث البيانات بنجاح');
+        }
+        return back()->with('error', 'لم تتم علمية تحديث بيانات المشارك ');
     }
 
     /**
@@ -79,6 +86,11 @@ class ParticipantController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $participant = Participant::find($id);
+        if ($participant) {
+            $participant->delete();
+            return redirect()->route('participants.index')->with('success', 'تم حذف البيانات بنجاح');
+        }
+        return back()->with('error', 'عملية الحذف فشلت. لا يمكن العثور على بيانات المشارك ');
     }
 }

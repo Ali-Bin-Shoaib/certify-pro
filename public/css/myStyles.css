@@ -6,3 +6,6 @@ main {
 	background-color: #eff4fd;
 	padding: 2rem !important;
 }
+a.btn.btn-warning.btn-sm>i.fa.fa-pen{
+	color: white;
+}

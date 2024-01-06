@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trainer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainerController extends Controller
 {
@@ -11,6 +13,8 @@ class TrainerController extends Controller
      */
     public function index()
     {
+        $trainers = Trainer::all();
+        return view("trainers.index", compact("trainers"));
         //
     }
 
@@ -19,7 +23,7 @@ class TrainerController extends Controller
      */
     public function create()
     {
-        //
+        return view("trainers.create");
     }
 
     /**
@@ -27,7 +31,15 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required",
+            'gender' => 'required',
+            'phone' => 'required',
+        ]);
+        $participant = $request->all();
+        $participant['member_id'] = Auth::user()->member->id;;
+        Trainer::create($participant);
+        return redirect()->route('trainers.index')->with('success', 'تمت الإضافة بنجاح');
     }
 
     /**
@@ -35,7 +47,9 @@ class TrainerController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $participant = Trainer::find($id);
+        return view('trainers.show', compact('participant'));
     }
 
     /**
@@ -43,7 +57,8 @@ class TrainerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $participant = Trainer::find($id);
+        return view('trainers.edit', compact('participant'));
     }
 
     /**
@@ -51,7 +66,17 @@ class TrainerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            "name" => "required",
+            'gender' => 'required',
+            'phone' => 'required',
+        ]);
+        $participant = Trainer::find($id);
+        if ($participant) {
+            $participant->update($request->all());
+            return redirect()->route('trainers.index')->with('success', 'تم تحديث البيانات بنجاح');
+        }
+        return back()->with('error', 'لم تتم علمية تحديث بيانات المشارك ');
     }
 
     /**
@@ -59,6 +84,11 @@ class TrainerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $participant = Trainer::find($id);
+        if ($participant) {
+            $participant->delete();
+            return redirect()->route('trainers.index')->with('success', 'تم حذف البيانات بنجاح');
+        }
+        return back()->with('error', 'عملية الحذف فشلت. لا يمكن العثور على بيانات المشارك ');
     }
 }

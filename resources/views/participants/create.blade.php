@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="row g-3 my-3">
-                <label class="col-md-2 form-label" for="gender">التصنيف</label>
+                <label class="col-md-2 form-label" for="gender">الجنس</label>
                 <div class=" col-md-10">
                     <select name="gender" id="gender" class="form-select">
                         <option value="ذكر">ذكر</option>

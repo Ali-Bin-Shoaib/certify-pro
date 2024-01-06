@@ -11,31 +11,33 @@
                 <h4 class="text-capitalize">certify Pro </h4>
                 <div class="social-container">
                     <span class="fa-stack">
-                        <a href="#your-link">
+                        <a href="https://www.facebook.com/certifyPro">
                             <i class="fas fa-circle fa-stack-2x"></i>
                             <i class="fab fa-facebook-f fa-stack-1x"></i>
                         </a>
                     </span>
                     <span class="fa-stack">
-                        <a href="#your-link">
+                        <a href="https://twitter.com/certifyPro">
                             <i class="fas fa-circle fa-stack-2x"></i>
-                            <i class="fab fa-twitter fa-stack-1x"></i>
+                            {{-- <i class="fab fa-twitter fa-stack-1x"></i> --}}
+                            <i class="fa-brands fa-x-twitter fa-stack-1x"></i>
+
                         </a>
                     </span>
                     <span class="fa-stack">
-                        <a href="#your-link">
+                        <a href="https://www.pinterest.com/cerityPro">
                             <i class="fas fa-circle fa-stack-2x"></i>
                             <i class="fab fa-pinterest-p fa-stack-1x"></i>
                         </a>
                     </span>
                     <span class="fa-stack">
-                        <a href="#your-link">
+                        <a href="https://www.instagram.com/cerityPro">
                             <i class="fas fa-circle fa-stack-2x"></i>
                             <i class="fab fa-instagram fa-stack-1x"></i>
                         </a>
                     </span>
                     <span class="fa-stack">
-                        <a href="#your-link">
+                        <a href="https://www.youtube.com/c/certifyPro" open>
                             <i class="fas fa-circle fa-stack-2x"></i>
                             <i class="fab fa-youtube fa-stack-1x"></i>
                         </a>

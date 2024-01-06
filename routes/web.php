@@ -48,7 +48,9 @@ Route::group(['middleware' => 'member'], function () {
     Route::resource('participants', ParticipantController::class);
     Route::resource('trainers', TrainerController::class);
     Route::resource('categories', CategoryController::class);
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');
     Route::get('/preview', [PDFController::class, 'previewPdf'])->name('preview');
+});
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -19,21 +19,28 @@
 </nav> --}}
 
 <!-- Navigation -->
-<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light py-4 shadow-sm" aria-label="Main navigation">
+<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 shadow-sm" aria-label="Main navigation">
     <div class="container">
-
         <!-- Image Logo -->
-        {{-- <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>  --}}
 
+        {{-- <a class="navbar-brand" href="{{ route('home') }}">
+            <img src="{{ asset('images/logo.ico') }}" alt="Logo" width="30" height="24"
+                class="d-inline-block align-text-top">
+            certify pro
+        </a> --}}
         <!-- Text Logo - Use this if you don't have a graphic logo -->
         <ul class="navbar-nav ms-auto navbar-nav-scroll">
             <li class="nav-item">
-
-                <a class="navbar-brand nav-link logo-text text-capitalize" href="{{ route('home') }}">certify pro</a>
+                <a class="navbar-brand nav-link logo-text text-capitalize" href="{{ route('home') }}"> <img
+                        src="{{ asset('favicon.ico') }}" alt="Logo" width="50" height="50"
+                        class="d-inline-block align-text-top">
+                    certify pro
+                </a>
             </li>
         </ul>
 
-        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -79,12 +86,19 @@
                         </ul>
                     </li> --}}
             </ul>
+            <div class="nav-item ms-3 py-1">
+                <div><b>الاسم: {{ Auth::user()->name }}</b></div>
+                <div>نوع الحساب: {{ Auth::user()->role }}</div>
+            </div>
             <span class="nav-item">
+
                 @guest
 
-                    <a class="btn-solid-sm" href="{{ route('login') }}">تسجيل الدخول</a>
+                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
+                        href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
                 @else
-                    <a class="btn-solid-sm" href="{{ route('logout') }}">تسجيل الخروج</a>
+                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
+                        href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
                 @endguest
             </span>
         </div> <!-- end of navbar-collapse -->

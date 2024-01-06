@@ -5,8 +5,8 @@
     <div class="container">
         <h1 class="text-center text-decoration-underline">المشاركين</h1>
         <a class="btn-solid-sm" href="{{ route('participants.create') }}"> <i class="fa fa-plus"></i> إضافة مشارك</a>
-        <table class="table table-bordered table-hover m-0  mt-3">
-            <thead>
+        <table class="table table-bordered table-hover m-0 mt-3 ">
+            <thead class="table-secondary ">
                 <th>#</th>
                 <th>الاسم</th>
                 <th>البريد الإلكتروني</th>
@@ -15,7 +15,7 @@
                 <th>تمت الإضافة بواسطة</th>
                 <th></th>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
                 @foreach ($participants as $key => $participant)
                     <tr>
                         <td>{{ ++$key }}</td>
@@ -23,7 +23,7 @@
                         <td>{{ $participant->email }}</td>
                         <td>{{ $participant->phone }}</td>
                         <td>{{ $participant->gender }}</td>
-                        <td>{{ $participant->member->username }}</td>
+                        <td>{{ $participant->member->user->name ?? '' }}</td>
                         <td class="d-flex align-items-center justify-content-center gap-1">
                             <a href="{{ route('participants.edit', $participant->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fa fa-pen"></i>

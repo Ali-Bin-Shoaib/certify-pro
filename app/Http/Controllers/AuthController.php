@@ -16,9 +16,12 @@ class AuthController extends Controller
 
     public function signup(Request $request)
     {
-        if ($request->method() == "GET")
-            return view("registration.signup");
-        else if ($request->method() == "POST") {
+        if ($request->method() == "GET") {
+            if (Auth::check()) {
+                return back()->with("info", "تمت علمية تسجيل الدخول مسبقا.");
+            } else
+                return view("registration.signup");
+        } else if ($request->method() == "POST") {
             try {
                 $request->validate([
                     "name" => "required",
