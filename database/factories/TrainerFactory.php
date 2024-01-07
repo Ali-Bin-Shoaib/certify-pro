@@ -17,10 +17,16 @@ class TrainerFactory extends Factory
      */
     public function definition(): array
     {
+        $gender = fake()->randomElement(['ذكر', 'أنثى']);
+        if ($gender == 'ذكر')
+            $name = fake()->name('male');
+        else
+            $name = fake()->name('female');
+
         return [
             'member_id' => Member::pluck('id')->random(),
             'name' => fake()->name,
-            'gender' => fake()->randomElement(['ذكر', 'أنثى']),
+            'gender' => $gender,
             'phone' => fake()->phoneNumber(),
         ];
     }

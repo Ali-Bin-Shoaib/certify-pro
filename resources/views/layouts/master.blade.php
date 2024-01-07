@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="{{ asset('bootstrap-icons/font/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome-free-6.5.1-web/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome-free-6.5.1-web/css/brands.min.css') }}">
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet"> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/swiper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/myStyles.css') }}">
@@ -55,7 +55,7 @@
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
     @include('components.navbar')
     <main class="bg-gray">
-        @if ($errors)
+        {{-- @if ($errors)
             <ul>
 
                 @foreach ($errors as $error)
@@ -68,7 +68,7 @@
         {{ Session::get('error') }}
         {{ Session::get('success') }}
         {{ Session::get('info') }}
-        {{ Session::get('warning') }}
+        {{ Session::get('warning') }} --}}
         @yield('main')
     </main>
     @include('components.footer')
@@ -76,9 +76,9 @@
     <script src="{{ asset('bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/swiper.min.js') }}"></script> <!-- Swiper for image and text sliders -->
     <script src="{{ asset('js/scripts.js') }}"></script> <!-- Custom scripts -->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
         @if (Session::has('error'))
             {

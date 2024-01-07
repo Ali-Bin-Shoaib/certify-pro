@@ -14,6 +14,6 @@ class ProgramParticipantSeeder extends Seeder
      */
     public function run(): void
     {
-        ProgramParticipant::factory()->count(10)->create();
+        ProgramParticipant::factory()->count(30)->create();
     }
 }

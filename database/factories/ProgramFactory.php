@@ -18,13 +18,14 @@ class ProgramFactory extends Factory
      */
     public function definition(): array
     {
+        $startDate = fake()->dateTimeBetween("now", "+10 months");
         return [
             'member_id' => Member::pluck('id')->random(),
             'category_id' => Category::pluck('id')->random(),
             'title' => fake()->word,
             'location' => fake()->address(),
-            'start_date' => fake()->dateTimeBetween('now', '+10 months'),
-            'end_date' => fake()->dateTimeBetween('now', '+10 months')
+            'start_date' => $startDate,
+            'end_date' => fake()->dateTimeBetween($startDate, '+10 months')
 
         ];
     }

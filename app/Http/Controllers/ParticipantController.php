@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participant;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,10 @@ class ParticipantController extends Controller
      */
     public function create()
     {
-        return view("participants.create");
+        $programs = Program::all()->where('end_date', '>=', date('Y-m-d h-i-s'));
+        if ($programs->count() === 0)
+            return back()->with('error', 'لا يوجد أي دورة متاحا حاليا. أضف دورة لإضافة مشاركين فيها..');
+        return view("participants.create", compact("programs"));
     }
 
     /**
@@ -31,12 +35,16 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "name" => "required",
-            "email" => "required",
-            'gender' => 'required',
-            'phone' => 'required',
-        ]);
+        try {
+            $request->validate([
+                "name" => "required",
+                "email" => "required",
+                'gender' => 'required',
+                'phone' => 'required',
+            ]);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'بيانات غير صحيحة');
+        }
         $participant = $request->all();
         $participant['member_id'] = Auth::user()->member->id;;
         Participant::create($participant);

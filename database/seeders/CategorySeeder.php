@@ -13,6 +13,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory()->count(10)->create();
+        try {
+            Category::factory()->count(10)->create();
+        } catch (\Throwable $th) {
+        }
     }
 }

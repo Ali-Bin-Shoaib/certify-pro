@@ -23,6 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
             'name' => fake()->name(),
             'username' => fake()->username(),
@@ -33,7 +34,6 @@ class UserFactory extends Factory
             'role' => fake()->randomElement(['admin', 'organization', 'member']),
         ];
     }
-
     /**
      * Indicate that the model's email address should be unverified.
      */

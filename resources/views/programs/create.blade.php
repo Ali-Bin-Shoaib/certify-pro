@@ -39,9 +39,9 @@
                 <label class="col-md-2 form-label" for="category_id">التصنيف</label>
                 <div class=" col-md-10">
                     <select name="category_id" id="category_id" class="form-select">
-                        <option value="1">برمجي</option>
-                        <option value="2">اجتماعي</option>
-                        <option value="3">ثقافي</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->title }}</option>
+                        @endforeach
                     </select>
 
                 </div>

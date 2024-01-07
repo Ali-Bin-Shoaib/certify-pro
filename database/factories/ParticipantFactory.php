@@ -18,12 +18,18 @@ class ParticipantFactory extends Factory
      */
     public function definition(): array
     {
+        $gender = fake()->randomElement(['ذكر', 'أنثى']);
+        if ($gender == 'ذكر')
+            $name = fake()->name('male');
+        else
+            $name = fake()->name('female');
+
         return [
             'member_id' => Member::pluck('id')->random(),
-            'name'=>fake()->name(),
-            'gender'=>fake()->randomElement(['ذكر','أنثى']),
-            'email' => fake()->unique()->safeEmail(),
-            'phone'=> fake()->phoneNumber(),
+            'name' => $name,
+            'gender' => $gender,
+            'email' => fake()->unique()->email(),
+            'phone' => fake()->phoneNumber(),
 
 
         ];

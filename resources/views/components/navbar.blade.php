@@ -1,4 +1,4 @@
-<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 shadow-sm" aria-label="Main navigation">
+<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm" aria-label="Main navigation">
     <div class="container">
         <!-- Image Logo -->
 
@@ -10,15 +10,15 @@
         <!-- Text Logo - Use this if you don't have a graphic logo -->
         <ul class="navbar-nav ms-auto navbar-nav-scroll">
             <li class="nav-item">
-                <a class="navbar-brand nav-link logo-text text-capitalize" href="{{ route('home') }}"> <img
-                        src="{{ asset('favicon.ico') }}" alt="Logo" width="50" height="50"
+                <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0" href="{{ route('home') }}"> <img
+                        src="{{ asset('favicon.ico') }}" alt="Logo" width="60" height="60"
                         class="d-inline-block align-text-top">
                     certify pro
                 </a>
             </li>
         </ul>
 
-        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+        <button class="navbar-toggler p-0 border-0 z-index-3" type="button" id="navbarSideCollapse"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

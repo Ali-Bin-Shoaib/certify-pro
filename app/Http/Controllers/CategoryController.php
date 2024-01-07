@@ -24,6 +24,9 @@ class CategoryController extends Controller
         $category = $request->validate([
             "title" => "required",
         ]);
+        if (Category::where("title", $request->title)->first() != null)
+            return back()->with('error', 'التصنيف المدخل موجود مسبقا.');
+        
         $category['member_id'] = Auth::user()->member->id;
         Category::create($category);
         return redirect()->route('categories.index')->with('success', 'تمت الإضافة بنجاح');

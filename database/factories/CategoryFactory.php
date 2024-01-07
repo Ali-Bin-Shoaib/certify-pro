@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Member;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,8 +18,17 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = Category::all('title');
+        while (true) {
+            $title = fake()->randomElement(['تطوير الذات', 'برمجية', 'علمية', 'لغة إنجليزية', 'مهنية', 'ثقافية','عامة']);
+            if ($categories->find('title', $title) != null) {
+                break;
+            }
+        }
+
+
         return [
-            'title' => fake()->randomElement(['تطوير الذات', 'برمجية', 'علمية', 'لغة إنجليزية', 'مهنية', 'ثقافية']),
+            'title' => $title,
             'member_id' => Member::pluck('id')->random()
         ];
     }

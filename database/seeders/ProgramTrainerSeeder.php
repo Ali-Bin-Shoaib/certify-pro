@@ -13,6 +13,6 @@ class ProgramTrainerSeeder extends Seeder
      */
     public function run(): void
     {
-        ProgramTrainer::factory()->count(10)->create(); 
+        ProgramTrainer::factory()->count(20)->create(); 
     }
 }
