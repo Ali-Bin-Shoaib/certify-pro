@@ -64,7 +64,9 @@
                 </ul>
             </div> <!-- end of col -->
             <div class="col-lg-3 col-md-12 col-sm-12">
-                <p class="p-small statement">جميع الحقوق محفوظة © <a href="#">علي بن شعيب</a></p>
+                <p class="p-small statement">جميع الحقوق محفوظة © <a href="https://github.com/ali-bin-shoaib"
+                        class="text-black fw-bold" rel="external" target="_blank">علي بن
+                        شعيب</a></p>
             </div> <!-- end of col -->
 
             <div class="col-lg-3 col-md-12 col-sm-12">

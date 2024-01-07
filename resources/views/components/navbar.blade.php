@@ -1,24 +1,3 @@
-{{-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">certificate pro</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
-                <a class="nav-link" href="{{ route('signup') }}">إنشاء حساب</a>
-                <a class="nav-link" href="{{ route('login') }}">تسجيل الدخول</a>
-                <a class="nav-link" href="{{ route('logout') }}">تسجيل الخروج</a>
-                <a class="nav-link" href="{{url('/pdf')}}">generate pdf</a>
-                <a class="nav-link" href="{{url('/ok')}}">view template</a>
-            </div>
-        </div>
-    </div>
-</nav> --}}
-
-<!-- Navigation -->
 <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 shadow-sm" aria-label="Main navigation">
     <div class="container">
         <!-- Image Logo -->
@@ -90,8 +69,8 @@
             @auth
 
                 <div class="nav-item ms-3 py-1">
-                    <div><b>الاسم: {{ Auth::user()->name }}</b></div>
                     <div>نوع الحساب: {{ Auth::user()->role }}</div>
+                    <div><b>الاسم: {{ Auth::user()->name }}</b></div>
                 </div>
             @endauth
             <span class="nav-item">

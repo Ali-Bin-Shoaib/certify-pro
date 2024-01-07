@@ -17,6 +17,9 @@
             <h5 class=" col-md-3">الموقع: </h5>
             <b class="col-md-7 fs-4">{{ $program->location }}</b>
 
+            <h5 class=" col-md-3">عدد المشاركين: </h5>
+            <b class="col-md-7 fs-4">{{ $program->participants->count() }}</b>
+
             <h5 class=" col-md-3">تاريخ بداية الدورة: </h5>
             <b class="col-md-7 fs-4">{{ date('Y-m-dD', strtotime($program->start_date)) }}</b>
 

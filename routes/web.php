@@ -6,12 +6,9 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ProgramParticipantController;
 use App\Http\Controllers\TrainerController;
-use App\Models\Category;
-use App\Models\Program;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\VarDumper\VarDumper;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +34,6 @@ Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-// Auth::routes();
-
 Route::group(['middleware' => 'organization'], function () {
     Route::resource('members', MemberController::class);
 });
@@ -48,9 +43,11 @@ Route::group(['middleware' => 'member'], function () {
     Route::resource('participants', ParticipantController::class);
     Route::resource('trainers', TrainerController::class);
     Route::resource('categories', CategoryController::class)->except('show');
+    Route::resource('participant-to-program', ProgramParticipantController::class);
     Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');
     Route::get('/preview', [PDFController::class, 'previewPdf'])->name('preview');
 });
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
