@@ -9,6 +9,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProgramParticipantController;
 use App\Http\Controllers\TrainerController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\VarDumper\VarDumper;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,13 @@ Route::group(['middleware' => 'member'], function () {
     Route::resource('participants', ParticipantController::class);
     Route::resource('trainers', TrainerController::class);
     Route::resource('categories', CategoryController::class)->except('show');
-    Route::resource('participant-to-program', ProgramParticipantController::class)->except('index');
+    Route::controller(ProgramParticipantController::class)->group(function () {
+        Route::get('/create/{programId}', 'create')->name('programParticipants.create');
+        Route::post('programParticipants/store', 'store')->name('programParticipants.store');
+        // Route::post('/orders', 'store');
+    });
+    // Route::resource('programParticipants', ProgramParticipantController::class)->except('index');
+
     Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');
     Route::get('/preview', [PDFController::class, 'previewPdf'])->name('preview');
 });

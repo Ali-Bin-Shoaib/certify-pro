@@ -1,13 +1,9 @@
 main {
-	padding-top: 7rem;
-	padding-bottom: 4rem;
+	position: relative;
+	top: 7rem;
+	padding-top: 2rem;
 }
 .container > form {
 	background-color: #eff4fd;
 	padding: 2rem !important;
 }
-a.btn.btn-warning.btn-sm > i.fa.fa-pen,
-a.btn > i {
-	/* color: white; */
-}
-

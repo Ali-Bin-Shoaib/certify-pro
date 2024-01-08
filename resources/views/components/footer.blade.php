@@ -4,7 +4,7 @@
 
 <!-- Footer -->
 <div class="footer bg-gray border-top">
-    <img class="decoration-circles" src="{{ asset('images/decoration-circles.png') }}" alt="alternative">
+    <img class="decoration-circles d-none d-md-block" src="{{ asset('images/decoration-circles.png') }}" alt="alternative">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">

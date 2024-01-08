@@ -24,7 +24,8 @@
                 @endphp
                 @foreach ($programs as $program)
                     <tr>
-                        <td>{{ ++$i }}</td>
+                        {{-- <td>{{ ++$i }}</td> --}}
+                        <td>{{ $program->id }}</td>
                         {{-- <td>{{ $program->participants->count() }}</td> --}}
                         <td>{{ $program->title }}</td>
                         <td>{{ $program->location }}</td>
@@ -64,7 +65,7 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item" title="إصدار الشهادات"
-                                            href="{{ route('participant-to-program.create', $program->id) }}"><i
+                                            href="{{ route('programParticipants.create', ['programId'=>$program->id]) }}"><i
                                                 class="fa fa-print"></i>
                                             إضافة مشاركين
                                         </a></li>

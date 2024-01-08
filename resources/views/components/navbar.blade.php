@@ -1,5 +1,5 @@
 <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm" aria-label="Main navigation">
-    <div class="container">
+    <div class="container-fluid w-75">
         <!-- Image Logo -->
 
         {{-- <a class="navbar-brand" href="{{ route('home') }}">
@@ -78,10 +78,10 @@
                 @if (!str_contains(url()->current(), 'login'))
                     @guest
 
-                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
+                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 "
                             href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
                     @else
-                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1"
+                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 "
                             href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
                     @endguest
                 @endif

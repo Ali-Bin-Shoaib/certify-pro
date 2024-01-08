@@ -13,7 +13,7 @@ class ProgramParticipantController extends Controller
     // {
     // }
 
-    public function create(Request $request, $id)
+    public function create(string $programId)
     {
         // $categories = Category::join('members', 'member_id', '=', 'members.id')
         // ->where('organization_id', '=', Auth::user()->member->organization_id)
@@ -21,10 +21,13 @@ class ProgramParticipantController extends Controller
         //     ->sortby('categories.created_at');
 
         $program = Program::join('members', 'member_id', 'members.id')
-            ->where('organization_id', Auth::user()->member->organization_id)->first();
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('programs.id', $programId)
+            ->first();
+            // dd($program);
         if (!$program)
             return redirect()->back()->with('error', 'الدورة غير موجودة');
-        return view('programParticipants.create');
+        return view('programParticipants.create',compact('program'));
     }
 
 
