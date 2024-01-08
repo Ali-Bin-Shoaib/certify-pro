@@ -46,10 +46,63 @@
 
                 </div>
             </div>
+            {{-- <div class="row g-3 my-2">
+                <div class="col-md-1"></div>
+                <div class="form-check col-md-9">
+                    <input class="form-check-input" type="checkbox" id="addParticipants" name="addParticipants">
+                    <label class="form-check-label" for="addParticipants">
+                        إضافة مشاركين للدورة؟
+                    </label>
+                </div>
+            </div> --}}
+
             <div class="row g-5">
                 <div class="col-md-3"></div>
-                <button class="col-md-6 btn-solid-sm">إضافة دورة</button>
+                <button class="col-md-6 btn-solid-sm">إضافة </button>
             </div>
         </form>
     </div>
+    {{-- <script>
+        $(function() {
+            //   const addParticipants = $('#addParticipants'); 
+            $('#addParticipants').on('click', function() {
+                console.log($('#addParticipants').val());
+                if ($('#addParticipants').val() == 'on')
+                    showNumberInput();
+                // showParticipantInput();
+                else
+                    hideParticipantInput();
+            });
+
+            function showNumberInput() {
+                $('#addParticipants').parent().parent().after(`
+                            <div class="row g-3 my-3" participantNumber>
+                <label class="col-md-2 form-label" for="participantsNumber">أدخل عدد المشاركين </label>
+                <div class=" col-md-10 d-flex">
+
+                    <input class="form-control " type="text" name="participantsNumber"  id="participantsNumber" required>
+                    <button class="btn btn-danger" id> delete</button>
+                </div>
+            </div>
+
+                `)
+                // console.log($('addParticipants').parent())
+            }
+
+            function deleteElement() {
+                this.parent().parent().remove();
+            }
+
+            function showParticipantInput() {
+                const participantsContainer = document.querySelect('#participantsContainer');
+                // participantsContainer.innerHTML = ``
+
+            }
+
+            function hideParticipantInput() {
+                $(`[name='name[]']`).remove();
+            }
+
+        })
+    </script> --}}
 @endsection

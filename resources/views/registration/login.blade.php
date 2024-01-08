@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('main')
-    <div class=" basic-1 bg-gray" style="background-image: url({{asset('images/header-background.jpg')}});background-size:contain">
+    <div class=" basic-1 bg-gray"
+        style="background-image: url({{ asset('images/header-background.jpg') }});background-size:contain">
         <div class="container py-5">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -25,6 +26,12 @@
                 <div class="row ">
                     <label class="g-2 col-md-12 fw-bold" for="password">كلمة المرور</label>
                     <input type="password" name="password" id="password" required class="form-control">
+                </div>
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        تذكرني
+                    </label>
                 </div>
                 <div class="row text-center">
                     <small class="g-2 ps-5">ليس لديك حساب؟ <a href="signup" class="fw-bold nav-link d-inline">سجّل

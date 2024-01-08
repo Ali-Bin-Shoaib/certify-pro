@@ -26,8 +26,6 @@
                                 data-bs-target="#deleteModal{{ $category->id }}">
                                 <i class="fa fa-trash"></i>
                             </button>
-
-
                         </td>
                     </tr>
                 @endforeach

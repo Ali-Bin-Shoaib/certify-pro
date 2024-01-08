@@ -64,17 +64,19 @@ class AuthController extends Controller
                 return redirect(route('home'));
         } else if ($request->method() == "POST") {
             try {
-                $credentials = $request->validate([
+                $request->validate([
                     'username' => 'required',
                     'password' => 'required',
+                    'rememberMe' => 'nullable'
                 ]);
-
+                $credentials = $request->only('username', 'password');
                 $user = User::where('username', '=', $credentials['username'])->first();
                 if (!$user || !Hash::check($credentials['password'], $user['password'])) {
                     return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
                 }
                 $request->session()->regenerate();
-                Auth::login($user);
+                Auth::login($user, $request->rememberMe == "on");
+                // dd(Auth::user(), $request->all());
                 if (Auth::user()->role === ('organization'))
                     return redirect()->intended(route("members.index"))->with("success", "تم تسجيل الدخول بنجاح");
                 elseif (Auth::user()->role === 'member')
@@ -94,9 +96,5 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('/')->with('success', 'تم تسجيل الخروج بنجاح');
-    }
-    public function unAuthorized(Request $request)
-    {
-        return view('registration.unAuthorized');
     }
 }

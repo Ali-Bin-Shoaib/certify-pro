@@ -21,7 +21,7 @@ class PDFController extends Controller
         $document = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
-            'margin'=>100,
+            // 'margin'=>100,
         ]);
         // $document->SetFont('Tajawal');
         $document->WriteHTML(view('pdf.template', $data));

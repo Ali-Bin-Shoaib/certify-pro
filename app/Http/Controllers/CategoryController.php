@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\VarDumper\VarDumper;
 
 class CategoryController extends Controller
 {
 
     public function index()
     {
-        $categories = Category::all();
+
+        $categories = Category::join('members', 'member_id', '=', 'members.id')
+            ->where('organization_id', '=', Auth::user()->member->organization_id)
+            ->get(['categories.id', 'categories.title'])
+            ->sortby('categories.created_at');
+        // dd($categories);
+        // $categories = Category::all();
         return view("categories.index", compact("categories"));
         //
     }
@@ -26,7 +34,7 @@ class CategoryController extends Controller
         ]);
         if (Category::where("title", $request->title)->first() != null)
             return back()->with('error', 'التصنيف المدخل موجود مسبقا.');
-        
+
         $category['member_id'] = Auth::user()->member->id;
         Category::create($category);
         return redirect()->route('categories.index')->with('success', 'تمت الإضافة بنجاح');
@@ -41,9 +49,17 @@ class CategoryController extends Controller
         $request->validate([
             "title" => "required",
         ]);
-        $category = Category::find($id);
+        $category = Category::join('members', 'member_id', '=', 'members.id')
+            ->where('organization_id', '=', Auth::user()->member->organization_id)
+            ->where('categories.id', '=', $id)->first();
+
+        // $category = Category::find($id);
+        // dd([$id, $category]);
+        // VarDumper::dump($id, $category);
+
         if ($category) {
-            $category->update($request->all());
+            $category['member_id'] = Auth::user()->member->id;
+            $category->update($category->toArray());
             return redirect()->route('categories.index')->with('success', 'تم تحديث البيانات بنجاح');
         }
         return back()->with('error', 'لم تتم علمية تحديث بيانات التصنيف ');

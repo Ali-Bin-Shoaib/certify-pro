@@ -64,11 +64,13 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item" title="إصدار الشهادات"
-                                            href="{{ route('participant-to-program.create') }}"><i class="fa fa-print"></i>
+                                            href="{{ route('participant-to-program.create', $program->id) }}"><i
+                                                class="fa fa-print"></i>
                                             إضافة مشاركين
                                         </a></li>
-                                    <li> <a class="dropdown-item" title="إصدار الشهادات" href=""><i
-                                                class="fa fa-print"></i> إصدار الشهادات</a>
+                                    <li> <a class="dropdown-item {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
+                                            title="إصدار الشهادات" href=""><i class="fa fa-print"></i> إصدار
+                                            الشهادات</a>
                                     </li>
                                 </ul>
                             </div>
