@@ -9,32 +9,59 @@ use Illuminate\Support\Facades\Auth;
 
 class ParticipantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $participants = Participant::all();
+        // $participants = Participant::all();
+        // $categories = Category::join('members', 'member_id', '=', 'members.id')
+        // ->where('organization_id', '=', Auth::user()->member->organization_id)
+        //     ->get(['categories.id', 'categories.title'])
+        //     ->sortby('categories.created_at');
+
+        $participants = Participant::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->get('participants.*')->sortby('participants.created_at');
         return view("participants.index", compact("participants"));
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function create(string $programId = null)
     {
-        $programs = Program::all()->where('end_date', '>=', date('Y-m-d h-i-s'));
+        $participants = Participant::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->get('participants.*')->sortby('participants.created_at');
+
+        if ($programId) {
+            $program = Program::join('members', 'member_id', 'members.id')
+                ->where('organization_id', Auth::user()->member->organization_id)
+                ->where('programs.id', $programId)
+                ->get('programs.*')->first();
+            // dd($program);
+            if (!$program)
+                return redirect()->back()->with('error', 'الدورة غير موجودة');
+            return view('Participants.create', compact('program'));
+        }
+
+        // $programs = Program::all()->where('end_date', '>=', date('Y-m-d h-i-s'));
+        $programs = Program::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('programs.id', $programId)
+            ->where('programs.end_date', '>=', now())
+            ->get('programs.*');
+        // dd($programs);
         if ($programs->count() === 0)
             return back()->with('error', 'لا يوجد أي دورة متاحا حاليا. أضف دورة لإضافة مشاركين فيها..');
         return view("participants.create", compact("programs"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function store(Request $request, string $programId)
     {
+        if (!$programId)
+            return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
+        $program = Program::find($programId);
+        if (!$program)
+            return redirect()->back()->with("error", "الدورة غير موجودة.");
         try {
             $request->validate([
                 "name" => "required",
@@ -42,18 +69,23 @@ class ParticipantController extends Controller
                 'gender' => 'required',
                 'phone' => 'required',
             ]);
+
+            $participant = $request->all();
+            $participant['member_id'] = Auth::user()->member->id;
+            // $isExist = Participant::where('email', $participant['email'])->exists();
+
+            $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
+            // dd($participant);
+            $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
+            // $program->participants()->attach($participant);
+            // dd($participant);
+            return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');
         } catch (\Throwable $th) {
             return back()->with('error', 'بيانات غير صحيحة');
         }
-        $participant = $request->all();
-        $participant['member_id'] = Auth::user()->member->id;;
-        Participant::create($participant);
-        return redirect()->route('participants.index')->with('success', 'تمت الإضافة بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
 
@@ -61,18 +93,14 @@ class ParticipantController extends Controller
         return view('participants.show', compact('participant'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         $participant = Participant::find($id);
         return view('participants.edit', compact('participant'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -84,14 +112,12 @@ class ParticipantController extends Controller
         $participant = Participant::find($id);
         if ($participant) {
             $participant->update($request->all());
+
             return redirect()->route('participants.index')->with('success', 'تم تحديث البيانات بنجاح');
         }
-        return back()->with('error', 'لم تتم علمية تحديث بيانات المشارك ');
+        return back()->with('error', 'لم تتم عملية تحديث بيانات المشارك ');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $participant = Participant::find($id);

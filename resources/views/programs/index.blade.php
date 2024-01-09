@@ -8,6 +8,7 @@
         <h1 class="text-center text-decoration-underline">الدورات</h1>
         <a class="btn-solid-sm" href="{{ route('programs.create') }}"> <i class="fa fa-plus"></i> إضافة دورة</a>
         <table class="table table-bordered table-hover m-0 mt-3 ">
+        <table class="table table-bordered table-hover m-0 mt-3 ">
             <thead class="table-secondary ">
                 <th>#</th>
 
@@ -64,8 +65,8 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" title="إصدار الشهادات"
-                                            href="{{ route('programParticipants.create', ['programId'=>$program->id]) }}"><i
+                                    <li><a class="dropdown-item" title="إضافة مشاركين للدورة"
+                                            href="{{ route('participants.create', ['programId' => $program->id]) }}"><i
                                                 class="fa fa-print"></i>
                                             إضافة مشاركين
                                         </a></li>

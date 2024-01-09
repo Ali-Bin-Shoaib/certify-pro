@@ -41,14 +41,16 @@ Route::group(['middleware' => 'organization'], function () {
 
 Route::group(['middleware' => 'member'], function () {
     Route::resource('programs', ProgramController::class);
-    Route::resource('participants', ParticipantController::class);
+    Route::get('/participants/create/{programId?}', [ParticipantController::class, 'create'])->name('participants.create');
+    Route::post('/participants/store/{programId}', [ParticipantController::class, 'store'])->name('participants.store');
+    Route::resource('participants', ParticipantController::class)->except(['create', 'store']);
     Route::resource('trainers', TrainerController::class);
     Route::resource('categories', CategoryController::class)->except('show');
-    Route::controller(ProgramParticipantController::class)->group(function () {
-        Route::get('/create/{programId}', 'create')->name('programParticipants.create');
-        Route::post('programParticipants/store', 'store')->name('programParticipants.store');
-        // Route::post('/orders', 'store');
-    });
+    // Route::controller(ProgramParticipantController::class)->group(function () {
+    //     Route::get('/create/{programId}', 'create')->name('programParticipants.create');
+    //     Route::post('programParticipants/store', 'store')->name('programParticipants.store');
+    //     // Route::post('/orders', 'store');
+    // });
     // Route::resource('programParticipants', ProgramParticipantController::class)->except('index');
 
     Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');

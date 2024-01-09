@@ -29,11 +29,11 @@
     <link rel="stylesheet" href="{{ asset('bootstrap-icons/font/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome-free-6.5.1-web/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome-free-6.5.1-web/css/brands.min.css') }}">
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet"> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/swiper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/myStyles.css') }}">
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
     <title>@yield('title', config('app.name'))</title>
@@ -42,7 +42,7 @@
     @font-face {
         font-family: "Tajawal";
         src: url("{{ asset('fonts/Tajawal/Tajawal-Regular.ttf') }}");
-        src: url("{{ asset('fonts/Tajawal/Tajawal-Regular.ttf') }}")format("truetype"),
+        /* src: url("{{ asset('fonts/Tajawal/Tajawal-Regular.ttf') }}")format("truetype"), */
     }
 
     body,
@@ -56,20 +56,6 @@
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
     @include('components.navbar')
     <main class="bg-gray">
-        {{-- @if ($errors)
-            <ul>
-
-                @foreach ($errors as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-
-        @endif
-
-        {{ Session::get('error') }}
-        {{ Session::get('success') }}
-        {{ Session::get('info') }}
-        {{ Session::get('warning') }} --}}
         @yield('main')
     </main>
     @include('components.footer')
@@ -78,45 +64,25 @@
     <script src="{{ asset('js/swiper.min.js') }}"></script> <!-- Swiper for image and text sliders -->
     <script src="{{ asset('js/scripts.js') }}"></script> <!-- Custom scripts -->
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            'timeOut': 3000,
+        }
         @if (Session::has('error'))
-            {
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true,
-                    'timeOut': 3000,
-                }
 
-                toastr.error("{{ Session::get('error') }}");
-            }
-        @elseif (Session::has('success')) {
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true,
-                    'timeOut': 3000,
-                }
+            toastr.error("{{ Session::get('error') }}");
+        @elseif (Session::has('success'))
 
-                toastr.success("{{ Session::get('success') }}");
-            }
-        @elseif (Session::has('info')) {
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true,
-                    'timeOut': 3000,
-                }
+            toastr.success("{{ Session::get('success') }}");
+        @elseif (Session::has('info'))
 
-                toastr.info("{{ Session::get('info') }}");
-            }
-        @elseif (Session::has('wrning')) {
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true,
-                    'timeOut': 3000,
-                }
+            toastr.info("{{ Session::get('info') }}");
+        @elseif (Session::has('wrning'))
 
-                toastr.warning("{{ Session::get('warning') }}");
-            }
+            toastr.warning("{{ Session::get('warning') }}");
         @endif
     </script>
     @yield('script')

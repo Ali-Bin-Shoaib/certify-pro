@@ -3,22 +3,38 @@
 @section('main')
     <div class="container py-5">
         <h1 class="text-decoration-underline text-center">إضافة مشارك</h1>
-        <form method="POST" action="{{ route('participants.store') }}" class="container w-75 shadow-sm my-5 p-5 form-bg ">
+        <form method="POST" action="{{ route('participants.store', ['programId' => $program->id]) }}"
+            class="container w-75 shadow-sm my-5 p-5 form-bg ">
             @csrf
-            {{-- @method('POST') --}}
-            <h4 class="text-decoration-underline">إضافة مشارك </h4>
-            <div class="row g-3 my-3">
 
-                <label class="col-md-2 form-label" for="program_id" required>الدورة</label>
-                <div class="col-md-10">
-                    <select class="form-select" name="program_id" id="program_id">
+            <div class="container form-bg row  py-3 shadow-sm">
+                #{{ $program->id }}
+                <h4 class="text-decoration-underline">معلومات الدورة </h4>
 
-                        @foreach ($programs as $program)
-                            <option value="{{ $program->id }}">{{ $program->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <h5 class=" col-md-3">تمت الإضافة بواسطة: </h5>
+                <b class="col-md-7 fs-4">{{ $program->member->user->name ?? '' }}</b>
+                <h5 class=" col-md-3">التصنيف: </h5>
+                <b class="col-md-7 fs-4">{{ $program->category->title }}</b>
+
+                <h5 class=" col-md-3">العنوان: </h5>
+                <b class="col-md-7 fs-4">{{ $program->title }}</b>
+
+                <h5 class=" col-md-3">الموقع: </h5>
+                <b class="col-md-7 fs-4">{{ $program->location }}</b>
+
+                <h5 class=" col-md-3">عدد المشاركين: </h5>
+                <b class="col-md-7 fs-4">{{ $program->participants->count() }}</b>
+
+                <h5 class=" col-md-3">تاريخ بداية الدورة: </h5>
+                <b class="col-md-7 fs-4">{{ date('Y-m-dD', strtotime($program->start_date)) }}</b>
+
+                <h5 class=" col-md-3">تاريخ نهاية الدورة: </h5>
+                <b class="col-md-7 fs-4">{{ date('Y-m-dD', strtotime($program->end_date)) }}</b>
+
             </div>
+            <hr class="my-3">
+            <h4 class="text-decoration-underline">معلومات المشارك </h4>
+
             <div class="row g-3 my-3">
 
                 <label class="col-md-2 form-label" for="name">الإسم</label>
@@ -46,8 +62,8 @@
                 <label class="col-md-2 form-label" for="gender">الجنس</label>
                 <div class=" col-md-10">
                     <select name="gender" id="gender" class="form-select">
-                        <option value="ذكر">ذكر</option>
                         <option value="أنثى">أنثى</option>
+                        <option value="ذكر">ذكر</option>
                     </select>
 
                 </div>
@@ -57,30 +73,19 @@
                 <div class="col-md-3"></div>
                 <button class="col-md-6 btn-solid-sm" type="submit">إضافة مشارك</button>
             </div>
+            @if ($errors)
+                <ul class="mt-2">
+
+                    @foreach ($errors->all() as $error)
+                        <li class="text-danger">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
+
         </form>
     </div>
 
 @endsection
 @section('script')
-    <script>
-        (() => {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
 
 @endsection

@@ -33,4 +33,8 @@ class Program extends Model
     {
         return $this->belongsToMany(Participant::class, 'program_participants', 'program_id', 'participant_id');
     }
+    public function trainers(): BelongsToMany
+    {
+        return $this->belongsToMany(Trainer::class, 'program_participants', 'program_id', 'trainer_id');
+    }
 }

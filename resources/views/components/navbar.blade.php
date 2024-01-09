@@ -23,7 +23,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <div class="navbar-collapse offcanvas-collapse fs-6" id="navbarsExampleDefault">
             <ul class="navbar-nav ms-auto navbar-nav-scroll">
                 {{-- <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('home') }}">الصفحة الرئيسية</a>
@@ -51,24 +51,12 @@
                         </li>
                     @endif
                 @endauth
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('verifiy') }}">التحقق من الشهادة</a>
-                </li> --}}
 
-                {{-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Drop</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                            <li><a class="dropdown-item" href="article.html">Article Details</a></li>
-                            <li><div class="dropdown-divider"></div></li>
-                            <li><a class="dropdown-item" href="terms.html">Terms Conditions</a></li>
-                            <li><div class="dropdown-divider"></div></li>
-                            <li><a class="dropdown-item" href="privacy.html">Privacy Policy</a></li>
-                        </ul>
-                    </li> --}}
             </ul>
             @auth
 
-                <div class="nav-item ms-3 py-1">
+                {{-- <div class="nav-item ms-3 py-1"> --}}
+                <div class="d-flex flex-column gap-3 pe-2">
                     <div>نوع الحساب: {{ Auth::user()->role }}</div>
                     <div><b>الاسم: {{ Auth::user()->name }}</b></div>
                 </div>

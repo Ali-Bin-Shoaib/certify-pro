@@ -13,6 +13,9 @@ class ProgramTrainerSeeder extends Seeder
      */
     public function run(): void
     {
-        ProgramTrainer::factory()->count(20)->create(); 
+        try {
+            ProgramTrainer::factory()->count(20)->create();
+        } catch (\Throwable $th) {
+        }
     }
 }

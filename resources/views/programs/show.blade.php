@@ -38,6 +38,29 @@
             </div>
 
         </div>
+        <hr class="my-3">
+
+        <h1 class="text-decoration-underline text-center ">معلومات المشاركين في الدورة</h1>
+        <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
+            <thead class="table-secondary ">
+                <th>#</th>
+                <th>الاسم</th>
+                <th>البريد الإلكتروني</th>
+                <th>الجوال</th>
+                <th>الجنس</th>
+            </thead>
+            <tbody class="table-group-divider">
+                @foreach ($program->participants as $participant)
+                    <tr>
+                        <td>{{$participant->id}}</td>
+                        <td>{{ $participant->name }}</td>
+                        <td>{{ $participant->email }}</td>
+                        <td>{{ $participant->phone }}</td>
+                        <td>{{ $participant->gender }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         {{-- <div class="text-center mt-3">
 
             <a class="btn-solid-lg " href="{{ route('participants.create') }}">إضافة مشاركين للدورة؟</a>

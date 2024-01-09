@@ -29,20 +29,19 @@ Colors:
 - Body text - dark gray #5e6576
 ******************************************/
 
-
 /**************************/
 /*     General Styles     */
 /**************************/
 body,
 html {
-    width: 100%;
+	width: 100%;
 	height: 100%;
-	box-sizing: border-box;
 }
 
-body, p {
-	color: #5e6576; 
-	/* font: 400 1rem/1.625rem "Open Sans", sans-serif; */
+body,
+p {
+	color: #5e6576;
+	font: 400 1rem/1.625rem 'Tajawal', sans-serif;
 }
 
 h1 {
@@ -336,7 +335,6 @@ a:hover {
 	color: #0092ff;
 }
 
-
 /**********************/
 /*     Navigation     */
 /**********************/
@@ -354,7 +352,7 @@ a:hover {
 }
 
 .navbar .logo-image img {
-    width: 126px;
+	width: 126px;
 	height: 32px;
 }
 
@@ -377,9 +375,9 @@ a:hover {
 	overflow-y: auto;
 	visibility: hidden;
 	background-color: #fcfafb;
-	transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
-	transition: transform .3s ease-in-out, visibility .3s ease-in-out;
-	transition: transform .3s ease-in-out, visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+	transition: visibility 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+	transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+	transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
 }
 
 .offcanvas-collapse.open {
@@ -408,17 +406,18 @@ a:hover {
 }
 
 /* Dropdown Menu */
-.navbar .dropdown .dropdown-menu {
-	animation: fadeDropdown 0.2s; /* required for the fade animation */
+.navbar .dropdown .dropdown-menu,
+.dropdown-menu {
+	animation: fadeDropdown 0.3s; /* required for the fade animation */
 }
 
 @keyframes fadeDropdown {
-    0% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 0;
+	}
 
-    100% {
-        opacity: 1;
+	100% {
+		opacity: 1;
 	}
 }
 
@@ -459,7 +458,6 @@ a:hover {
 	font-size: 1.25rem;
 }
 
-
 /******************/
 /*     Header     */
 /******************/
@@ -482,7 +480,6 @@ a:hover {
 .header .image-container {
 	margin-top: 5rem;
 }
-
 
 /********************/
 /*     Services     */
@@ -556,7 +553,6 @@ a:hover {
 	color: #223150;
 }
 
-
 /*********************/
 /*     Details 1     */
 /*********************/
@@ -577,7 +573,6 @@ a:hover {
 .basic-1 p {
 	margin-bottom: 2rem;
 }
-
 
 /*********************/
 /*     Details 2     */
@@ -600,7 +595,6 @@ a:hover {
 .basic-2 p {
 	margin-bottom: 2rem;
 }
-
 
 /********************/
 /*     Features     */
@@ -696,7 +690,6 @@ a:hover {
 	color: #ffffff;
 }
 
-
 /************************/
 /*     Testimonials     */
 /************************/
@@ -763,7 +756,6 @@ a:hover {
 	background: linear-gradient(to right, #637eff, #16c66d);
 }
 
-
 /********************/
 /*    Customers     */
 /********************/
@@ -786,7 +778,6 @@ a:hover {
 	margin-bottom: 0.5rem;
 	padding: 1rem 0;
 }
-
 
 /**********************/
 /*     Invitation     */
@@ -825,7 +816,6 @@ a:hover {
 	color: #ffffff;
 }
 
-
 /*******************/
 /*     Contact     */
 /*******************/
@@ -855,13 +845,12 @@ a:hover {
 	margin-left: 0.5rem;
 }
 
-
 /******************/
 /*     Footer     */
 /******************/
 .footer {
-	position: relative;
-	padding-top: 5rem;
+	/* position: relative; */
+	padding-top: 10rem;
 	padding-bottom: 5rem;
 	text-align: center;
 }
@@ -872,7 +861,7 @@ a:hover {
 	left: -60px;
 }
 
-.footer div[class*="col"] {  
+.footer div[class*='col'] {
 	/* selects all elements which have classes starting with col */
 	/* needed so that the absolute positioned decoration stays behind */
 	position: relative;
@@ -895,7 +884,7 @@ a:hover {
 }
 
 .footer .fa-stack .fa-stack-1x {
-    color: #0092ff;
+	color: #0092ff;
 	transition: all 0.2s ease;
 }
 
@@ -909,9 +898,8 @@ a:hover {
 }
 
 .footer .fa-stack:hover .fa-stack-2x {
-    color: #0092ff;
+	color: #0092ff;
 }
-
 
 /*********************/
 /*     Copyright     */
@@ -931,23 +919,22 @@ a:hover {
 	opacity: 0.7;
 }
 
-
 /******************************/
 /*     Back To Top Button     */
 /******************************/
 #myBtn {
-	position: fixed; 
-  	z-index: 99; 
-	bottom: 20px; 
-	right: 20px; 
-	display: none; 
+	position: fixed;
+	z-index: 99;
+	bottom: 20px;
+	right: 20px;
+	display: none;
 	width: 52px;
 	height: 52px;
-	border: none; 
-	border-radius: 50%; 
-	outline: none; 
-	background-color: #44434a; 
-	cursor: pointer; 
+	border: none;
+	border-radius: 50%;
+	outline: none;
+	background-color: #44434a;
+	cursor: pointer;
 }
 
 #myBtn:hover {
@@ -958,7 +945,6 @@ a:hover {
 	margin-bottom: 0.25rem;
 	width: 18px;
 }
-
 
 /***********************/
 /*     Extra Pages     */
@@ -1013,13 +999,11 @@ a:hover {
 	margin-bottom: 0.5rem;
 }
 
-
 /*************************/
 /*     Media Queries     */
-/*************************/	
+/*************************/
 /* Min-width 768px */
 @media (min-width: 768px) {
-
 	/* Header */
 	.header {
 		padding-top: 5rem;
@@ -1032,7 +1016,6 @@ a:hover {
 	}
 	/* end of header */
 
-
 	/* Statistics */
 	.counter .counter-cell {
 		display: inline-block;
@@ -1042,7 +1025,6 @@ a:hover {
 	}
 	/* end of statistics */
 
-
 	/* Extra Pages */
 	.ex-basic-1 .text-box {
 		padding: 1.75rem 2rem 0.875rem 2rem;
@@ -1051,10 +1033,8 @@ a:hover {
 }
 /* end of min-width 768px */
 
-
 /* Min-width 992px */
 @media (min-width: 992px) {
-	
 	/* General Styles */
 	.h2-heading {
 		width: 35.25rem;
@@ -1068,7 +1048,6 @@ a:hover {
 		margin-left: auto;
 	}
 	/* end of general styles */
-
 
 	/* Navigation */
 	.navbar {
@@ -1107,7 +1086,7 @@ a:hover {
 		margin-top: 0;
 		margin-bottom: 0;
 	}
-	
+
 	.navbar .nav-item .nav-link {
 		padding-right: 0.75rem;
 		padding-left: 0.75rem;
@@ -1129,7 +1108,6 @@ a:hover {
 	}
 	/* end of navigation */
 
-
 	/* Header */
 	.header {
 		text-align: right;
@@ -1148,12 +1126,11 @@ a:hover {
 		margin-right: 0;
 		margin-left: 0;
 	}
-	
+
 	.header .btn-solid-lg {
 		margin-right: 0.5rem;
 	}
 	/* end of header */
-
 
 	/* Services */
 	.cards-1 .card {
@@ -1161,13 +1138,12 @@ a:hover {
 		width: 286px;
 		vertical-align: top;
 	}
-	
-	.cards-1 .card:nth-of-type(3n+2) {
+
+	.cards-1 .card:nth-of-type(3n + 2) {
 		margin-right: 2rem;
 		margin-left: 2rem;
 	}
 	/* end of services */
-
 
 	/* Details 1 */
 	.basic-1 .image-container {
@@ -1178,8 +1154,7 @@ a:hover {
 		margin-top: 2rem;
 	}
 	/* end of details 1 */
-	
-	
+
 	/* Details 2 */
 	.basic-2 .text-container {
 		margin-top: 3rem;
@@ -1187,20 +1162,18 @@ a:hover {
 	}
 	/* end of details 2 */
 
-
 	/* Testimonials */
 	.cards-2 .card {
 		display: inline-block;
 		width: 298px;
 		vertical-align: top;
 	}
-	
-	.cards-2 .card:nth-of-type(3n+2) {
+
+	.cards-2 .card:nth-of-type(3n + 2) {
 		margin-right: 1rem;
 		margin-left: 1rem;
 	}
 	/* end of testimonials */
-
 
 	/* Invitation */
 	.basic-3 .text-container {
@@ -1221,7 +1194,6 @@ a:hover {
 	}
 	/* end of invitation */
 
-
 	/* Footer */
 	.footer h4 {
 		width: 46rem;
@@ -1229,7 +1201,6 @@ a:hover {
 		margin-left: auto;
 	}
 	/* end of footer */
-
 
 	/* Copyright */
 	.copyright {
@@ -1246,7 +1217,6 @@ a:hover {
 	}
 	/* end of copyright */
 
-
 	/* Extra Pages */
 	.ex-cards-1 .card {
 		display: inline-block;
@@ -1254,7 +1224,7 @@ a:hover {
 		vertical-align: top;
 	}
 
-	.ex-cards-1 .card:nth-of-type(3n+2) {
+	.ex-cards-1 .card:nth-of-type(3n + 2) {
 		margin-right: 1rem;
 		margin-left: 1rem;
 	}
@@ -1262,16 +1232,13 @@ a:hover {
 }
 /* end of min-width 992px */
 
-
 /* Min-width 1200px */
 @media (min-width: 1200px) {
-	
 	/* General Styles */
 	.container {
 		max-width: 1140px;
 	}
 	/* end of general styles */
-	
 
 	/* Header */
 	.header {
@@ -1287,7 +1254,7 @@ a:hover {
 	.header .image-container {
 		position: relative;
 	}
-	
+
 	.header .image-container img {
 		position: absolute;
 		bottom: -520px;
@@ -1296,18 +1263,16 @@ a:hover {
 	}
 	/* end of header */
 
-
 	/* Services */
 	.cards-1 .card {
 		width: 310px;
 	}
-	
-	.cards-1 .card:nth-of-type(3n+2) {
+
+	.cards-1 .card:nth-of-type(3n + 2) {
 		margin-right: 5.5rem;
 		margin-left: 5.5rem;
 	}
 	/* end of services */
-
 
 	/* Details 1 */
 	.basic-1 .text-container {
@@ -1315,7 +1280,6 @@ a:hover {
 		margin-left: 2.75rem;
 	}
 	/* end of details 1 */
-
 
 	/* Details 2 */
 	.basic-2 .text-container {
@@ -1328,7 +1292,6 @@ a:hover {
 	}
 	/* end of details 2 */
 
-
 	/* Features */
 	.accordion-1 .accordion {
 		margin-bottom: 0;
@@ -1339,18 +1302,16 @@ a:hover {
 	}
 	/* end of features */
 
-
 	/* Testimonials */
 	.cards-2 .card {
 		width: 356px;
 	}
-	
-	.cards-2 .card:nth-of-type(3n+2) {
+
+	.cards-2 .card:nth-of-type(3n + 2) {
 		margin-right: 1.125rem;
 		margin-left: 1.125rem;
 	}
 	/* end of testimonials */
-
 
 	/* Invitation */
 	.basic-3 .text-container {
@@ -1359,18 +1320,16 @@ a:hover {
 	}
 	/* end of invitation */
 
-
 	/* Contact */
 	.form-1 .text-container {
 		margin-top: 1.5rem;
 		margin-right: 2.75rem;
 	}
-	
+
 	.form-1 form {
 		margin-left: 2.75rem;
 	}
 	/* end of contact */
-
 
 	/* Footer */
 	.footer .decoration-circles {
@@ -1378,13 +1337,12 @@ a:hover {
 	}
 	/* end of footer */
 
-
 	/* Extra Pages */
 	.ex-cards-1 .card {
 		width: 336px;
 	}
 
-	.ex-cards-1 .card:nth-of-type(3n+2) {
+	.ex-cards-1 .card:nth-of-type(3n + 2) {
 		margin-right: 2.875rem;
 		margin-left: 2.875rem;
 	}

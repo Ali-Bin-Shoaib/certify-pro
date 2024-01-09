@@ -40,17 +40,21 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'category_id' => 'required',
-            'location' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ]);
-        $newProgram = $request->all();
-        $newProgram['member_id'] = Auth::user()->id ?? Member::findFirst()->id;
-        Program::create($newProgram);
-        return redirect()->route('programs.index')->with('success', 'program is created successfully');
+        try {
+            $this->validate($request, [
+                'title' => 'required',
+                'category_id' => 'required',
+                'location' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+            ]);
+            $newProgram = $request->all();
+            $newProgram['member_id'] = Auth::user()->member->id;
+            Program::create($newProgram);
+            return redirect()->route('programs.index')->with('success', 'program is created successfully');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
     }
 
     /**
@@ -59,7 +63,13 @@ class ProgramController extends Controller
     public function show(string $id)
     {
         //
+        // $program = Program::join('members', 'member_id', 'members.id')
+        //     ->where('organization_id', Auth::user()->member->organization_id)
+        //     ->where('programs.id', $id)->with('participants')->first(); //->get('programs.*');
         $program = Program::find($id);
+        // dd($program->participants);
+        if (!$program)
+            return back()->with('error', 'الدورة غير موجودة.');
         return view('programs.show', compact('program'));
     }
 
