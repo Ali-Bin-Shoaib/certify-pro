@@ -37,4 +37,7 @@ class Program extends Model
     {
         return $this->belongsToMany(Trainer::class, 'program_participants', 'program_id', 'trainer_id');
     }
+    public function programParticipants(): HasMany{
+        return $this->hasMany(ProgramParticipant::class,'','');
+    }
 }

@@ -76,7 +76,11 @@ class ParticipantController extends Controller
 
             $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
             // dd($participant);
-            $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
+            try {
+                $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
+            } catch (\Throwable $th) {
+                return back()->with('error', 'خطأ. المشارك مضاف مسبقا لهذه الدورة.');
+            }
             // $program->participants()->attach($participant);
             // dd($participant);
             return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');

@@ -1,9 +1,8 @@
 @extends('layouts.master')
 @section('title', 'إضافة دورة')
 @section('main')
-    <div class="container mt-5 py-5">
+    <div class="container mt-5 py-5 ">
         <h1 class="text-decoration-underline text-center ">معلومات الدورة</h1>
-
         <div class="container form-bg row  py-5 shadow-sm">
 
             <h5 class=" col-md-3">تمت الإضافة بواسطة: </h5>
@@ -38,10 +37,21 @@
             </div>
 
         </div>
+
         <hr class="my-3">
 
-        <h1 class="text-decoration-underline text-center ">معلومات المشاركين في الدورة</h1>
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
+            <tfoot>
+                <h1 class="text-decoration-underline text-center ">معلومات المشاركين في الدورة</h1>
+                <a class=" btn  btn-secondary
+             {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
+                    title="إصدار الشهادات" href="{{ route('previewCertificate', ['programId' => $program->id]) }}"><i
+                        class="fa fa-print"></i> إصدار
+                    الشهادات</a>
+
+            </tfoot>
+
+
             <thead class="table-secondary ">
                 <th>#</th>
                 <th>الاسم</th>
@@ -52,7 +62,7 @@
             <tbody class="table-group-divider">
                 @foreach ($program->participants as $participant)
                     <tr>
-                        <td>{{$participant->id}}</td>
+                        <td>{{ $participant->id }}</td>
                         <td>{{ $participant->name }}</td>
                         <td>{{ $participant->email }}</td>
                         <td>{{ $participant->phone }}</td>
@@ -61,10 +71,7 @@
                 @endforeach
             </tbody>
         </table>
-        {{-- <div class="text-center mt-3">
 
-            <a class="btn-solid-lg " href="{{ route('participants.create') }}">إضافة مشاركين للدورة؟</a>
-        </div> --}}
 
     </div>
 

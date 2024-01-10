@@ -46,9 +46,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
-                        </li>
+                        </li> --}}
                     @endif
                 @endauth
 

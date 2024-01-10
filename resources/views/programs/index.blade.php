@@ -70,10 +70,10 @@
                                                 class="fa fa-print"></i>
                                             إضافة مشاركين
                                         </a></li>
-                                    <li> <a class="dropdown-item {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
+                                    {{-- <li> <a class="dropdown-item {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
                                             title="إصدار الشهادات" href=""><i class="fa fa-print"></i> إصدار
                                             الشهادات</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
 

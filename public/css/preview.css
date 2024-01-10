@@ -1,0 +1,88 @@
+body,
+body * {
+	font-family: 'Tajawal';
+	direction: rtl !important;
+	box-sizing: border-box;
+	/* margin: 0; */
+	text-align: center;
+}
+
+
+/* 
+* {
+	border: 1px solid red;
+} */
+
+
+.certificate-header {
+    padding-top: 5rem;
+	font-size: 3rem;
+	margin-bottom: 1rem;
+	text-decoration: underline;
+}
+
+.certificate-title {
+	font-size: 2.5rem;
+}
+
+.participant-name {
+	font-size: 4rem;
+	margin-top: 1rem;
+    color: black;
+}
+
+.certificate-static-text {
+	font-size: 2rem;
+	margin: auto;
+	margin-top: 1rem;
+	width: 80%;
+}
+
+.program-title {
+	text-decoration: underline;
+    color: black;
+}
+
+.table {
+	width: 100%;
+	margin-top: 3rem;
+	text-align: center;
+	vertical-align: bottom;
+}
+.table *{
+    background-color: rgba(99, 89, 89, 0) !important;
+    border:0px !important;
+
+}
+
+.stamp-td,
+.signature-td {
+	font-size: 2rem;
+}
+
+.stamp-td {
+	width: 40%;
+}
+
+.qr-td {
+	text-align: center;
+	width: 20%;
+	margin: auto;
+}
+
+.signature-td {
+	width: 40%;
+}
+
+.certificate-id {
+	margin-top: 10px;
+	font-size: 1.1rem;
+}
+
+.certificate-qr {
+	text-align: center;
+}
+
+.border-top-dashed {
+	border-top: 0.5px dashed #333;
+}

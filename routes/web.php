@@ -4,12 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ParticipantController;
-use App\Http\Controllers\PDFController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ProgramController;
-use App\Http\Controllers\ProgramParticipantController;
 use App\Http\Controllers\TrainerController;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\VarDumper\VarDumper;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +26,7 @@ Route::get('/', function () {
 
 Route::redirect('/index', '/');
 Route::redirect('/home', '/');
-Route::get('/verify', [PDFController::class, 'verify'])->name('verify');
+Route::get('/verify', [CertificateController::class, 'verify'])->name('verify');
 
 Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
@@ -41,20 +39,18 @@ Route::group(['middleware' => 'organization'], function () {
 
 Route::group(['middleware' => 'member'], function () {
     Route::resource('programs', ProgramController::class);
+
     Route::get('/participants/create/{programId?}', [ParticipantController::class, 'create'])->name('participants.create');
     Route::post('/participants/store/{programId}', [ParticipantController::class, 'store'])->name('participants.store');
     Route::resource('participants', ParticipantController::class)->except(['create', 'store']);
-    Route::resource('trainers', TrainerController::class);
-    Route::resource('categories', CategoryController::class)->except('show');
-    // Route::controller(ProgramParticipantController::class)->group(function () {
-    //     Route::get('/create/{programId}', 'create')->name('programParticipants.create');
-    //     Route::post('programParticipants/store', 'store')->name('programParticipants.store');
-    //     // Route::post('/orders', 'store');
-    // });
-    // Route::resource('programParticipants', ProgramParticipantController::class)->except('index');
 
-    Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('pdf');
-    Route::get('/preview', [PDFController::class, 'previewPdf'])->name('preview');
+    Route::resource('trainers', TrainerController::class);
+
+    Route::resource('categories', CategoryController::class)->except('show');
+
+    Route::get('/certificate/{programId}', [CertificateController::class, 'generateCertificate'])->name('generateCertificate');
+    Route::get('/certificate-preview/{programId}', [CertificateController::class, 'previewCertificate'])->name('previewCertificate');
+    Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verifyCertificate');
 });
 
 Route::group(['middleware' => 'auth'], function () {

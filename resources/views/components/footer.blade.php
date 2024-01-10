@@ -4,7 +4,7 @@
 
 <!-- Footer -->
 <div class="footer bg-gray border-top">
-    <img class="decoration-circles d-none d-md-block" src="{{ asset('images/decoration-circles.png') }}" alt="alternative">
+    {{-- <img class="decoration-circles d-none d-md-block" src="{{ asset('images/decoration-circles.png') }}" alt="alternative"> --}}
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -65,12 +65,12 @@
             </div> <!-- end of col -->
             <div class="col-lg-3 col-md-12 col-sm-12">
                 <p class="p-small statement">جميع الحقوق محفوظة © <a href="https://github.com/ali-bin-shoaib"
-                        class="text-black fw-bold" rel="external" target="_blank">علي بن
-                        شعيب</a></p>
+                        class="text-black fw-bold fs-6" rel="external" target="_blank">Certify Pro</a></p>
             </div> <!-- end of col -->
 
             <div class="col-lg-3 col-md-12 col-sm-12">
-                {{-- <p class="p-small statement">Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p> --}}
+                <p class="p-small statement"> <a class="fw-bold fs-6 text-black" href="https://github.com/ali-bin-shoaib"
+                        target="_blank"> علي بن شعيب</a>Developed by  </p>
             </div> <!-- end of col -->
         </div> <!-- enf of row -->
     </div> <!-- end of container -->
