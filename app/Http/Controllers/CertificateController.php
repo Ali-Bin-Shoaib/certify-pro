@@ -39,7 +39,7 @@ class CertificateController extends Controller
         $url = "http://127.0.0.1:8000/verify/";
         $certificateId = uniqid();
         $qrCode = $this->generateQr($url, $certificateId);
-        return view("pdf.preview", compact(["qrCode", "certificateId", "program","organization"]));
+        return view("pdf.preview", compact(["qrCode", "certificateId", "program", "organization"]));
     }
     public function generateQr(string $url, string $certificateId)
     {
@@ -54,8 +54,11 @@ class CertificateController extends Controller
 
         return $generatedQrCode;
     }
-    public function verifyCertificate(string $certificateId)
+    public function verifyCertificate(string $certificateId = null)
     {
-        return 'verify';
+        if ($certificateId != null) {
+            
+        }
+        return view("certificate.verify");
     }
 }

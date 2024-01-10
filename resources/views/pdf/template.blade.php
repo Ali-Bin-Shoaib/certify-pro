@@ -50,7 +50,7 @@
         font-size: 2rem;
         margin: auto;
         margin-top: 1rem;
-        width: 80%;
+        width: 85%;
     }
 
     .program-title {
@@ -84,6 +84,9 @@
 
     .signature-td {
         width: 40%;
+        background-repeat: no-repeat;
+        background-position: 50% 100%;
+
     }
 
     /* .signature-img{
@@ -113,29 +116,39 @@ display: block;
         </h1>
         <div class="certificate-title">تشهد {{ $organization->user->name }} بأنّ</div>
         <div class="participant-name">{{ $program->participants[3]->name }}</div>
-        <div class="certificate-static-text">
+        <div class="certificate-static-text ">
             قد شارك في الدورة التدريبية <span class="program-title">{{ $program->title }}</span> في الفترة من<br>
             {{ date('d-m-Y ', strtotime($program->start_date)) }} إلى
-            {{ date('d-m-Y', strtotime($program->end_date)) }} المقامة في
+            {{ date('d-m-Y', strtotime($program->end_date)) }} المقامة في {{ $program->location }}
         </div>
         <table class="table">
             <tr style="text-align: ">
-                <td class="stamp-td"><small class="border-top-dashed">الختم</small></td>
+                <td class="stamp-td">
+                    {{-- <small class="border-top-dashed">الختم</small> --}}
+                </td>
                 <td>
                     <div class="certificate-qr">
                         {!! $qrCode !!}
                     </div>
-                    <small class="certificate-id">
+                    {{-- <small class="certificate-id">
                         {{ $certificateId }}
-                    </small>
+                    </small> --}}
 
                 </td>
-                <td class="signature-td"
-                    style="background-image: url('{{ public_path('images/s1.png') }}')"
-                    >
-                    {{-- <img src="{{public_path('images/s1.png')}}" class="signature-img" width="100" height="100" alt=""> --}}
-
-                    <small style="" class="border-top-dashed">التوقيع</small></td>
+                <td class="signature-td " style="
+background-image: url('{{ public_path('images/s1.png') }}');
+">
+                    {{-- <div
+                        style="
+                        background-image: url('{{ public_path('images/s1.png') }}');
+                        background-repeat:no-repeat;
+                        height:103px;
+                        width:75%;
+                        ">
+                    </div> --}}
+                    <small class="border-top-dashed">
+                        التوقيع</small>
+                </td>
             </tr>
         </table>
 

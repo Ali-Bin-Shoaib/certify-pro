@@ -8,7 +8,7 @@ body * {
 }
 
 
-/* 
+/*
 * {
 	border: 1px solid red;
 } */
@@ -50,8 +50,8 @@ body * {
 	vertical-align: bottom;
 }
 .table *{
-    background-color: rgba(99, 89, 89, 0) !important;
-    border:0px !important;
+    /* background-color: rgba(99, 89, 89, 0) !important; */
+    border-bottom:0px !important;
 
 }
 

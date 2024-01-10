@@ -15,7 +15,8 @@ class Participant extends Model
     ];
     public function programs(): BelongsToMany
     {
-        return $this->belongsToMany(Program::class, 'program_participants', 'program_id', 'participant_id');
+        return $this->belongsToMany(Program::class, ProgramParticipant::class, 'program_id', 'participant_id')
+            ->withPivot(['certificate_id', 'created_by']);
     }
     public function member(): BelongsTo
     {

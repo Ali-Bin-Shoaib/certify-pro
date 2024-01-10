@@ -71,12 +71,22 @@
                     <div class="certificate-qr">
                         {!! $qrCode !!}
                     </div>
-                    <small class="certificate-id">
+                    {{-- <small class="certificate-id">
                         {{ $certificateId }}
-                    </small>
+                    </small> --}}
 
                 </td>
-                <td class="signature-td"><small class="border-top-dashed">التوقيع</small></td>
+                <td class="signature-td " style="position: relative;">
+                    <div
+                        style="
+                        background-image: url('{{ asset('images/s1.png') }}');
+                        position:absolute;top:15px;
+                        background-repeat:no-repeat;height:103px;width:75%
+                        ">
+                    </div>
+                    <small class="border-top-dashed">
+                        التوقيع</small>
+                </td>
             </tr>
         </table>
 

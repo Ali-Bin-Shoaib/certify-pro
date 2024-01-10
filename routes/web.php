@@ -26,12 +26,13 @@ Route::get('/', function () {
 
 Route::redirect('/index', '/');
 Route::redirect('/home', '/');
-Route::get('/verify', [CertificateController::class, 'verify'])->name('verify');
+// Route::get('/verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verify');
+Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verifyCertificate');
 
 Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
-Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'organization'], function () {
     Route::resource('members', MemberController::class);
@@ -50,7 +51,7 @@ Route::group(['middleware' => 'member'], function () {
 
     Route::get('/certificate/{programId}', [CertificateController::class, 'generateCertificate'])->name('generateCertificate');
     Route::get('/certificate-preview/{programId}', [CertificateController::class, 'previewCertificate'])->name('previewCertificate');
-    Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verifyCertificate');
+    // Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verifyCertificate');
 });
 
 Route::group(['middleware' => 'auth'], function () {

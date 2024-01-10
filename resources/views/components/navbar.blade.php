@@ -1,4 +1,5 @@
-<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm" aria-label="Main navigation">
+<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm"
+    aria-label="Main navigation">
     <div class="container-fluid w-75">
         <!-- Image Logo -->
 
@@ -46,12 +47,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
                         </li>
+
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
                         </li> --}}
                     @endif
                 @endauth
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('verifyCertificate') }}">تحقّق من شهادة</a>
+                </li>
             </ul>
             @auth
 
