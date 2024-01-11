@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->foreignId('member_id')->nullable()->constrained('members')->nullOnDelete();
             $table->timestamps();
+
+            $table->unique(['title', 'member_id']);
         });
     }
 

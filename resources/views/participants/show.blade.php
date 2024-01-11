@@ -54,9 +54,9 @@
                 <th>تاريخ النهاية</th>
             </thead>
             <tbody class="table-group-divider">
-                @foreach ($participant->programs as $key => $program)
+                @foreach ($participant->programs as $program)
                     <tr>
-                        <td>{{ ++$key }}</td>
+                        <td>{{ $program->id }}</td>
                         <td>{{ $program->title }}</td>
                         <td>{{ $program->location }}</td>
 

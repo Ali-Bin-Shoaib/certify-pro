@@ -27,7 +27,7 @@ Route::get('/', function () {
 Route::redirect('/index', '/');
 Route::redirect('/home', '/');
 // Route::get('/verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verify');
-Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verifyCertificate');
+Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('verifyCertificate');
 
 Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signup', [AuthController::class, 'signup']);
@@ -42,16 +42,16 @@ Route::group(['middleware' => 'member'], function () {
     Route::resource('programs', ProgramController::class);
 
     Route::get('/participants/create/{programId?}', [ParticipantController::class, 'create'])->name('participants.create');
-    Route::post('/participants/store/{programId}', [ParticipantController::class, 'store'])->name('participants.store');
+    Route::post('/participants/store/{programId?}', [ParticipantController::class, 'store'])->name('participants.store');
     Route::resource('participants', ParticipantController::class)->except(['create', 'store']);
 
     Route::resource('trainers', TrainerController::class);
 
     Route::resource('categories', CategoryController::class)->except('show');
 
-    Route::get('/certificate/{programId}', [CertificateController::class, 'generateCertificate'])->name('generateCertificate');
-    Route::get('/certificate-preview/{programId}', [CertificateController::class, 'previewCertificate'])->name('previewCertificate');
-    // Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'verifyCertificate'])->name('verifyCertificate');
+    Route::get('/certificate/{programId}/{participantId}', [CertificateController::class, 'certificateGenerate'])->name('certificateGenerate');
+    Route::get('/certificate-preview/{programId}/{participantId}', [CertificateController::class, 'certificatePreview'])->name('certificatePreview');
+    Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('certificateVerify');
 });
 
 Route::group(['middleware' => 'auth'], function () {

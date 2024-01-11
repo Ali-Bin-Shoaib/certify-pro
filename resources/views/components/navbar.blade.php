@@ -54,7 +54,7 @@
                     @endif
                 @endauth
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('verifyCertificate') }}">تحقّق من شهادة</a>
+                    <a class="nav-link" href="{{ route('certificateVerify') }}">تحقّق من شهادة</a>
                 </li>
             </ul>
             @auth

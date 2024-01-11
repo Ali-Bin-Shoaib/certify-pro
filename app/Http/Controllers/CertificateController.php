@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\Participant;
 use App\Models\Program;
+use App\Models\ProgramParticipant;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\Rules\Unique;
 use Mpdf\Mpdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -13,35 +17,58 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CertificateController extends Controller
 {
-    public function generateCertificate(string $programId)
+    public function certificateGenerate(Request $request, string $programId, string $participantId)
     {
         $program = Program::find($programId);
         $organization = Organization::find(Auth::user()->member->organization_id);
-        if (!$program || !$organization)
+        $participant = Participant::find($participantId);
+        if (!$program || !$organization || !$participant)
             return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
         $document = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
         ]);
-        $url = "http://127.0.0.1:8000/verify/";
-        $certificateId = uniqid();
-        $qrCode = $this->generateQr($url, $certificateId);
-        $document->WriteHTML(view('pdf.template', compact(['program', 'organization', 'qrCode', 'certificateId'])));
+        $url = "http://127.0.0.1:8000/certificate-verify/";
+        try {
+            $certificate = ProgramParticipant::where("program_id", $programId)
+                ->where('participant_id', $participantId)
+                ->first();
+            // dd($certificateId);
+            if ($certificate->certificate_id !== null) {
+                $certificate->update(['updated_at' => now()]);
+                // $request->session()->put('success', 'تم إصدار الشهادة مرة أخرى');
+            } else {
+                $certificate->update([
+                    'certificate_id' => uniqid('', true),
+                    'created_by' => Auth::user()->member->id,
+                    'created_at' => now(),
+                ]);
+                // $request->session()->put('success', 'تم إنشاء الشهادة بنجاح');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error', $th->getMessage());
+        }
+        $qrCode = $this->qrGenerate($url, $certificate->certificate_id);
+        $document->WriteHTML(view('certificates.template', compact(
+            ['program', 'organization', 'qrCode', 'participantId']
+        )));
         return $document->Output();
     }
-    public function previewCertificate(string $programId)
+    public function certificatePreview(string $programId, string $participantId)
     {
         $program = Program::find($programId);
         $organization = Organization::find(Auth::user()->member->organization_id);
-        if (!$program || !$organization)
-            return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
+        $participant = Participant::find($participantId);
 
+        if (!$program || !$organization || !$participant)
+            return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
         $url = "http://127.0.0.1:8000/verify/";
         $certificateId = uniqid();
-        $qrCode = $this->generateQr($url, $certificateId);
-        return view("pdf.preview", compact(["qrCode", "certificateId", "program", "organization"]));
+        $qrCode = $this->qrGenerate($url, $certificateId);
+        return view("certificates.preview", compact(["qrCode", "program", "organization", 'participantId']));
     }
-    public function generateQr(string $url, string $certificateId)
+    public function qrGenerate(string $url, string $certificateId)
     {
         $qrValue = $url . $certificateId;
         // QrCode::format('png');
@@ -51,14 +78,30 @@ class CertificateController extends Controller
             "<xml version=\"1.0\" encoding=\"UTF-8\">",
             $generatedQrCode
         );
-
         return $generatedQrCode;
     }
-    public function verifyCertificate(string $certificateId = null)
+    public function certificateVerify(Request $request, string $certificateId = null)
     {
-        if ($certificateId != null) {
-            
-        }
-        return view("certificate.verify");
+        if ($certificateId === null)
+            if ($request->input("certificate_id") === null)
+                return view("certificates.verify");
+            else
+                try {
+                    $certificateId = $request->validate(["certificate_id" => 'required|string']);
+                    $certificate = ProgramParticipant::where('certificate_id', $certificateId)->first();
+                    // dd($certificate);
+                    $participant = Participant::find($certificate->participant->id);
+                    $program = Program::find($certificate->program->id);
+                    if ($certificate && $program && $program)
+                        return view('certificates.certified', compact(['program', 'participant', 'certificate']));
+                    else
+                        return view('certificates.uncertified');
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    return view('certificates.uncertified');
+
+                    // return redirect()->back()->with('error', $th->getMessage());
+                    // return redirect()->back()->with('error', 'error : ' . $th->getMessage());
+                }
     }
 }

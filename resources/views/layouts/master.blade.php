@@ -74,15 +74,19 @@
         @if (Session::has('error'))
 
             toastr.error("{{ Session::get('error') }}");
+            {{ session()->forget('error') }}
         @elseif (Session::has('success'))
 
             toastr.success("{{ Session::get('success') }}");
+            {{ session()->forget('success') }}
         @elseif (Session::has('info'))
 
             toastr.info("{{ Session::get('info') }}");
+            {{ session()->forget('info') }}
         @elseif (Session::has('wrning'))
 
             toastr.warning("{{ Session::get('warning') }}");
+            {{ session()->forget('warning') }}
         @endif
     </script>
     @yield('script')

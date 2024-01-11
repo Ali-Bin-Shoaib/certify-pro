@@ -53,16 +53,16 @@
     @include('components.navbar')
 
     <div class="main-container">
-        <a href="{{ route('generateCertificate', ['programId' => $program->id]) }}"
+        <a href="{{ route('certificateGenerate', ['programId' => $program->id, 'participantId' => $participantId]) }}"
             class="btn btn-primary rounded-5 text-decoration-none  export-btn">إصدار الشهادات</a>
         <h1 class="certificate-header">شهادة مشاركة
         </h1>
         <div class="certificate-title">تشهد {{ $organization->user->name }} بأن</div>
-        <div class="participant-name">"اسم المشارك الرباعي"</div>
+        <div class="participant-name">{{ $program->participants()->find($participantId)->name }}</div>
         <div class="certificate-static-text">
-            قد شارك في دورة <span class="program-title">"عنوان الدورة"</span> في الفترة من<br>
+            قد شارك في دورة <span class="program-title">{{ $program->title }}</span> في الفترة من<br>
             {{ date('d-m-Y ', strtotime($program->start_date)) }} إلى
-            {{ date('d-m-Y', strtotime($program->end_date)) }} المقامة في "موقع إقامة الدورة".
+            {{ date('d-m-Y', strtotime($program->end_date)) }} المقامة في "{{ $program->location }}".
         </div>
         <table class="table">
             <tr style="text-align: ">

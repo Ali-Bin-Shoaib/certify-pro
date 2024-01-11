@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class ProgramTrainer extends Pivot
 {
     use HasFactory;
+    protected $table = 'program_trainers';
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Member;
 use App\Models\Program;
+use App\Models\Trainer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,9 +18,11 @@ class ProgramController extends Controller
     {
         // $programs = Program::all()->sortDesc();
 
-        $programs = Program::join('members', 'member_id', 'members.id')
-            ->where('organization_id', Auth::user()->member->organization_id)
-            ->get(['programs.*']);
+        $programs = Program::join('members', 'programs.member_id', 'members.id')
+            ->where('members.organization_id', Auth::user()->member->organization_id)
+            ->select('programs.*')
+            ->get();
+        // ->get(['programs.*']);
         // $programs = Program::all()->orderBy('created_at', 'desc');
 
         // dd($programs[0]->member->user);
@@ -31,7 +34,10 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::join('members', 'categories.member_id', 'members.id')
+            ->where('members.organization_id', Auth::user()->member->organization_id)
+            ->select('categories.*')
+            ->get();
         return view('programs.create', compact('categories'));
     }
 
@@ -47,13 +53,24 @@ class ProgramController extends Controller
                 'location' => 'required',
                 'start_date' => 'required',
                 'end_date' => 'required',
+                'name' => 'required',
+                'gender' => 'required',
+                'phone' => 'required',
             ]);
-            $newProgram = $request->all();
+
+            $newProgram = $request->only(['title', 'category_id', 'location', 'start_date', 'end_date']);
+            $newTrainer = $request->only(['name', 'gender', 'phone']);
             $newProgram['member_id'] = Auth::user()->member->id;
-            Program::create($newProgram);
-            return redirect()->route('programs.index')->with('success', 'program is created successfully');
+            $newTrainer['member_id'] = Auth::user()->member->id;
+            // dd($request->all(), $newTrainer);
+            $program = Program::create($newProgram);
+            $trainer = Trainer::create($newTrainer);
+            $program->trainers()->attach($trainer);
+
+            return redirect()->route('programs.index')->with('success', 'تم إضافة معلومات الدورة بنجاح');
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            throw $th;
+            // return back()->with('error', $th->getMessage());
         }
     }
 

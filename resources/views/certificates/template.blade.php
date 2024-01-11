@@ -25,14 +25,13 @@
 
     .container {
         margin: auto;
-        padding-top: 5rem;
+        padding-top: 3rem;
         text-align: center
     }
 
     .certificate-header {
         font-size: 3rem;
         margin-bottom: 1rem;
-        text-decoration: underline
     }
 
     .certificate-title {
@@ -115,11 +114,12 @@ display: block;
         <h1 class="certificate-header">شهادة مشاركة
         </h1>
         <div class="certificate-title">تشهد {{ $organization->user->name }} بأنّ</div>
-        <div class="participant-name">{{ $program->participants[3]->name }}</div>
+        <div class="participant-name">{{ $program->participants()->find($participantId)->name }}</div>
         <div class="certificate-static-text ">
             قد شارك في الدورة التدريبية <span class="program-title">{{ $program->title }}</span> في الفترة من<br>
             {{ date('d-m-Y ', strtotime($program->start_date)) }} إلى
             {{ date('d-m-Y', strtotime($program->end_date)) }} المقامة في {{ $program->location }}
+
         </div>
         <table class="table">
             <tr style="text-align: ">

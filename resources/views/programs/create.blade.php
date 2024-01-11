@@ -46,6 +46,31 @@
 
                 </div>
             </div>
+            <h4 class="text-decoration-underline">معلومات المدرب </h4>
+            <div class="row g-3 my-3">
+                <label class="col-md-2 form-label" for="name">اسم المدرب</label>
+                <div class="col-md-10">
+                    <input class=" form-control" type="text" name="name" id="name" required>
+                </div>
+            </div>
+            <div class="row g-3 my-3">
+                <label class="col-md-2 form-label" for="gender">الجنس</label>
+                <div class="col-md-10">
+                    <select name="gender" id="gender" class="form-select" required>
+                        <option>أنثى</option>
+                        <option>ذكر</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 my-3">
+                <label class="col-md-2 form-label" for="phone">رقم الجوال</label>
+                <div class=" col-md-10">
+
+                    <input class="form-control" type="tel" name="phone" id="phone" required>
+                </div>
+            </div>
+
+
             {{-- <div class="row g-3 my-2">
                 <div class="col-md-1"></div>
                 <div class="form-check col-md-9">
@@ -64,7 +89,7 @@
     </div>
     {{-- <script>
         $(function() {
-            //   const addParticipants = $('#addParticipants'); 
+            //   const addParticipants = $('#addParticipants');
             $('#addParticipants').on('click', function() {
                 console.log($('#addParticipants').val());
                 if ($('#addParticipants').val() == 'on')

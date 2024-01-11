@@ -13,7 +13,7 @@ class ProgramParticipant extends Pivot
     protected $table = 'program_participants';
 
     protected $fillable = [
-        "certificate_id", "program_id", "participant_id"
+        "certificate_id", "created_by" //, "program_id", "participant_id"
     ];
 
     public function program(): BelongsTo

@@ -43,11 +43,7 @@
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
             <tfoot>
                 <h1 class="text-decoration-underline text-center ">معلومات المشاركين في الدورة</h1>
-                <a class=" btn  btn-secondary
-             {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
-                    title="إصدار الشهادات" href="{{ route('previewCertificate', ['programId' => $program->id]) }}"><i
-                        class="fa fa-print"></i> إصدار
-                    الشهادات</a>
+
 
             </tfoot>
 
@@ -58,6 +54,7 @@
                 <th>البريد الإلكتروني</th>
                 <th>الجوال</th>
                 <th>الجنس</th>
+                <th></th>
             </thead>
             <tbody class="table-group-divider">
                 @foreach ($program->participants as $participant)
@@ -67,6 +64,50 @@
                         <td>{{ $participant->email }}</td>
                         <td>{{ $participant->phone }}</td>
                         <td>{{ $participant->gender }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    إجراء
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li> <a class="dropdown-item"
+                                            href="{{ route('participants.edit', $participant->id) }}">
+                                            <i class="fa fa-pen"></i> تعديل
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <form class="dropdown-item" method="POST"
+                                            action="{{ route('participants.destroy', $participant->id) }} ">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="nav-link">
+                                                <i class="fa fa-trash"></i> حذف
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li> <a title="التفاصيل" href="{{ route('participants.show', $participant->id) }}"
+                                            class="dropdown-item">
+                                            <i class="fa fa-info-circle"></i> تفاصيل
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class=" btn  btn-secondary
+             {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
+                                            title="إصدار شهادة"
+                                            {{-- href="{{ route('certificatePreview', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i --}}
+                                            href="{{ route('certificateGenerate', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i
+
+                                                class="fa fa-print"></i> إصدار
+                                            شهادة</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

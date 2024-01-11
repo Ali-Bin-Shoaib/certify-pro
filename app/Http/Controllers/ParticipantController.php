@@ -27,9 +27,10 @@ class ParticipantController extends Controller
 
     public function create(string $programId = null)
     {
-        $participants = Participant::join('members', 'member_id', 'members.id')
-            ->where('organization_id', Auth::user()->member->organization_id)
-            ->get('participants.*')->sortby('participants.created_at');
+        // $participants = Participant::join('members', 'member_id', 'members.id')
+        //     ->where('organization_id', Auth::user()->member->organization_id)
+        //     ->get('participants.*')->sortby('participants.created_at');
+        // $p = Participant::find(1);
 
         if ($programId) {
             $program = Program::join('members', 'member_id', 'members.id')
@@ -45,7 +46,7 @@ class ParticipantController extends Controller
         // $programs = Program::all()->where('end_date', '>=', date('Y-m-d h-i-s'));
         $programs = Program::join('members', 'member_id', 'members.id')
             ->where('organization_id', Auth::user()->member->organization_id)
-            ->where('programs.id', $programId)
+            // ->where('programs.id', $programId)
             ->where('programs.end_date', '>=', now())
             ->get('programs.*');
         // dd($programs);
@@ -55,34 +56,41 @@ class ParticipantController extends Controller
     }
 
 
-    public function store(Request $request, string $programId)
+    public function store(Request $request, string $programId = null)
     {
-        if (!$programId)
-            return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
-        $program = Program::find($programId);
-        if (!$program)
-            return redirect()->back()->with("error", "الدورة غير موجودة.");
         try {
             $request->validate([
                 "name" => "required",
                 "email" => "required",
                 'gender' => 'required',
                 'phone' => 'required',
+                'program_id' => 'required',
             ]);
 
-            $participant = $request->all();
-            $participant['member_id'] = Auth::user()->member->id;
-            // $isExist = Participant::where('email', $participant['email'])->exists();
+            $programId = $request->only('program_id');
+            if (!$programId)
+                return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
+            $program = Program::find($programId);
+            if (!$program)
+                return redirect()->back()->with("error", "الدورة غير موجودة.");
 
+
+            $participant = $request->except(['program_id']);
+            $participant['member_id'] = Auth::user()->member->id;
             $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
             // dd($participant);
             try {
                 $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
             } catch (\Throwable $th) {
-                return back()->with('error', 'خطأ. المشارك مضاف مسبقا لهذه الدورة.');
+                // return back()->with('error', $th->getMessage());
+                return back()->with('error', ' المشارك مضاف مسبقا لهذه الدورة.');
             }
-            // $program->participants()->attach($participant);
-            // dd($participant);
+            // try {
+            //     dd($program->participants()->where('programParticipants.participant_id', $participant->id)->first());
+            // } catch (\Throwable $th) {
+            //     // throw $th;
+            //     return back()->with('error', $th->getMessage());
+            // }
             return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');
         } catch (\Throwable $th) {
             return back()->with('error', 'بيانات غير صحيحة');
@@ -119,7 +127,7 @@ class ParticipantController extends Controller
 
             return redirect()->route('participants.index')->with('success', 'تم تحديث البيانات بنجاح');
         }
-        return back()->with('error', 'لم تتم عملية تحديث بيانات المشارك ');
+        return back()->with('error', 'لم تتم عملية تحديث البيانات ');
     }
 
     public function destroy(string $id)

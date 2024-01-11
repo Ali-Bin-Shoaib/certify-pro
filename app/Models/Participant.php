@@ -11,7 +11,7 @@ class Participant extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'gender', 'email', 'phone', 'member_id'
+        'name', 'gender', 'email', 'phone', 'member_id','program_id'
     ];
     public function programs(): BelongsToMany
     {

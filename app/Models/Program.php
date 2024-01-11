@@ -16,6 +16,9 @@ class Program extends Model
         'start_date',
         'end_date',
         'location',
+        'name',
+        'gender',
+        'phone',
         'category_id',
         'member_id'
     ];
@@ -31,13 +34,14 @@ class Program extends Model
     }
     public function participants(): BelongsToMany
     {
-        return $this->belongsToMany(Participant::class, 'program_participants', 'program_id', 'participant_id');
+        return $this->belongsToMany(Participant::class, ProgramParticipant::class, 'program_id', 'participant_id')
+            ->withPivot(['certificate_Id', 'created_by']);
     }
     public function trainers(): BelongsToMany
     {
-        return $this->belongsToMany(Trainer::class, 'program_participants', 'program_id', 'trainer_id');
+        return $this->belongsToMany(Trainer::class, ProgramTrainer::class, 'program_id', 'trainer_id')->withTimestamps();
     }
-    public function programParticipants(): HasMany{
-        return $this->hasMany(ProgramParticipant::class,'','');
-    }
+    // public function programParticipants(): HasMany{
+    //     return $this->hasMany(ProgramParticipant::class,'','');
+    // }
 }
