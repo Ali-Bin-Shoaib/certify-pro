@@ -98,10 +98,8 @@
                                     <li>
                                         <a class=" btn  btn-secondary
              {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
-                                            title="إصدار شهادة"
-                                            {{-- href="{{ route('certificatePreview', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i --}}
+                                            title="إصدار شهادة" {{-- href="{{ route('certificatePreview', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i --}}
                                             href="{{ route('certificateGenerate', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i
-
                                                 class="fa fa-print"></i> إصدار
                                             شهادة</a>
                                     </li>

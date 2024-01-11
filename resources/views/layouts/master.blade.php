@@ -56,6 +56,9 @@
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
     @include('components.navbar')
     <main class="bg-gray">
+        {{-- @if (Session::has('error'))
+            {{ Session::get('error') }}
+        @endif --}}
         @yield('main')
     </main>
     @include('components.footer')
