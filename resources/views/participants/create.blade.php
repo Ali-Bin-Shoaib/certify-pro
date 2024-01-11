@@ -40,6 +40,8 @@ action="{{ route('participants.store', ['programId' => $program->id]) }}"
                 <hr class="my-3">
             @endisset
             <h4 class="text-decoration-underline">معلومات المشارك </h4>
+            @isset($programs)
+
             <div class="row g-3 my-3">
 
                 <label class="col-md-2 form-label" for="program_id">الدورة</label>
@@ -51,6 +53,7 @@ action="{{ route('participants.store', ['programId' => $program->id]) }}"
                     </select>
                 </div>
             </div>
+            @endisset
             <div class="row g-3 my-3">
 
                 <label class="col-md-2 form-label" for="name">الإسم</label>

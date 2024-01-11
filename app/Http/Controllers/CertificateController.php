@@ -98,7 +98,7 @@ class CertificateController extends Controller
                         return view('certificates.uncertified');
                 } catch (\Throwable $th) {
                     //throw $th;
-                    return view('certificates.uncertified');
+                    return view('certificates.uncertified')->with('error','حصل خطأ في جلب بيانات الشهادة .');
 
                     // return redirect()->back()->with('error', $th->getMessage());
                     // return redirect()->back()->with('error', 'error : ' . $th->getMessage());
