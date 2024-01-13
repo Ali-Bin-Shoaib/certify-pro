@@ -22,6 +22,9 @@ class AuthController extends Controller
             } else
                 return view("registration.signup");
         } else if ($request->method() == "POST") {
+            if (Auth::check())
+                return back()->with("info", "لقد تم إنشاء حساب مسقا.");
+
             try {
                 $request->validate([
                     "name" => "required",
@@ -31,27 +34,27 @@ class AuthController extends Controller
                     "phone" => "required",
                     "address" => "required",
                 ]);
-                $organizationData = $request->only(["phone", "address"]);
-                $userData = $request->only(['name', 'email', 'username', 'password']);
-                $userData['role'] = 'organization';
-                try {
-                    $user = User::create($userData);
-                    if ($user) {
-                        $organizationData['user_id'] = $user->id;
-                        $organization = Organization::create($organizationData);
-                        if ($organization) {
-                            Auth::login($user);
-                            return redirect()->route('members.index')->with('success', 'تم إنشاء الحساب بنجاح');
-                        }
-                    }
-                    throw new \Exception('error at creating an organization account.');
-                } catch (\Throwable $th) {
-                    if ($user) $user->delete();
-                    if ($organization) $organization->delete();
-                    back()->with('error', 'حصل خطأ عند عملية إنشاء الحساب .');
-                }
             } catch (\Throwable $th) {
-                throw $th;
+                return back()->with("error", "خطأ في إدخال البيانات");
+            }
+
+            $organizationData = $request->only(["phone", "address"]);
+            $userData = $request->only(['name', 'email', 'username', 'password']);
+            $userData['role'] = 'organization';
+            try {
+                $user = User::create($userData);
+                $organizationData['user_id'] = $user->id;
+                $organization = Organization::create($organizationData);
+                $user->organization->attach($organization);;
+                Auth::login($user);
+                return redirect()->route('members.index')->with('success', 'تم إنشاء الحساب بنجاح');
+            } catch (\Throwable $th) {
+                try {
+                    $user->delete();
+                    $organization->delete();
+                } catch (\Throwable $th) {
+                    return  back()->with('error', 'حصل خطأ عند عملية إنشاء الحساب .');
+                }
             }
         }
     }
@@ -61,7 +64,7 @@ class AuthController extends Controller
             if (Auth::user() === null) {
                 return view("registration.login");
             } else
-                return redirect(route('home'));
+                return redirect(route('home'))->with('info', 'لقد تم تسجيل الدخول مسبقا.');
         } else if ($request->method() == "POST") {
             try {
                 $request->validate([
@@ -69,32 +72,37 @@ class AuthController extends Controller
                     'password' => 'required',
                     'rememberMe' => 'nullable'
                 ]);
-                $credentials = $request->only('username', 'password');
-                $user = User::where('username', '=', $credentials['username'])->first();
-                if (!$user || !Hash::check($credentials['password'], $user['password'])) {
-                    return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
-                }
+            } catch (\Throwable $th) {
+                return back()->with('error', 'خطأ في إدخال البيانات.');
+            }
+            $credentials = $request->only('username', 'password');
+
+            $user = User::where('username', $credentials['username'])->first();
+            if (!$user || !Hash::check($credentials['password'], $user['password']))
+                return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
+
+            try {
                 $request->session()->regenerate();
                 Auth::login($user, $request->rememberMe == "on");
-                // dd(Auth::user(), $request->all());
                 if (Auth::user()->role === ('organization'))
                     return redirect()->intended(route("members.index"))->with("success", "تم تسجيل الدخول بنجاح");
+
                 elseif (Auth::user()->role === 'member')
                     return redirect()->intended(route("programs.index"))->with("success", "تم تسجيل الدخول بنجاح");
+
                 elseif (Auth::user()->role === "admin")
                     return redirect()->intended(route("home"))->with("success", 'welcome admin');
-                return back()->with('error', 'خطأ في اسم المستخدم أو كلمة المرور');
-                // return redirect(route('login'))->withe('error', 'Invalid username or password');
             } catch (\Throwable $th) {
-                throw $th;
+                return back()->with("error", "حصل خطأ عند عملية تسجيل الدخول.");
+                // throw $th;
             }
         }
     }
     public function logout()
     {
-        //logout 
+        //logout
         Session::flush();
         Auth::logout();
-        return redirect('/')->with('success', 'تم تسجيل الخروج بنجاح');
+        return redirect(route('home'))->with('success', 'تم تسجيل الخروج بنجاح');
     }
 }

@@ -16,6 +16,7 @@ class MemberMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
+        
         if ($user && $user->role === 'member')
             return $next($request);
         if (!$user)

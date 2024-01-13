@@ -10,13 +10,15 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $members = Member::all();
-        return view('members.index', compact('members'));
+        try {
+            $members = Member::where('members.organization_id', Auth::user()->organization->id)->select('members.*')->get();
+            return view('members.index', compact('members'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'حصل خطأ عند عرض بيانات الأعضاء.');
+        }
     }
 
     /**
@@ -27,13 +29,11 @@ class MemberController extends Controller
         return view('members.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         try {
-            $check = $this->validate($request, [
+            $request->validate([
                 'name' => 'required',
                 'username' => 'required|unique:users,username',
                 'email' => 'required|email|unique:users,email',
@@ -41,59 +41,65 @@ class MemberController extends Controller
                 'password' => 'required',
                 // 'organization_id' => 'required',
             ]);
-            // dd($check);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'خطأ في إدخال البيانات.');
+        }
+        try {
             $newUser = $request->except('job_title');
             $newUser['role'] = 'member';
             $createdUser = User::create($newUser);
             $newMember = $request->only('job_title');
-            $newMember['organization_id'] = Auth::user()->id ?? 1;
             $newMember['user_id'] = $createdUser->id;
+            $newMember['organization_id'] = Auth::user()->organization->id;
             Member::create($newMember);
-            return redirect()->route('members.index')->with('success', 'Member is created successfully');
+            return redirect()->route('members.index')->with('success', 'تم إضافة عضو جديد بنجاح.');
         } catch (\Throwable $th) {
-            throw $th;
+            return back()->with('error', 'حصل خطأ عند إضافة عضو جديد');
+            // throw $th;
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $member = Member::find($id);
-        if ($member != null)
-            return view('members.show', compact('member'));
-        return 'not found';
+        try {
+            $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('id', $id)->first();
+            if ($member != null)
+                return view('members.show', compact('member'));
+            return back()->with('error', 'العضو غير موجود.');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'لا توجد بيانات.');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
-        $member = Member::find($id);
-        if ($member != null) {
-            return view('members.edit', compact('member'));
+        try {
+            $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('id', $id)->first();
+            if ($member != null) {
+                return view('members.edit', compact('member'));
+            }
+            return 'not found';
+        } catch (\Throwable $th) {
+            return back()->with('error', 'خطأ العضو غير موجود');
         }
-        return 'not found';
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
-        $this->validate($request, [
-            'name' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'email' => 'required',
-            'job_title' => 'required',
-        ]);
-        $member = Member::find($id);
+        try {
+            $this->validate($request, [
+                'name' => 'required',
+                'username' => 'required',
+                'password' => 'required',
+                'email' => 'required',
+                'job_title' => 'required',
+            ]);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'خطأ في إدخال البيانات');
+        }
+        $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('id', $id)->first();
         $user = User::find($member->user_id);
-        // VarDumper::dump([$user, $member]);
         if ($member != null && $user != null) {
 
             $member->update($request->only('job_title'));
@@ -103,20 +109,18 @@ class MemberController extends Controller
         return 'member not found';
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
-        $toDelete = Member::find($id);
-        if ($toDelete != null) {
-            if ($toDelete->delete()) {
-                return redirect()->route('members.index')->with('success', 'Member deleted successfully.');
-            } else {
-                return redirect()->route('members.index')->with('error', 'Can\'t delete program with id ' . $id);
-            }
+        $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('id', $id)->first();
+        if ($member === null)
+            return redirect()->route('members.index')->with('error', 'خطأ لم يتم الحذف. العضو غير موجود');
+        try {
+            $member->delete();
+            return redirect()->route('members.index')->with('success', 'تم الحذف بنجاح.');
+        } catch (\Throwable $th) {
+            return redirect()->route('members.index')->with('error', 'حصل خطأ لم تتم عملية الحذف.');
+            //throw $th;
         }
-        return redirect()->route('members.index')->with('error', 'program with id ' . $id . 'dose not exist.');
-        // return 'error';
     }
 }
