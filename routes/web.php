@@ -6,6 +6,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TrainerController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,11 @@ Route::group(['middleware' => 'member'], function () {
 
     Route::get('/certificate/{programId}/{participantId}', [CertificateController::class, 'certificateGenerate'])->name('certificateGenerate');
     Route::get('/certificate-preview/{programId}/{participantId}', [CertificateController::class, 'certificatePreview'])->name('certificatePreview');
+    Route::get('template/create/{programId}', [TemplateController::class, 'create'])->name('template.create');
+    Route::post('template/store/{programId}', [TemplateController::class, 'store'])->name('template.store');
+    Route::get('template/edit/{programId}', [TemplateController::class, 'edit'])->name('template.edit');
+    Route::put('template/update/{programId}', [TemplateController::class, 'update'])->name('template.update');
+    Route::delete('template/{programId}', [TemplateController::class, 'destroy'])->name('template.destroy');
     // Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('certificateVerify');
 });
 

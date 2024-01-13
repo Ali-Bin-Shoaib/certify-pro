@@ -43,11 +43,7 @@
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
             <tfoot>
                 <h1 class="text-decoration-underline text-center ">معلومات المشاركين في الدورة</h1>
-
-
             </tfoot>
-
-
             <thead class="table-secondary ">
                 <th>#</th>
                 <th>الاسم</th>
@@ -95,8 +91,36 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
+                                    {{-- second dropdown menu --}}
+                                    {{-- <li>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                إجراء
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
+                                                        الشهادة</a>
+
+                                                </li>
+
+                                            </ul>
+                                            <div>
+                                    </li> --}}
                                     <li>
-                                        <a class=" btn  btn-secondary
+                                        <a class="dropdown-item"
+                                            href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
+                                            الشهادة</a>
+
+                                    </li>
+
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class=" dropdown-item
              {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
                                             title="إصدار شهادة" {{-- href="{{ route('certificatePreview', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i --}}
                                             href="{{ route('certificateGenerate', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i

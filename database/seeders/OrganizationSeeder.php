@@ -13,7 +13,11 @@ class OrganizationSeeder extends Seeder
      */
     public function run(): void
     {
-        
-        Organization::factory()->count(10)->create();
+        try {
+            Organization::factory()->count(10)->create();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

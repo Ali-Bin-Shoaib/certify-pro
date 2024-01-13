@@ -14,14 +14,12 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $categories = Category::join('members', 'member_id', '=', 'members.id')
+        $categories = Category::join('members', 'member_id',  'members.id')
             ->where('organization_id', '=', Auth::user()->member->organization_id)
             ->get(['categories.*'])
             ->sortby('categories.created_at');
         // dd($categories);
-        // $categories = Category::all();
         return view("categories.index", compact("categories"));
-        //
     }
     public function create()
     {
@@ -32,7 +30,7 @@ class CategoryController extends Controller
         $category = $request->validate([
             "title" => "required",
         ]);
-        $isExist = Category::join('members', 'member_id', '=', 'members.id')
+        $isExist = Category::join('members', 'member_id',  'members.id')
             ->where('organization_id', '=', Auth::user()->member->organization_id)
             ->where('title', '=', $request->title)
             ->get(['categories.*'])
@@ -47,24 +45,39 @@ class CategoryController extends Controller
     }
     public function edit(string $id)
     {
-        $category = Category::find($id);
-        return view('categories.edit', compact('category'));
+        $category = Category::join('members', 'categories.member_id',  'members.id')
+            ->where('members.organization_id',  Auth::user()->member->organization_id)
+            ->where('categories.id', $id)
+            ->get(['categories.*'])->first();
+        if ($category != null)
+            return view('categories.edit', compact('category'));
+        return back()->with('error', 'هذا التصنيف غير موجود');
     }
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            "title" => "required",
-        ]);
-        $category = Category::join('members', 'member_id', '=', 'members.id')
+        try {
+            $request->validate([
+                "title" => "required",
+            ]);
+        } catch (\Throwable $th) {
+            return back()->with("error", $th->getMessage());
+        }
+
+        $isExist = Category::join('members', 'member_id',  'members.id')
             ->where('organization_id', '=', Auth::user()->member->organization_id)
-            ->where('categories.id', '=', $id)->first();
+            ->where('title', '=', $request->title)
+            ->get(['categories.*'])
+            ->first();
+        if ($isExist != null)
+            return back()->with('error', 'التصنيف المدخل موجود مسبقا.');
 
-        // $category = Category::find($id);
-        // dd([$id, $category]);
-        // VarDumper::dump($id, $category);
-
+        $category = Category::join('members', 'categories.member_id',  'members.id')
+            ->where('members.organization_id',  Auth::user()->member->organization_id)
+            ->where('categories.id', $id)
+            ->get(['categories.*'])->first();
         if ($category) {
             $category['member_id'] = Auth::user()->member->id;
+            $category['title'] = $request->title;
             $category->update($category->toArray());
             return redirect()->route('categories.index')->with('success', 'تم تحديث البيانات بنجاح');
         }

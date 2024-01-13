@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Member;
 use App\Models\Participant;
 use App\Models\Program;
 use App\Models\Trainer;
@@ -22,6 +23,7 @@ class ProgramTrainerFactory extends Factory
         return [
             'program_id' => Program::pluck('id')->random(),
             'trainer_id' => Trainer::pluck('id')->random(),
+            // 'created_by' => Member::pluck('id')->random(),
 
         ];
     }

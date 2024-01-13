@@ -23,7 +23,7 @@ class OrganizationFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::pluck('id')->random(),
+            'user_id' => User::where('role','organization')->pluck('id')->random(),
             'address' => fake()->address,
             'phone' => fake()->phoneNumber(),
         ];

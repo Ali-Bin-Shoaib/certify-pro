@@ -21,10 +21,6 @@ class ParticipantController extends Controller
 
     public function create(string $programId = null)
     {
-        // $participants = Participant::join('members', 'member_id', 'members.id')
-        //     ->where('organization_id', Auth::user()->member->organization_id)
-        //     ->get('participants.*')->sortby('participants.created_at');
-        // $p = Participant::find(1);
         if ($programId) {
             $program = Program::join('members', 'member_id', 'members.id')
                 ->where('organization_id', Auth::user()->member->organization_id)
@@ -36,13 +32,10 @@ class ParticipantController extends Controller
             return redirect()->back()->with('error', 'الدورة غير موجودة');
         }
 
-        // $programs = Program::all()->where('end_date', '>=', date('Y-m-d h-i-s'));
         $programs = Program::join('members', 'member_id', 'members.id')
             ->where('organization_id', Auth::user()->member->organization_id)
-            // ->where('programs.id', $programId)
             ->where('programs.end_date', '>=', now())
             ->get('programs.*');
-        // dd($programs);
         if ($programs->count() === 0)
             return back()->with('error', 'لا يوجد أي دورة متاحا حاليا. أضف دورة لإضافة مشاركين فيها..');
         return view("participants.create", compact("programs"));
@@ -57,9 +50,9 @@ class ParticipantController extends Controller
                 "email" => "required",
                 'gender' => 'required',
                 'phone' => 'required',
-                // 'program_id' => 'required',
+                $programId ? '' : 'program_id' => 'required',
             ]);
-
+// dd($request->all());
             $programId = $programId ? $programId : $request->input('program_id');
             if (!$programId)
                 return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
@@ -74,10 +67,10 @@ class ParticipantController extends Controller
             try {
                 $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
             } catch (\Throwable $th) {
-                // return back()->with('error', $th->getMessage());
+                return back()->with('error', $th->getMessage());
                 return back()->with('error', ' المشارك مضاف مسبقا لهذه الدورة.');
             }
-   
+
             return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');
         } catch (\Throwable $th) {
             return back()->with('error', 'بيانات غير صحيحة');
@@ -87,8 +80,14 @@ class ParticipantController extends Controller
 
     public function show(string $id)
     {
+        $participant = Participant::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('participants.id', $id)
+            ->get(['participants.*'])->first();
 
-        $participant = Participant::find($id);
+        // dd($participant);
+        if (!$participant)
+            return redirect()->back()->with('error', 'لا يمكن إيجاد هذا المشارك.');
         return view('participants.show', compact('participant'));
     }
 

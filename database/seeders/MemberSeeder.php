@@ -13,6 +13,10 @@ class MemberSeeder extends Seeder
      */
     public function run(): void
     {
-        Member::factory()->count(10)->create();
+        try {
+            Member::factory()->count(10)->create();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

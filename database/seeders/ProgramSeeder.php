@@ -13,6 +13,11 @@ class ProgramSeeder extends Seeder
      */
     public function run(): void
     {
-        Program::factory()->count(30)->create();
+        try {
+            Program::factory()->count(30)->create();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

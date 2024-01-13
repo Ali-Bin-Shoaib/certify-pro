@@ -3,7 +3,8 @@
 @section('main')
     <div class="container py-5">
         <h1 class="text-decoration-underline text-center">تحديث تصنيف</h1>
-        <form method="POST" action="{{ route('categories.update',$category->id) }}" class="container w-75 shadow-sm my-5 p-5 form-bg">
+        <form method="POST" action="{{ route('categories.update', $category->id) }}"
+            class="container w-75 shadow-sm my-5 p-5 form-bg">
 
             @csrf
             @method('PUT')

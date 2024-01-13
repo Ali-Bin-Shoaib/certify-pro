@@ -30,7 +30,7 @@
                         {{-- <td>{{ $program->participants->count() }}</td> --}}
                         <td>{{ $program->title }}</td>
                         <td>{{ $program->location }}</td>
-                        <td>{{ $program->category->title }}</td>
+                        <td>{{ $program->category->title??'' }}</td>
                         <td>{{ $program->member->user->name ?? '' }}</td>
                         <td>{{ date('Y/m/dD - h:i:s') }}</td>
                         <td class="d-flex align-items-center justify-content-center gap-1">
