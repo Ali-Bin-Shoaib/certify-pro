@@ -26,13 +26,13 @@ Route::get('/', function () {
 
 Route::redirect('/index', '/');
 Route::redirect('/home', '/');
-Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('certificateVerify');
-
 
 Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('certificateVerify');
 
 Route::group(['middleware' => 'organization'], function () {
     Route::resource('members', MemberController::class);

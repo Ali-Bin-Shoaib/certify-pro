@@ -27,31 +27,33 @@ class CertificateController extends Controller
         $document = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'margin_top' => 20,
+            'margin_bottom' => 0,
         ]);
         $url = "http://127.0.0.1:8000/certificate-verify/";
         try {
             $certificate = ProgramParticipant::where("program_id", $programId)
                 ->where('participant_id', $participantId)
                 ->first();
-            // dd($certificateId);
-            if ($certificate->certificate_id !== null) {
+            $certificateId = $certificate->certificate_id;
+            if ($certificateId !== null) {
                 $certificate->update(['updated_at' => now()]);
                 // $request->session()->put('success', 'تم إصدار الشهادة مرة أخرى');
             } else {
                 $certificate->update([
-                    'certificate_id' => uniqid('', true),
+                    'certificate_id' => uniqid(),
                     'created_by' => Auth::user()->member->id,
                     'created_at' => now(),
                 ]);
-                // $request->session()->put('success', 'تم إنشاء الشهادة بنجاح');
             }
         } catch (\Throwable $th) {
-            //throw $th;
             return back()->with('error', $th->getMessage());
         }
-        $qrCode = $this->qrGenerate($url, $certificate->certificate_id);
+        $qrCode = $this->qrGenerate($url, $certificateId);
         $document->WriteHTML(view('certificates.template', compact(
-            ['program', 'organization', 'qrCode', 'participantId']
+            ['program', 'organization', 'qrCode', 'participantId','certificateId']
         )));
         return $document->Output();
     }
@@ -98,7 +100,7 @@ class CertificateController extends Controller
                         return view('certificates.uncertified');
                 } catch (\Throwable $th) {
                     //throw $th;
-                    return view('certificates.uncertified')->with('error','حصل خطأ في جلب بيانات الشهادة .');
+                    return view('certificates.uncertified')->with('error', 'حصل خطأ في جلب بيانات الشهادة .');
 
                     // return redirect()->back()->with('error', $th->getMessage());
                     // return redirect()->back()->with('error', 'error : ' . $th->getMessage());

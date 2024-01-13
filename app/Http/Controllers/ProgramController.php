@@ -17,7 +17,7 @@ class ProgramController extends Controller
     public function index()
     {
         // $programs = Program::all()->sortDesc();
-
+        // dd(Auth::user()->member->organization_id);
         $programs = Program::join('members', 'programs.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
             ->select('programs.*')

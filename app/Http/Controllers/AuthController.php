@@ -19,8 +19,9 @@ class AuthController extends Controller
         if ($request->method() == "GET") {
             if (Auth::check()) {
                 return back()->with("info", "تمت علمية تسجيل الدخول مسبقا.");
-            } else
+            } else {
                 return view("registration.signup");
+            }
         } else if ($request->method() == "POST") {
             if (Auth::check())
                 return back()->with("info", "لقد تم إنشاء حساب مسقا.");
@@ -45,13 +46,13 @@ class AuthController extends Controller
                 $user = User::create($userData);
                 $organizationData['user_id'] = $user->id;
                 $organization = Organization::create($organizationData);
-                $user->organization->attach($organization);;
                 Auth::login($user);
                 return redirect()->route('members.index')->with('success', 'تم إنشاء الحساب بنجاح');
             } catch (\Throwable $th) {
                 try {
                     $user->delete();
                     $organization->delete();
+                    return  back()->with('error', ' حصل خطأ عند عملية إنشاء حساب. تم حذف البانات السابقة. ');
                 } catch (\Throwable $th) {
                     return  back()->with('error', 'حصل خطأ عند عملية إنشاء الحساب .');
                 }
@@ -84,13 +85,14 @@ class AuthController extends Controller
             try {
                 $request->session()->regenerate();
                 Auth::login($user, $request->rememberMe == "on");
-                if (Auth::user()->role === ('organization'))
+                $role = Auth::user()->role;
+                if ($role === ('organization'))
                     return redirect()->intended(route("members.index"))->with("success", "تم تسجيل الدخول بنجاح");
 
-                elseif (Auth::user()->role === 'member')
+                elseif ($role === 'member')
                     return redirect()->intended(route("programs.index"))->with("success", "تم تسجيل الدخول بنجاح");
 
-                elseif (Auth::user()->role === "admin")
+                elseif ($role === "admin")
                     return redirect()->intended(route("home"))->with("success", 'welcome admin');
             } catch (\Throwable $th) {
                 return back()->with("error", "حصل خطأ عند عملية تسجيل الدخول.");

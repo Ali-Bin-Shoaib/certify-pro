@@ -92,9 +92,13 @@
 display: block;
     } */
     .certificate-id {
-        margin-top: 10px;
-        font-size: 1.1rem;
+        font-size: 0.8rem;
+        position: absolute;
+        bottom: 0;
+        right: 1rem;
     }
+
+
 
     .certificate-qr {
         text-align: center;
@@ -151,9 +155,11 @@ background-image: url('{{ public_path('images/s1.png') }}');
                 </td>
             </tr>
         </table>
-
     </div>
 
+    <div class="certificate-id">
+        تم إصدار هذه الشهادة بواسطة certify pro . رقم التحقق {{ $certificateId }}
+    </div>
 </body>
 
 {{-- <body style="background-image: url('{{ asset('images/star-template.jpg') }}')"> --}}

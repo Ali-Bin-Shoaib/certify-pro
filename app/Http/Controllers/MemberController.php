@@ -42,7 +42,8 @@ class MemberController extends Controller
                 // 'organization_id' => 'required',
             ]);
         } catch (\Throwable $th) {
-            return back()->with('error', 'خطأ في إدخال البيانات.');
+            // dd($th);
+            return back()->with('error', $th->getMessage());
         }
         try {
             $newUser = $request->except('job_title');

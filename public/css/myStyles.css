@@ -132,3 +132,6 @@ main {
     .border-top-dashed {
         border-top: 0.5px dashed #333;
     }
+    .bg-certified{
+        background: #00592815;
+    }
