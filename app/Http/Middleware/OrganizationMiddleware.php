@@ -15,13 +15,16 @@ class OrganizationMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user();
-        if ($user && $user->role === 'organization') {
-            return $next($request);
+        try {
+            $user = $request->user();
+            if (!$user)
+                return redirect()->route('login');
+            if ($user && $user->role === 'organization') {
+                return $next($request);
+            }
+            return back()->with('error', 'لا يمكنك الوصل لهذه الصفحة. يرجى الدخول بحساب منظمة لدخول الصفحة.');
+        } catch (\Throwable $th) {
+            return back()->with('error', ' حصل خطأ يرجى تسجيل الدخول');
         }
-
-        if (!$user)
-            return redirect()->route('login');
-        return back()->with('error', 'لا يمكنك الوصول لهذه الصفحة');
     }
 }

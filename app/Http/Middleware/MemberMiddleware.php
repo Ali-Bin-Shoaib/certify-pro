@@ -15,12 +15,15 @@ class MemberMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user();
-        
-        if ($user && $user->role === 'member')
-            return $next($request);
-        if (!$user)
-            return redirect()->route('login');
-        return back()->with('error', 'لا يمكنك الوصول لهذه الصفحة');
+        try {
+            $user = $request->user();
+            if (!$user)
+                return redirect()->route('login');
+            if ($user && $user->role === 'member')
+                return $next($request);
+            return back()->with('error', 'لا يمكنك الوصل لهذه الصفحة. يرجى الدخول بحساب عضو لدخول الصفحة.');
+        } catch (\Throwable $th) {
+            return back()->with('error', ' حصل خطأ يرجى تسجيل الدخول');
+        }
     }
 }
