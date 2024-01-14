@@ -44,94 +44,110 @@ main {
 	background-color: #eff4fd;
 	padding: 2rem !important;
 }
-    .main-container,
-    .main-container * {
-        font-family: 'Tajawal';
-        direction: rtl !important;
-        text-align: center;
-    }
+.main-container,
+.main-container * {
+	font-family: 'Tajawal';
+	direction: rtl !important;
+	text-align: center;
+}
 
-    /* td,
+/* td,
     table,
     div,
     h1,
     small {
         border: 1px solid red;
     } */
-    .main-container {
-        /* background-image: url('{{ public_path('images/test3.jpg') }}'); */
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+.main-container {
+	/* background-image: url('{{ public_path('images/test3.jpg') }}'); */
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
+.certificate-header {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+	text-decoration: underline;
+}
 
-    .certificate-header {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        text-decoration: underline
-    }
+.certificate-title {
+	font-size: 2.5rem;
+}
 
-    .certificate-title {
-        font-size: 2.5rem
-    }
+.participant-name {
+	font-size: 4rem;
+	margin-top: 1rem;
+}
 
-    .participant-name {
-        font-size: 4rem;
-        margin-top: 1rem
-    }
+.certificate-static-text {
+	font-size: 2rem;
+	margin: auto;
+	margin-top: 1rem;
+	width: 80%;
+}
 
-    .certificate-static-text {
+.program-title {
+	text-decoration: underline;
+}
 
-        font-size: 2rem;
-        margin: auto;
-        margin-top: 1rem;
-        width: 80%;
-    }
+.table {
+	width: 100%;
+	margin-top: 3rem;
+	text-align: center;
+	vertical-align: bottom;
+}
 
-    .program-title {
-        text-decoration: underline
-    }
+.stamp-td,
+.signature-td {
+	font-size: 2rem;
+}
 
-    .table {
-        width: 100%;
-        margin-top: 3rem;
-        text-align: center;
-        vertical-align: bottom;
-    }
+.stamp-td {
+	width: 40%;
+}
 
-    .stamp-td,
-    .signature-td {
-        font-size: 2rem;
+.qr-td {
+	text-align: center;
+	width: 20%;
+	margin: auto;
+}
 
-    }
+.signature-td {
+	width: 40%;
+}
 
-    .stamp-td {
-        width: 40%;
-    }
+.certificate-id {
+	margin-top: 10px;
+	font-size: 1.1rem;
+}
 
-    .qr-td {
-        text-align: center;
-        width: 20%;
-        margin: auto;
-    }
+.certificate-qr {
+	text-align: center;
+}
 
-    .signature-td {
-        width: 40%;
-    }
+.border-top-dashed {
+	border-top: 0.5px dashed #333;
+}
+.bg-certified {
+	background: #00592815;
+}
+.custom-file-button {
+	input[type='file'] {
+		margin-left: -2px !important;
 
-    .certificate-id {
-        margin-top: 10px;
-        font-size: 1.1rem;
-    }
+		&::-webkit-file-upload-button {
+			display: none;
+		}
+		&::file-selector-button {
+			display: none;
+		}
+	}
 
-    .certificate-qr {
-        text-align: center;
-    }
-
-    .border-top-dashed {
-        border-top: 0.5px dashed #333;
-    }
-    .bg-certified{
-        background: #00592815;
-    }
+	&:hover {
+		label {
+			background-color: #dde0e3;
+			cursor: pointer;
+		}
+	}
+}

@@ -111,7 +111,10 @@ display: block;
 
 
 <body
-    style="background-image: url('{{ public_path('images/test3.jpg') }}'); margin: 0; padding: 0; box-sizing: border-box;">
+    {{-- style="background-image: url('{{ public_path('images/test3.jpg') }}'); margin: 0; padding: 0; box-sizing: border-box;"> --}}
+    {{-- style="background-image: url('{{public_path('storage/uploads/3_quia/template.jpg')}}'); margin: 0; padding: 0; box-sizing: border-box;"> --}}
+    style="background-image: url('{{public_path($templateImages[1])}}'); margin: 0; padding: 0; box-sizing: border-box;">
+
 
 
     <div class="container">
@@ -139,9 +142,8 @@ display: block;
                     </small> --}}
 
                 </td>
-                <td class="signature-td " style="
-background-image: url('{{ public_path('images/s1.png') }}');
-">
+                <td class="signature-td "
+                    style="background-image: url('{{ public_path($templateImages[0]) }}');">
                     {{-- <div
                         style="
                         background-image: url('{{ public_path('images/s1.png') }}');

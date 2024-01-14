@@ -19,7 +19,7 @@ action="{{ route('participants.store', ['programId' => $program->id]) }}"
                     <h5 class=" col-md-3">تمت الإضافة بواسطة: </h5>
                     <b class="col-md-7 fs-4">{{ $program->member->user->name ?? '' }}</b>
                     <h5 class=" col-md-3">التصنيف: </h5>
-                    <b class="col-md-7 fs-4">{{ $program->category->title }}</b>
+                    <b class="col-md-7 fs-4">{{ $program->category->title??'' }}</b>
 
                     <h5 class=" col-md-3">العنوان: </h5>
                     <b class="col-md-7 fs-4">{{ $program->title }}</b>

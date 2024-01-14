@@ -8,7 +8,7 @@
             <h5 class=" col-md-3">تمت الإضافة بواسطة: </h5>
             <b class="col-md-7 fs-4">{{ $program->member->user->name ?? '' }}</b>
             <h5 class=" col-md-3">التصنيف: </h5>
-            <b class="col-md-7 fs-4">{{ $program->category->title }}</b>
+            <b class="col-md-7 fs-4">{{ $program->category->title ?? '' }}</b>
 
             <h5 class=" col-md-3">العنوان: </h5>
             <b class="col-md-7 fs-4">{{ $program->title }}</b>
@@ -40,6 +40,10 @@
 
         <hr class="my-3">
 
+        <div>
+            <a class="btn-solid-reg" href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
+                الشهادة</a>
+        </div>
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
             <tfoot>
                 <h1 class="text-decoration-underline text-center ">معلومات المشاركين في الدورة</h1>
@@ -91,24 +95,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    {{-- second dropdown menu --}}
-                                    {{-- <li>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-secondary dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                إجراء
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
-                                                        الشهادة</a>
 
-                                                </li>
-
-                                            </ul>
-                                            <div>
-                                    </li> --}}
                                     <li>
                                         <a class="dropdown-item"
                                             href="{{ route('template.create', ['programId' => $program->id]) }}">قالب

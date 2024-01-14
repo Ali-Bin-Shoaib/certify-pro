@@ -44,16 +44,19 @@ class ParticipantController extends Controller
 
     public function store(Request $request, string $programId = null)
     {
+        // dd($programId);
         try {
             $request->validate([
                 "name" => "required",
                 "email" => "required",
                 'gender' => 'required',
                 'phone' => 'required',
-                $programId ? '' : 'program_id' => 'required',
+                'program_id' => $programId ? 'nullable' : 'required',
             ]);
-// dd($request->all());
-            $programId = $programId ? $programId : $request->input('program_id');
+            // dd($request->all());
+            if (!$programId && $request->has('program_id'))
+                $programId = $request->input('program_id');
+            // $programId = $programId ? $programId : $request->input('program_id');
             if (!$programId)
                 return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
             $program = Program::find($programId);
@@ -65,9 +68,10 @@ class ParticipantController extends Controller
             $participant['member_id'] = Auth::user()->member->id;
             $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
             try {
+                // dd();
                 $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
             } catch (\Throwable $th) {
-                return back()->with('error', $th->getMessage());
+                // return back()->with('error', $th->getMessage());
                 return back()->with('error', ' المشارك مضاف مسبقا لهذه الدورة.');
             }
 
