@@ -27,7 +27,7 @@ class ParticipantController extends Controller
                 ->where('programs.id', $programId)
                 ->get('programs.*')->first();
             if ($program)
-                return view('Participants.create', compact('program'));
+                return view('participants.create', compact('program'));
 
             return redirect()->back()->with('error', 'الدورة غير موجودة');
         }
