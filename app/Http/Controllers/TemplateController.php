@@ -23,12 +23,13 @@ class TemplateController extends Controller
 
     public function store(Request $request, string $programId)
     {
-        // dd($request->all(),$request->file('template-image'));
+        // dd($request->all());
 
         try {
             $request->validate([
                 'template-image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
                 'signature-image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+                'template-text' => 'nullable'
             ]);
         } catch (\Throwable $th) {
             //throw $th;
@@ -42,6 +43,9 @@ class TemplateController extends Controller
             $signature = $request->file('signature-image');
             $signatureName = 'signature.' . $template->extension();
 
+            $text = $request->input('template-text');
+            $textName = 'text.txt';
+
             $folderName = 'uploads/' . $program->id . '_' . $program->title;
             if (is_dir(public_path('storage/' . $folderName)))
                 Storage::deleteDirectory('public/' . $folderName);
@@ -49,10 +53,13 @@ class TemplateController extends Controller
             Storage::makeDirectory(($folderName));
             $template->storeAs(($folderName), $templateName, 'public');
             $signature->storeAs(($folderName), $signatureName, 'public');
+            Storage::put('public/' . $folderName . '/' . $textName, $text);
+
             return redirect()->route('programs.show',  $program->id)->with('success', 'تم حفظ الملفات بنجاح');
             // $request->image->move(public_path('images'), $folderName);
         } catch (\Throwable $th) {
             //throw $th;
+            return back()->with('error', $th->getMessage());
         }
     }
 

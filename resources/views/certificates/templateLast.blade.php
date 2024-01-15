@@ -22,10 +22,6 @@
     small {
         border: 1px solid red;
     } */
-    .bottom {
-        position: absolute;
-        bottom: 0;
-    }
 
     .container {
         margin: auto;
@@ -62,22 +58,11 @@
 
     }
 
-    body {
-        width: 100%;
-        height: 100%;
-    }
-
     .table {
-
         width: 100%;
         margin-top: 3rem;
         text-align: center;
         vertical-align: bottom;
-    }
-
-    .p-bottom {
-        position: absolute;
-        bottom: 8rem;
     }
 
     .stamp-td,
@@ -106,18 +91,17 @@
     /* .signature-img{
 display: block;
     } */
-
-
-
-    .certificate-qr {
-        text-align: center;
-    }
-
     .certificate-id {
         font-size: 0.8rem;
         position: absolute;
         bottom: 0;
         right: 1rem;
+    }
+
+
+
+    .certificate-qr {
+        text-align: center;
     }
 
     .border-top-dashed {
@@ -131,24 +115,43 @@ display: block;
 
 
 
-    {{-- <div class="container"> --}}
-    {!! $content !!}
-    {{-- </div> --}}
-    <div class="p-bottom">
-        <table class="table ">
-            <tr class="" style=" ">
-                <td class="stamp-td ">
+    <div class="container">
+
+        <h1 class="certificate-header">شهادة مشاركة
+        </h1>
+        <div class="certificate-title">تشهد {{ $organization->user->name }} بأنّ</div>
+        <div class="participant-name">{{ $program->participants()->find($participantId)->name }}</div>
+        <div class="certificate-static-text ">
+            قد شارك في الدورة التدريبية <span class="program-title">{{ $program->title }}</span> في الفترة من<br>
+            {{ date('d-m-Y ', strtotime($program->start_date)) }} إلى
+            {{ date('d-m-Y', strtotime($program->end_date)) }} المقامة في {{ $program->location }}
+
+        </div>
+        <table class="table">
+            <tr style="text-align: ">
+                <td class="stamp-td">
                     {{-- <small class="border-top-dashed">الختم</small> --}}
                 </td>
                 <td>
-                    <div class="certificate-qr ">
+                    <div class="certificate-qr">
                         {!! $qrCode !!}
                     </div>
-
+                    {{-- <small class="certificate-id">
+                        {{ $certificateId }}
+                    </small> --}}
 
                 </td>
-                <td class="signature-td  "
-                    style="background-image: url('{{ public_path($templateImages[0]) }}');background-repeat:no-repeat;">
+                <td class="signature-td "
+                    style="background-image: url('{{ public_path($templateImages[0]) }}');background-repeat:no-repeat;
+">
+                    {{-- <div
+                        style="
+                        background-image: url('{{ public_path('images/s1.png') }}');
+                        background-repeat:no-repeat;
+                        height:103px;
+                        width:75%;
+                        ">
+                    </div> --}}
                     <small class="border-top-dashed">
                         التوقيع</small>
                 </td>
@@ -172,7 +175,7 @@ display: block;
 {{-- <img src="{{ public_path('images/star-template.jpg') }}" width="700px" height="700px" alt="{{ $name }}"> --}}
 
 
-{{-- </body> --}}
+</body>
 
 
 </html>

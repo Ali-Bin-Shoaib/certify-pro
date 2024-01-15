@@ -23,17 +23,16 @@ class CertificateController extends Controller
         $program = Program::find($programId);
         $organization = Organization::find(Auth::user()->member->organization_id);
         $participant = Participant::find($participantId);
-
         if (!$program || !$organization || !$participant)
             return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
 
         $document = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
-            'margin_left' => 0,
-            'margin_right' => 0,
-            'margin_top' => 20,
-            'margin_bottom' => 0,
+            'margin_left' => 20,
+            'margin_right' => 20,
+            'margin_top' => 40,
+            'margin_bottom' => -100,
         ]);
 
         $url = "http://127.0.0.1:8000/certificate-verify/";
@@ -61,24 +60,30 @@ class CertificateController extends Controller
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }
-        // dd($certificateId);
         try {
             $storage = 'public/uploads/';
             $images = Storage::files($storage . $program->id . '_' . $program->title);
-            $templateImages=[];
-            foreach ($images as $key=>$image) {
+            $templateImages = [];
+            foreach ($images as $key => $image) {
                 $templateImages[] = str_replace('public', 'storage', $image);
             }
-            // $templateImage = public_path($program->id . '_' . $program->title . '/' . 'template.png');
-            // dd($templateImages,$images);
-            // dd($templateImages,public_path('images/s1.png'));
-            // dd(public_path('storage/uploads/3_quia/template.png'));
         } catch (\Throwable $th) {
             //throw $th;
+            return back()->with('error', $th->getMessage());
         }
         $qrCode = $this->qrGenerate($url, $certificateId);
+        $content = Storage::get($storage . $program->id . '_' . $program->title . '/text.txt');
+        $content = $this->replaceTokensWithValues($content, [
+            '{اسم_المشارك}', '{اسم_المنظمة}', '{اسم_الدورة}', '{الموقع}', '{تاريخ_البدايةوالنهاية}', '{التوقيع}', '{QR}'
+        ], [
+            $participant->name,
+            $organization->user->name,
+            $program->title, $program->location,
+            date('Y/m/d ', strtotime($program->start_date)) . 'إلى' . date('Y/m/d ', strtotime($program->end_date)),'', ''
+
+        ]);
         $document->WriteHTML(view('certificates.template', compact(
-            ['program', 'organization', 'qrCode', 'participantId', 'certificateId', 'templateImages']
+            ['program', 'organization', 'qrCode', 'participantId', 'certificateId', 'templateImages', 'content']
         )));
         return $document->Output();
     }
@@ -131,5 +136,13 @@ class CertificateController extends Controller
                     // return redirect()->back()->with('error', $th->getMessage());
                     // return redirect()->back()->with('error', 'error : ' . $th->getMessage());
                 }
+    }
+
+    public function replaceTokensWithValues(string $content, array $tokens, array $values): string
+    {
+        foreach ($tokens as $key => $token) {
+            $content = str_replace($token, $values[$key], $content);
+        }
+        return $content;
     }
 }
