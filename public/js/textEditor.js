@@ -22,7 +22,7 @@ $('#editor').trumbowyg(
 <h2 style="text-align: center; "><span >{اسم_المشارك}</span></h2>
 <h3 style="text-align: center; ">&nbsp;قد شارك في دورة <span >{اسم_الدورة}</span> المقامة في
     <span >{الموقع}</span> بتاريخ
-    <span >{تاريخ_البدايةوالنهاية}</span>&nbsp;
+    <span >{تاريخ_البداية} إلى {تاريخ_النهاية}</span>&nbsp;
 </h3>
 <p><br></p>
 <h2 style="text-align: left; >&nbsp; {التوقيع}</h2>

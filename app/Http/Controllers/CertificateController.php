@@ -6,11 +6,9 @@ use App\Models\Organization;
 use App\Models\Participant;
 use App\Models\Program;
 use App\Models\ProgramParticipant;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\Unique;
 use Mpdf\Mpdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -20,9 +18,18 @@ class CertificateController extends Controller
 {
     public function certificateGenerate(Request $request, string $programId, string $participantId)
     {
-        $program = Program::find($programId);
+        $program = Program::join('members', 'programs.member_id', 'members.id')
+            ->where('members.organization_id', Auth::user()->member->organization_id)
+            ->where('programs.id', $programId)
+            ->get('programs.*')
+            ->first();
+        // $program = Program::find($programId);
         $organization = Organization::find(Auth::user()->member->organization_id);
-        $participant = Participant::find($participantId);
+        $participant = Participant::join('members', 'participants.member_id', 'members.id')
+            ->where('members.organization_id', Auth::user()->member->organization_id)
+            ->where('participants.id', $participantId)
+            ->get('participants.*')
+            ->first();
         if (!$program || !$organization || !$participant)
             return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
 
@@ -115,27 +122,26 @@ class CertificateController extends Controller
     }
     public function certificateVerify(Request $request, string $certificateId = null)
     {
-        if ($certificateId === null)
-            if ($request->input("certificate_id") === null)
-                return view("certificates.verify");
-            else
-                try {
-                    $certificateId = $request->validate(["certificate_id" => 'required|string']);
-                    $certificate = ProgramParticipant::where('certificate_id', $certificateId)->first();
-                    // dd($certificateId);
-                    $participant = Participant::find($certificate->participant->id);
-                    $program = Program::find($certificate->program->id);
-                    if ($certificate && $program && $program)
-                        return view('certificates.certified', compact(['program', 'participant', 'certificate']));
-                    else
-                        return view('certificates.uncertified');
-                } catch (\Throwable $th) {
-                    //throw $th;
-                    return back()->with('error', 'حصل خطأ في جلب بيانات الشهادة .');
+        if ($certificateId === null && $request->input("certificate_id") === null)
+            return view("certificates.verify");
 
-                    // return redirect()->back()->with('error', $th->getMessage());
-                    // return redirect()->back()->with('error', 'error : ' . $th->getMessage());
-                }
+        try {
+            $certificateId = $certificateId ? $certificateId : $request->validate(["certificate_id" => 'required|string']);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'أدخل رقم شهادة للّتحقّق من أصالتها.');
+        }
+        try {
+            $certificate = ProgramParticipant::where('certificate_id', $certificateId)->first();
+            $participant = Participant::find($certificate->participant->id);
+            $program = Program::find($certificate->program->id);
+            if ($certificate && $program && $program)
+                return view('certificates.certified', compact(['program', 'participant', 'certificate']));
+            else
+                return view('certificates.uncertified');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error', 'حصل خطأ في جلب بيانات الشهادة .');
+        }
     }
 
     public function replaceTokensWithValues(string $content, array $values): string
