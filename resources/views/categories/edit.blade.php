@@ -8,7 +8,6 @@
 
             @csrf
             @method('PUT')
-            {{-- <h4 class="text-decoration-underline">معلومات التصنيف </h4> --}}
             <div class="row g-3 my-3">
                 <label class="col-md-2 form-label" for="title">التصنيف</label>
                 <div class="col-md-10">
@@ -20,7 +19,7 @@
 
             <div class="row g-5">
                 <div class="col-md-3"></div>
-                <button class="col-md-6 btn-solid-sm">تحديث تصنيف</button>
+                <button class="col-md-6 btn-solid-sm">تحديث </button>
             </div>
             @if ($errors)
                 <ul class="mt-2">

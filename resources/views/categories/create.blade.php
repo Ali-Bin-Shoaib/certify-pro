@@ -6,8 +6,6 @@
         <form method="POST" action="{{ route('categories.store') }}" class="container w-75 shadow-sm my-5 p-5 form-bg">
 
             @csrf
-            {{-- @method('POST') --}}
-            {{-- <h4 class="text-decoration-underline">معلومات المدرب </h4> --}}
             <div class="row g-3 my-3">
                 <label class="col-md-2 form-label" for="title">التصنيف</label>
                 <div class="col-md-10">
