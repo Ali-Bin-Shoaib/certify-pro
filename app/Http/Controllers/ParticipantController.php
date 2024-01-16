@@ -88,7 +88,7 @@ class ParticipantController extends Controller
             ->where('organization_id', Auth::user()->member->organization_id)
             ->where('participants.id', $id)
             ->get(['participants.*'])->first();
-
+        // dd($participant->programs);
         // dd($participant);
         if (!$participant)
             return redirect()->back()->with('error', 'لا يمكن إيجاد هذا المشارك.');

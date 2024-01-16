@@ -40,7 +40,7 @@ main {
 	padding-top: 3rem;
 	padding-bottom: 5rem;
 }
-.container > form {
+.container-fluid > form {
 	background-color: #eff4fd;
 	padding: 2rem !important;
 }

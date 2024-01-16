@@ -9,7 +9,7 @@ action="{{ route('participants.store', ['programId' => $program->id]) }}"
         @else
              action="{{ route('participants.store') }}"
         @endisset
-            class="container w-75 shadow-sm my-5 p-5 form-bg ">
+            class="container-fluid w-75 shadow-sm my-5 p-5 form-bg ">
             @csrf
             @isset($program)
                 <div class="container form-bg row  py-3 shadow-sm">

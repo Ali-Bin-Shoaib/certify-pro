@@ -46,7 +46,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js"
         integrity="sha512-YJgZG+6o3xSc0k5wv774GS+W1gx0vuSI/kr0E0UylL/Qg/noNspPtYwHPN9q6n59CTR/uhgXfjDXLTRI+uIryg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/langs/ar.min.js"
+        integrity="sha512-TLcp0JL5fVBMFE38fMA1QpKriHzCK+H1PNR3db2WmtRwOMbHqWPB2NWqZsHc+IkpYljujpSzSzAqUlVK+kTgjA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script src="https://cdn.tiny.cloud/1/i2yd1q1xyy1sq5dv3j6axcmva1g3jpfaeya76d7rrpejcajt/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/fontsize/trumbowyg.fontsize.js"
+        integrity="sha512-xHFhu0HHBdpnUP6TpIuwa1FGVr1K99NKrVJTuRKOxNJJ2Y8h3H16mqml92F2r2PYyl5ToovnWyaVyL8TLhN/jQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>@yield('title', config('app.name'))</title>
 </head>
 <style>
@@ -66,7 +73,7 @@
 
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
     @include('components.navbar')
-    <main class="bg-gray">
+    <main class="bg-gray ">
         {{-- @if (Session::has('error'))
             {{ Session::get('error') }}
         @endif --}}

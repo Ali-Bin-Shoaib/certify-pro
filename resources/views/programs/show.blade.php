@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('title', 'إضافة دورة')
 @section('main')
-    <div class="container mt-5 py-5 ">
+    <div class="container-fluid w-75 py-5">
         <h1 class="text-decoration-underline text-center ">معلومات الدورة</h1>
-        <div class="container form-bg row  py-5 shadow-sm">
+        <div class="container mx-auto form-bg row  py-5 shadow-sm">
 
             <h5 class=" col-md-3">تمت الإضافة بواسطة: </h5>
             <b class="col-md-7 fs-4">{{ $program->member->user->name ?? '' }}</b>
@@ -41,8 +41,11 @@
         <hr class="my-3">
 
         <div>
-            <a class="btn-solid-reg" href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
-                الشهادة</a>
+            <a class="btn-solid-reg" href="{{ route('template.create', ['programId' => $program->id]) }}">
+                رفع ملفات الشهادة
+            </a>
+            <a class="btn-solid-reg float-end" href="{{ route('participants.create', ['programId' => $program->id]) }}">
+            إضافة مشارك للدورة</a>
         </div>
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
             <tfoot>

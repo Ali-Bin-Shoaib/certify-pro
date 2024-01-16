@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'إضافة دورة')
 @section('main')
-    <div class="container py-5">
+    <div class="container-fluid w-75 py-5">
         <h1 class="text-decoration-underline text-center">إضافة دورة</h1>
         <form method="POST" action="{{ route('programs.store') }}" class="container w-75 shadow-sm my-5 p-5 form-bg">
             @csrf

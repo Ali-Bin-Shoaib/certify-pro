@@ -2,7 +2,7 @@
 @section('title', 'أعضاء المنظمة')
 
 @section('main')
-    <div class="container">
+    <div class="container-fluid w-75 py-5">
         <h1 class="text-center text-decoration-underline">أعضاء المنظمة</h1>
         <a class="btn-solid-sm" href="{{ route('members.create') }}"> <i class="fa fa-plus"></i> إضافة عضو</a>
         <table class="table table-bordered table-hover m-0 mt-3 ">

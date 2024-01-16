@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', 'تسجيل الدخول')
 @section('main')
     <div class=" basic-1 bg-gray"
         style="background-image: url({{ asset('images/header-background.jpg') }});background-size:contain">
@@ -33,8 +34,8 @@
                         تذكرني
                     </label>
                 </div>
-                <div class="row text-center">
-                    <small class="g-2 ps-5">ليس لديك حساب؟ <a href="signup" class="fw-bold nav-link d-inline">سجّل
+                <div class="row text-center ">
+                    <small class="g-2 ps-5 my-3">ليس لديك حساب؟ <a href="signup" class="fw-bold nav-link d-inline">سجّل
                             الآن</a></small>
                 </div>
 

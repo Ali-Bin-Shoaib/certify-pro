@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'معلومات المشارك')
 @section('main')
-    <div class="container w-50 mt-5 py-5">
+    <div class="container-fluid w-75 py-5 ">
         <h1 class="text-decoration-underline text-center ">معلومات المشارك</h1>
 
         <div class="container form-bg row  py-5 shadow-sm overflow-hidden ">

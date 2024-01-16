@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'تعديل دورة')
 @section('main')
-    <div class="container py-5">
+    <div class="container-fluid w-75 py-5">
         <h1 class="text-decoration-underline text-center">تعديل الدورة</h1>
         <form method="POST" action="{{ route('programs.update', $program->id) }}"
             class="container w-75 shadow-sm my-5 p-5 form-bg">

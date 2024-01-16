@@ -1,6 +1,6 @@
-<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm"
+<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm "
     aria-label="Main navigation">
-    <div class="container-fluid w-75">
+    <div class="container-fluid mx-5 px-5">
         <!-- Image Logo -->
 
         {{-- <a class="navbar-brand" href="{{ route('home') }}">
@@ -11,10 +11,10 @@
         <!-- Text Logo - Use this if you don't have a graphic logo -->
         <ul class="navbar-nav ms-auto navbar-nav-scroll">
             <li class="nav-item">
-                <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0" href="{{ route('home') }}"> <img
+                <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0 d-flex flex-row align-items-center justify-content-center" href="{{ route('home') }}"> <img
                         src="{{ asset('favicon.ico') }}" alt="Logo" width="60" height="60"
                         class="d-inline-block align-text-top">
-                    certify pro
+                    {{config('app.name')}}
                 </a>
             </li>
         </ul>
@@ -57,28 +57,28 @@
                     <a class="nav-link" href="{{ route('certificateVerify') }}">تحقّق من شهادة</a>
                 </li>
             </ul>
-            @auth
-
-                {{-- <div class="nav-item ms-3 py-1"> --}}
-                <div class="d-flex flex-column gap-3 pe-2">
-                    <div>نوع الحساب: {{ Auth::user()->role }}</div>
-                    <div><b>الاسم: {{ Auth::user()->name }}</b></div>
-                </div>
-            @endauth
-            <span class="nav-item">
-
-                @if (!str_contains(url()->current(), 'login'))
-                    @guest
-
-                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 "
-                            href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
-                    @else
-                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 "
-                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
-                    @endguest
-                @endif
-            </span>
         </div> <!-- end of navbar-collapse -->
+        @auth
+
+            {{-- <div class="nav-item ms-3 py-1"> --}}
+            <div class="d-flex flex-column gap-3 pe-2">
+                <div>نوع الحساب: {{ Auth::user()->role }}</div>
+                <div><b>الاسم: {{ Auth::user()->name }}</b></div>
+            </div>
+        @endauth
+        <span class="nav-item">
+
+            @if (!str_contains(url()->current(), 'login'))
+                @guest
+
+                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
+                        href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
+                @else
+                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
+                        href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                @endguest
+            @endif
+        </span>
     </div> <!-- end of container -->
 </nav> <!-- end of navbar -->
 <!-- end of navigation -->

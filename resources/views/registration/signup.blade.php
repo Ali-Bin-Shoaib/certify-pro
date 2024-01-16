@@ -3,7 +3,7 @@
 @section('main')
     <div class="basic-1">
 
-        <div class="container ">
+    <div class="container-fluid w-75 py-5">
             <h3 class="text-center text-decoration-underline">معلومات المنظمة</h3>
             <form method="POST" action="{{ route('signup') }}" class="container w-75 shadow-sm my-3">
                 @csrf
@@ -56,7 +56,7 @@
                     </div>
                 </div> --}}
                 <div class="row text-center">
-                    <small class="g-2 ps-5">لديك حساب ؟ <a href="signup" class="fw-bold nav-link d-inline">سجّل دخول </a></small>
+                    <small class="g-2 ps-5 my-3">لديك حساب ؟ <a href="login" class="fw-bold nav-link d-inline">سجّل دخول </a></small>
                 </div>
 
                 <div class="row g-5">

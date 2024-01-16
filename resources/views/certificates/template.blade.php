@@ -127,7 +127,7 @@ display: block;
 
 
 <body {{-- style="background-image: url('{{ public_path('images/test3.jpg') }}'); margin: 0; padding: 0; box-sizing: border-box;"> --}} {{-- style="background-image: url('{{public_path('storage/uploads/3_quia/template.jpg')}}'); margin: 0; padding: 0; box-sizing: border-box;"> --}}
-    style="background-image: url('{{ public_path($templateImages[1]) }}'); margin: 0; padding: 0; box-sizing: border-box;">
+    style="background-image: url('{{ public_path($templateImages[1]) }}');background-repeat:no-repeat; margin: 0; padding: 0; box-sizing: border-box;">
 
 
 

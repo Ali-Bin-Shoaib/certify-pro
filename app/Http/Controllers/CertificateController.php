@@ -29,10 +29,10 @@ class CertificateController extends Controller
         $document = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
-            'margin_left' => 20,
-            'margin_right' => 20,
+            'margin_left' => 30,
+            'margin_right' => 30,
             'margin_top' => 40,
-            'margin_bottom' => -100,
+            'margin_bottom' => 0,
         ]);
 
         $url = "http://127.0.0.1:8000/certificate-verify/";
@@ -73,13 +73,13 @@ class CertificateController extends Controller
         }
         $qrCode = $this->qrGenerate($url, $certificateId);
         $content = Storage::get($storage . $program->id . '_' . $program->title . '/text.txt');
+        if ($content == null) return back()->with('error', 'لا توجد ملفات الشهادة. يجب رفع الملفات أولا');
         $content = $this->replaceTokensWithValues($content, [
-            '{اسم_المشارك}', '{اسم_المنظمة}', '{اسم_الدورة}', '{الموقع}', '{تاريخ_البدايةوالنهاية}', '{التوقيع}', '{QR}'
-        ], [
             $participant->name,
             $organization->user->name,
             $program->title, $program->location,
-            date('Y/m/d ', strtotime($program->start_date)) . 'إلى' . date('Y/m/d ', strtotime($program->end_date)),'', ''
+            date('Y/m/d ', strtotime($program->start_date)),
+            date('Y/m/d ', strtotime($program->end_date)), '', ''
 
         ]);
         $document->WriteHTML(view('certificates.template', compact(
@@ -138,11 +138,17 @@ class CertificateController extends Controller
                 }
     }
 
-    public function replaceTokensWithValues(string $content, array $tokens, array $values): string
+    public function replaceTokensWithValues(string $content, array $values): string
     {
-        foreach ($tokens as $key => $token) {
-            $content = str_replace($token, $values[$key], $content);
-        }
+        $tokens = ['{اسم_المشارك}', '{اسم_المنظمة}', '{اسم_الدورة}', '{الموقع}', '{تاريخ_البداية}', '{تاريخ_النهاية}', '{التوقيع}', '{QR}'];
+        if (isset($values))
+            foreach ($tokens as $key => $token) {
+                $content = str_replace($token, $values[$key], $content);
+            }
+        else
+            foreach ($tokens as $token) {
+                $content = str_replace($token, '', $content);
+            }
         return $content;
     }
 }

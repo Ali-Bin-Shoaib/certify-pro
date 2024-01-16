@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'إضافة مدرب')
 @section('main')
-    <div class="container w-75 mt-5 py-5">
+    <div class="container-fluid w-75 py-5">
         <h1 class="text-decoration-underline text-center ">معلومات المدرب</h1>
 
         <div class="container  form-bg row  py-5 shadow-sm overflow-hidden">

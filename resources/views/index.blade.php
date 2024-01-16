@@ -7,13 +7,13 @@
                 <div class="col-lg-6 col-xl-5">
                     <div class="text-container">
                         <h1 class="h1 fw-bold text-black text-start">
-                            "Certify Pro" يسهِّل عليك إصدار الشهادات بسهولة لبرامجك ودوراتك التدريبية.
+                            "{{config('app.name')}}" يسهِّل عليك إصدار الشهادات بسهولة لبرامجك ودوراتك التدريبية.
 
 
                         </h1>
-                        <p class="p-large text-start">مرحبًا بك في "Certify Pro"،
+                        <p class="p-large text-start">مرحبًا بك في "{{config('app.name')}}"،
                             نحن هنا لمساعدتك في تسهيل وتوثيق عملية إصدار الشهادات للمشاركين في برامجكم
-                            ودوراتكم. ابدأ اليوم واستخدم "Certify Pro" لإصدار الشهادات
+                            ودوراتكم. ابدأ اليوم واستخدم "{{config('app.name')}}" لإصدار الشهادات
                             المحترفة بكفاءة ودقة.
                         </p>
                         <a class="btn-solid-lg" href="{{ route('programs.create') }}">إضافة دورة</a>

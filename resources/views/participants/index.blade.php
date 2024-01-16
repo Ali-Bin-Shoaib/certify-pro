@@ -2,7 +2,7 @@
 @section('title', 'المشاركين')
 
 @section('main')
-    <div class="container">
+    <div class="container-fluid w-75 py-5">
         <h1 class="text-center text-decoration-underline">المشاركين</h1>
         <a class="btn-solid-sm" href="{{ route('participants.create') }}"> <i class="fa fa-plus"></i> إضافة مشارك</a>
         <table class="table table-bordered table-hover m-0 mt-3 ">
