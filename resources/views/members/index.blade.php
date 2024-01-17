@@ -15,6 +15,7 @@
                 <th></th>
             </thead>
             <tbody class="table-group-divider">
+
                 @foreach ($members as $key => $member)
                     <tr>
                         <td>{{ ++$key }}</td>

@@ -7,7 +7,7 @@
 
         <h1 class="text-center text-decoration-underline">الدورات</h1>
         <a class="btn-solid-sm" href="{{ route('programs.create') }}"> <i class="fa fa-plus"></i> إضافة دورة</a>
-        <div class="table-responsive">
+        <div class="table-responsive-md">
 
             <table class="table table-bordered table-hover m-0 mt-3 ">
                 <table class="table table-bordered table-hover m-0 mt-3 ">

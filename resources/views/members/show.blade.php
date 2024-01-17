@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title', 'إضافة دورة')
+@section('title', 'إضافة عضو')
 @section('main')
     <div class="container-fluid w-75 py-5">
         <h1 class="text-decoration-underline text-center ">معلومات العضو</h1>
 
-        <div class="container  form-bg row  py-5 shadow-sm overflow-hidden">
+        <div class="container mx-auto form-bg row  py-5 shadow-sm overflow-hidden">
 
             <h5 class=" col-md-3">ID: </h5>
             <b class="col-md-7 fs-4">{{ $member->id }}</b>
@@ -26,10 +26,10 @@
 
 
             <h5 class=" col-md-3">تاريخ الإضافة: </h5>
-            <b class="col-md-7 fs-4">{{ date('Y/m/dD - h-i-s a',strtotime($member->created_at)) }}</b>
+            <b class="col-md-7 fs-4">{{ date('Y/m/d - h-i-s ', strtotime($member->created_at)) }}</b>
 
             <h5 class=" col-md-3">آخر تعديل: </h5>
-            <b class="col-md-7 fs-4">{{ date('Y/m/dD - h-i-s a',strtotime($member->updated_at)) }}</b>
+            <b class="col-md-7 fs-4">{{ date('Y/m/d - h-i-s ', strtotime($member->updated_at)) }}</b>
 
             <div class="d-flex flex-row align-items-end justify-content-end">
                 <a href="{{ route('members.edit', $member->id) }}" class="btn btn-warning btn-sm text-white">

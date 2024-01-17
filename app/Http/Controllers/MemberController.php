@@ -14,10 +14,12 @@ class MemberController extends Controller
     public function index()
     {
         try {
-            $members = Member::where('members.organization_id', Auth::user()->organization->id)->select('members.*')->get();
-            return view('members.index', compact('members'));
+            $members = Member::where('members.organization_id', Auth::user()->organization->id)->get('members.*');
+            if ($members)
+                return view('members.index', compact('members'));
+            return back()->with('error', 'لا يوجد أعضاء ');
         } catch (\Throwable $th) {
-            return back()->with('error', 'حصل خطأ عند عرض بيانات الأعضاء.');
+            return back()->with('error', 'حصل خطأ عند البحث عن معلومات الأعضاء.');
         }
     }
 
@@ -42,7 +44,7 @@ class MemberController extends Controller
                 // 'organization_id' => 'required',
             ]);
         } catch (\Throwable $th) {
-            // dd($th);
+            // return back()->with('error', 'خطأ في البيانات المدخلة');
             return back()->with('error', $th->getMessage());
         }
         try {
@@ -76,13 +78,13 @@ class MemberController extends Controller
     public function edit(string $id)
     {
         try {
-            $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('id', $id)->first();
+            $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('members.id', $id)->first();
             if ($member != null) {
                 return view('members.edit', compact('member'));
             }
-            return 'not found';
+            return back()->with('error', 'حصل خطأ عند تحديث بيانات العضو.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'خطأ العضو غير موجود');
+            return back()->with('error', 'خطأ. العضو غير موجود');
         }
     }
 
@@ -97,17 +99,22 @@ class MemberController extends Controller
                 'job_title' => 'required',
             ]);
         } catch (\Throwable $th) {
-            return back()->with('error', 'خطأ في إدخال البيانات');
+            return back()->with('error', $th->getMessage());
+            // return back()->with('error', 'خطأ في إدخال البيانات');
         }
         $member = Member::where('members.organization_id', Auth::user()->organization->id)->where('id', $id)->first();
         $user = User::find($member->user_id);
-        if ($member != null && $user != null) {
-
-            $member->update($request->only('job_title'));
-            $user->update($request->except('job_title'));
-            return redirect()->route('members.index')->with('success', 'Member is updated successfully');
+        try {
+            if ($member != null && $user != null) {
+                $member->update($request->only('job_title'));
+                $user->update($request->except('job_title'));
+                return redirect()->route('members.index')->with('success', 'تم تحديث العضو بنجاح');
+            }
+            return back()->with('error', 'لم تتم عملية تحديث البيانات');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'حصل خطأ في تحديث البيانات');
+            //throw $th;
         }
-        return 'member not found';
     }
 
 
@@ -120,7 +127,7 @@ class MemberController extends Controller
             $member->delete();
             return redirect()->route('members.index')->with('success', 'تم الحذف بنجاح.');
         } catch (\Throwable $th) {
-            return redirect()->route('members.index')->with('error', 'حصل خطأ لم تتم عملية الحذف.');
+            return back()->with('error', 'حصل خطأ لم تتم عملية الحذف.');
             //throw $th;
         }
     }
