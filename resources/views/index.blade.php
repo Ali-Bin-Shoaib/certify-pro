@@ -6,17 +6,17 @@
             <div class="row">
                 <div class="col-lg-6 col-xl-5">
                     <div class="text-container">
-                        <h1 class="h1 fw-bold text-black text-start">
-                            "{{config('app.name')}}" يسهِّل عليك إصدار الشهادات بسهولة لبرامجك ودوراتك التدريبية.
+                        <h1 class="h1 fw-bold text-black text-start mb-5">
+                            "{{ config('app.name') }}" يسهِّل عليك إصدار الشهادات بسهولة لبرامجك ودوراتك التدريبية.
 
 
                         </h1>
-                        <p class="p-large text-start">مرحبًا بك في "{{config('app.name')}}"،
+                        {{-- <p class="p-large text-start">مرحبًا بك في "{{config('app.name')}}"،
                             نحن هنا لمساعدتك في تسهيل وتوثيق عملية إصدار الشهادات للمشاركين في برامجكم
                             ودوراتكم. ابدأ اليوم واستخدم "{{config('app.name')}}" لإصدار الشهادات
                             المحترفة بكفاءة ودقة.
-                        </p>
-                        <a class="btn-solid-lg" href="{{ route('programs.create') }}">إضافة دورة</a>
+                        </p> --}}
+                        <a class="btn-solid-lg mt-5" href="{{ route('programs.create') }}">إضافة دورة</a>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6 col-xl-7">
@@ -40,6 +40,35 @@
             </div> <!-- end of row -->
             <div class="row">
                 <div class="col-lg-12">
+                    <!-- Card -->
+                    <div class="card">
+                        <div class="card-icon green">
+                            <span class="fas fa-award"></span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">إصدار شهادة</h5>
+                            <p>نقدم خدمات تصميم شهادات الدورات المخصصة وفقًا لمتطلباتك، مع إمكانية تخصيص النص والشعار
+                                والتصميم لإبراز هوية المؤسسة الخاصة بك.</p>
+                            <a class="read-more no-line" href="article.html">المزيد <span
+                                    class="fas fa-long-arrow-alt-left"></span></a>
+                        </div>
+                    </div>
+                    <!-- end of card -->
+
+                    <!-- Card -->
+                    <div class="card">
+                        <div class="card-icon green">
+                            <span class="fas fa-check"></span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">التحقق من أصالة الشهادة</h5>
+                            <p>توفر المنصة إمكانية التحقق من أصالة أي شهادة عن طريق إدخال الرقم الخاص بالشهادة أو عن طريق
+                                مسح الQr code الخاص بكل شهادة.</p>
+                            <a class="read-more no-line" href="article.html">المزيد <span
+                                    class="fas fa-long-arrow-alt-left"></span></a>
+                        </div>
+                    </div>
+                    <!-- end of card -->
 
                     <!-- Card -->
                     <div class="card">
@@ -97,35 +126,6 @@
                     </div>
                     <!-- end of card -->
 
-                    <!-- Card -->
-                    <div class="card">
-                        <div class="card-icon green">
-                            <span class="fas fa-award"></span>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">تصميم شهادة</h5>
-                            <p>نقدم خدمات تصميم شهادات الدورات المخصصة وفقًا لمتطلباتك، مع إمكانية تخصيص النص والشعار
-                                والتصميم لإبراز هوية المؤسسة الخاصة بك.</p>
-                            <a class="read-more no-line" href="article.html">المزيد <span
-                                    class="fas fa-long-arrow-alt-left"></span></a>
-                        </div>
-                    </div>
-                    <!-- end of card -->
-
-                    <!-- Card -->
-                    <div class="card">
-                        <div class="card-icon green">
-                            <span class="fas fa-check"></span>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">التحقق من أصالة الشهادة</h5>
-                            <p>توفر المنصة إمكانية التحقق من أصالة أي شهادة عن طريق إدخال الرقم الخاص بالشهادة أو عن طريق
-                                مسح الQr code الخاص بكل شهادة.</p>
-                            <a class="read-more no-line" href="article.html">المزيد <span
-                                    class="fas fa-long-arrow-alt-left"></span></a>
-                        </div>
-                    </div>
-                    <!-- end of card -->
 
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
@@ -196,22 +196,22 @@
             </div> <!-- end of row -->
             <div class="row align-items-center">
                 <div class="col-xl-5">
-                    <div class="accordion" id="accordionExample">
+
+                    {{-- <div class="accordion" id="accordionExample">
 
                         <!-- Accordion Item -->
                         <div class="accordion-item ">
-                            {{-- <div class="accordion-icon ">
-                                <span class="fas fa-tv"></span>
-                            </div> <!-- end of accordion-icon --> --}}
-                            <div class="accordion-header" id="headingOne">
+                            <div class="accordion-header d-flex justify-content-center align-items-center gap-3" id="headingOne">
+                                <span class="fas fa-tv bg-success p-3 rounded-4 text-white"></span>
+
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     تخصيص سهل </button>
                             </div> <!-- end of accordion-header -->
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                                 data-bs-parent="#accordionExample">
-                                <div class="accordion-body">قم بتخصيص وتصميم الشهادات المهنية بسهولة وفقًا لاحتياجاتك.
-                                    يمكنك إضافة شعار منظمتك، واختيار من بين مجموعة متنوعة من القوالب، وتخصيص الشهادة بتفاصيل
+                                <div class="accordion-body">قم بتخصيص وتصميم الشهادات بسهولة وفقًا لاحتياجاتك.
+                                    واختيار من بين مجموعة متنوعة من القوالب، وتخصيص الشهادة بتفاصيل
                                     المستلم.</div>
                             </div> <!-- end of accordion-collapse -->
                         </div> <!-- end of accordion-item -->
@@ -219,10 +219,13 @@
 
                         <!-- Accordion Item -->
                         <div class="accordion-item">
-                            {{-- <div class="accordion-icon blue">
+                            <div class="accordion-icon blue">
                                 <span class="fas fa-microphone"></span>
-                            </div> <!-- end of accordion-icon --> --}}
-                            <div class="accordion-header" id="headingTwo">
+                            </div> <!-- end of accordion-icon -->
+
+                            <div class="accordion-header d-flex justify-content-center align-items-center gap-3 " id="headingTwo">
+                                <span class="fas fa-microphone"></span>
+
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     واجهة سهلة الإستخدام
@@ -239,10 +242,10 @@
 
                         <!-- Accordion Item -->
                         <div class="accordion-item">
-                            {{-- <div class="accordion-icon purple">
+                            <div class="accordion-icon purple">
                                 <span class="fas fa-video"></span>
-                            </div> <!-- end of accordion-icon --> --}}
-                            <div class="accordion-header" id="headingThree">
+                            </div> <!-- end of accordion-icon -->
+                            <div class="accordion-header d-flex justify-content-center align-items-center gap-3" id="headingThree">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     ملء البيانات التلقائي
@@ -259,10 +262,10 @@
 
                         <!-- Accordion Item -->
                         <div class="accordion-item">
-                            {{-- <div class="accordion-icon orange">
+                            <div class="accordion-icon orange">
                                 <span class="fas fa-tools"></span>
-                            </div> <!-- end of accordion-icon --> --}}
-                            <div class="accordion-header" id="headingFour">
+                            </div> <!-- end of accordion-icon -->
+                            <div class="accordion-header d-flex justify-content-center align-items-center gap-3" id="headingFour">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                     خيارات تسليم مرنة
@@ -276,7 +279,12 @@
                         </div> <!-- end of accordion-item -->
                         <!-- end of accordion-item -->
 
-                    </div> <!-- end of accordion -->
+                    </div> <!-- end of accordion --> --}}
+                    <ul class="text-white fs-3 d-flex flex-column gap-5 list-unstyled">
+                        <li> <i class="fa-solid fa-gears ms-3"></i>تخصيص سهل</li>
+                        <li><i class="fa-solid fa-check ms-3"></i>واجهة سهلة الإستخدام</li>
+                        <li><i class="fa-solid fa-print ms-3"></i>خيارات تسليم مرنة</li>
+                    </ul>
                 </div> <!-- end of col -->
                 <div class="col-xl-7">
                     <div class="image-container">
