@@ -25,8 +25,7 @@ class ProgramController extends Controller
     {
         $categories = Category::join('members', 'categories.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
-            ->select('categories.*')
-            ->get();
+            ->get('categories.*');
         return view('programs.create', compact('categories'));
     }
 
