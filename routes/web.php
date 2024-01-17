@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TrainerController;
@@ -36,6 +37,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('certificateVerify');
 
 Route::group(['middleware' => 'organization'], function () {
+
+    Route::get('organizations/{organizationId}/edit',[OrganizationController::class, 'edit'])->name('organizations.edit');
     Route::resource('members', MemberController::class);
 });
 

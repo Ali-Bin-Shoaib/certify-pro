@@ -40,12 +40,13 @@
 
         <hr class="my-3">
 
-        <div>
+        <div class="d-flex align-items-center justify-content-around mb-5 mt-4">
             <a class="btn-solid-reg" href="{{ route('template.create', ['programId' => $program->id]) }}">
                 رفع ملفات الشهادة
             </a>
-            <a class="btn-solid-reg float-end" href="{{ route('participants.create', ['programId' => $program->id]) }}">
-            إضافة مشارك للدورة</a>
+            <a class="btn-solid-reg " href="{{ route('participants.create', ['programId' => $program->id]) }}">
+                إضافة مشارك للدورة</a>
+            <a href="{{route('partici')}}" class="btn-solid-reg ">تحميل بيانات من ملف إكسل</a>
         </div>
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">
             <tfoot>

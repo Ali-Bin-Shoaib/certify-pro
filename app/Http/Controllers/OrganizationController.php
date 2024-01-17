@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrganizationController extends Controller
 {
@@ -43,7 +45,14 @@ class OrganizationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            $organization = Organization::where('id', Auth::user()->organization->id)->first();
+            if ($organization)
+                return view('organizations.edit', compact('organization'));
+            return back()->with('error', 'لا يوجد حساب منظمة');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'حصل خطأ عند محاولة عرض صفحة تعديل البيانات');
+        }
     }
 
     /**
