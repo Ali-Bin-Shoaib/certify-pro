@@ -38,7 +38,8 @@ Route::get('/certificate-verify/{certificateId?}', [CertificateController::class
 
 Route::group(['middleware' => 'organization'], function () {
 
-    Route::get('organizations/{organizationId}/edit',[OrganizationController::class, 'edit'])->name('organizations.edit');
+    Route::get('organizations/edit',[OrganizationController::class, 'edit'])->name('organization.edit');
+    Route::post('organizations/update',[OrganizationController::class, 'update'])->name('organization.update');
     Route::resource('members', MemberController::class);
 });
 

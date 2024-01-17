@@ -11,10 +11,10 @@
         <!-- Text Logo - Use this if you don't have a graphic logo -->
         <ul class="navbar-nav ms-auto navbar-nav-scroll">
             <li class="nav-item">
-                <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0 d-flex flex-row align-items-center justify-content-center" href="{{ route('home') }}"> <img
-                        src="{{ asset('favicon.ico') }}" alt="Logo" width="60" height="60"
-                        class="d-inline-block align-text-top">
-                    {{config('app.name')}}
+                <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0 d-flex flex-row align-items-center justify-content-center"
+                    href="{{ route('home') }}"> <img src="{{ asset('favicon.ico') }}" alt="Logo" width="60"
+                        height="60" class="d-inline-block align-text-top">
+                    {{ config('app.name') }}
                 </a>
             </li>
         </ul>
@@ -60,11 +60,29 @@
         </div> <!-- end of navbar-collapse -->
         @auth
 
-            {{-- <div class="nav-item ms-3 py-1"> --}}
-            <div class="d-flex flex-column gap-3 pe-2">
-                <div>نوع الحساب: {{ Auth::user()->role }}</div>
-                <div><b>الاسم: {{ Auth::user()->name }}</b></div>
-            </div>
+            {{-- < class="nav-item ms-3 py-1"> --}}
+            @if (Auth::user()->role === 'organization')
+                <div class="btn-group">
+                    <button type="button" class="btn-solid-sm dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('organization.edit', Auth::user()->organization->id) }}">تعديل البانات</a>
+                        </li>
+                        <li> <a class="dropdown-item d-flex align-items-center justifiy-content-center gap-1 ms-0 "
+                                href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            @endif
+            {{-- <div>نوع الحساب: {{ Auth::user()->role }}</div>
+                <div><b>الاسم: {{ Auth::user()->name }}</b></div> --}}
+
         @endauth
         <span class="nav-item">
 
@@ -74,8 +92,10 @@
                     <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
                         href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
                 @else
-                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
-                        href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                    @if (Auth::user()->role == 'member')
+                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
+                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                    @endif
                 @endguest
             @endif
         </span>
