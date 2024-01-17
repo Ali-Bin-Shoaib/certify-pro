@@ -34,30 +34,32 @@ class ProgramController extends Controller
     {
         try {
             $this->validate($request, [
+                //program data
                 'title' => 'required',
                 'category_id' => 'required',
                 'location' => 'required',
                 'start_date' => 'required',
                 'end_date' => 'required',
+                //trainer data
                 'name' => 'required',
                 'gender' => 'required',
-                'phone' => 'required',
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
             ]);
-
-            $newProgram = $request->only(['title', 'category_id', 'location', 'start_date', 'end_date']);
-            $newTrainer = $request->only(['name', 'gender', 'phone']);
-            $newProgram['member_id'] = Auth::user()->member->id;
-            $newTrainer['member_id'] = Auth::user()->member->id;
-            // dd($request->all(), $newTrainer);
-            $program = Program::create($newProgram);
-            $trainer = Trainer::create($newTrainer);
-            $program->trainers()->attach($trainer);
-
-            return redirect()->route('programs.index')->with('success', 'تم إضافة معلومات الدورة بنجاح');
         } catch (\Throwable $th) {
-            throw $th;
-            // return back()->with('error', $th->getMessage());
+            // throw $th;
+            return back()->with('error', $th->getMessage());
         }
+
+        $newProgram = $request->only(['title', 'category_id', 'location', 'start_date', 'end_date']);
+        $newTrainer = $request->only(['name', 'gender', 'phone']);
+        $newProgram['member_id'] = Auth::user()->member->id;
+        $newTrainer['member_id'] = Auth::user()->member->id;
+        // dd($request->all(), $newTrainer);
+        $program = Program::create($newProgram);
+        $trainer = Trainer::create($newTrainer);
+        $program->trainers()->attach($trainer);
+
+        return redirect()->route('programs.index')->with('success', 'تم إضافة معلومات الدورة بنجاح');
     }
 
 
@@ -78,7 +80,10 @@ class ProgramController extends Controller
     public function edit(string $id)
     {
         $program = Program::find($id);
-        $categories = Category::all();
+        $categories = Category::join('members', 'categories.member_id', 'members.id')
+            ->where('members.organization_id', Auth::user()->member->organization_id)
+            ->get('categories.*');
+            
         return view('programs.edit', compact('program', 'categories'));
     }
 

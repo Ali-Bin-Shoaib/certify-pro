@@ -149,9 +149,9 @@ a:hover {
 	color: #0092ff;
 }
 
-.bg-gray {
+/* .bg-gray {
 	background-color: #fcfafb;
-}
+} */
 
 .section-title {
 	margin-bottom: 0.5rem;
@@ -465,8 +465,9 @@ a:hover {
 .header {
 	padding-top: 4rem;
 	padding-bottom: 4em;
-	background: url('../images/header-background.jpg') center center no-repeat;
-	background-size: cover;
+	/* background: url('../images/header-background.jpg') center center no-repeat; */
+    /* background-attachment: fixed; */
+	/* background-size: cover; */
 	text-align: center;
 }
 

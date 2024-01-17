@@ -35,11 +35,7 @@
                 <button type="button" onclick="submitForm()" class="btn-solid-reg w-50">تأكيد</button>
             </div>
 
-            {{-- <div class="col">
-                <textarea>
-  Welcome to TinyMCE!
-</textarea>
-            </div> --}}
+     
         </form>
     </div>
 @endsection

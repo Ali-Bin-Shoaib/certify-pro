@@ -134,8 +134,14 @@ class CertificateController extends Controller
             $certificate = ProgramParticipant::where('certificate_id', $certificateId)->first();
             $participant = Participant::find($certificate->participant->id);
             $program = Program::find($certificate->program->id);
-            if ($certificate && $program && $program)
-                return view('certificates.certified', compact(['program', 'participant', 'certificate']));
+            $organization = Organization::join('members', 'organizations.id', 'members.organization_id')
+                ->join('programs', 'programs.member_id', 'programs.member_id')
+                ->where('programs.id', $program->id)
+                ->get('organizations.*')->first();
+            // $organization = Organization::find($organizationId);
+            // dd($organization);
+            if ($certificate && $program && $organization && $certificate)
+                return view('certificates.certified', compact(['program', 'participant', 'certificate', 'organization']));
             else
                 return view('certificates.uncertified');
         } catch (\Throwable $th) {

@@ -11,6 +11,10 @@
 body {
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
+	background-color: #fcfafb;
+	background: url('../images/header-background.jpg') center center ;
+    /* background-attachment: fixed; */
+
 }
 
 input,
@@ -39,6 +43,9 @@ main {
 	top: 7rem;
 	padding-top: 3rem;
 	padding-bottom: 5rem;
+}
+table {
+	box-shadow: 0.1px 0.1px 1px;
 }
 .container-fluid > form {
 	background-color: #eff4fd;
@@ -130,7 +137,7 @@ main {
 	border-top: 0.5px dashed #333;
 }
 .bg-certified {
-	background: #00592815;
+	background: #c0eed5;
 }
 .custom-file-button {
 	input[type='file'] {
