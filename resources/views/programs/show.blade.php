@@ -47,7 +47,8 @@
             <a class="btn-solid-reg " href="{{ route('participants.create', ['programId' => $program->id]) }}">
                 إضافة مشارك للدورة</a>
             {{-- <a href="{{route('partici')}}" class="btn-solid-reg ">تحميل بيانات من ملف إكسل</a> --}}
-            <a href="{{ route('template.importParticipants.get',$program->id) }}" class="btn-solid-reg ">تحميل بيانات المشاركين من ملف
+            <a href="{{ route('template.importParticipants.get', $program->id) }}" class="btn-solid-reg ">تحميل بيانات
+                المشاركين من ملف
                 إكسل</a>
 
         </div>
@@ -64,7 +65,7 @@
                 <th></th>
             </thead>
             <tbody class="table-group-divider">
-                @foreach ($program->participants as $participant)
+                @foreach ($participants as $participant)
                     <tr>
                         <td>{{ $participant->id }}</td>
                         <td>{{ $participant->name }}</td>
@@ -104,7 +105,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item"
-                                            href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
+                                            href="{{ route('template.create', ['programId' => $id]) }}">قالب
                                             الشهادة</a>
                                     </li> --}}
                                     <li>
@@ -112,7 +113,7 @@
                                     </li>
                                     <li>
                                         <a class=" dropdown-item
-             {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
+             {{ $participants->count() == 0 ? 'disabled' : '' }}"
                                             title="إصدار شهادة" {{-- href="{{ route('certificatePreview', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i --}}
                                             href="{{ route('certificateGenerate', ['programId' => $program->id, 'participantId' => $participant->id]) }}"><i
                                                 class="fa fa-print"></i> إصدار
@@ -125,7 +126,36 @@
                 @endforeach
             </tbody>
         </table>
-
+        <div class="pagination justify-content-center mt-3" style="display: flex; justify-content:space-between;align-items:center">
+            <ul class="pagination justify-content-center">
+                @if ($participants->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">السابق</span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $participants->previousPageUrl() }}" rel="prev">السابق</a>
+                    </li>
+                @endif
+                @foreach ($participants->getUrlRange(1, $participants->lastPage()) as $page => $url)
+                    <li class="page-item {{ $page == $participants->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+                @if ($participants->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $participants->nextPageUrl() }}" rel="next">التالي</a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link">التالي</span>
+                    </li>
+                @endif
+            </ul>
+        </div>
+        {{-- <div class="pagination-label float-end">
+            Page {{ $participants->currentPage() }} of {{ $participants->lastPage() }}
+        </div> --}}
 
     </div>
 

@@ -81,7 +81,7 @@ class CertificateController extends Controller
         $qrCode = $this->qrGenerate($url, $certificateId);
         $content = Storage::get($storage . $program->id . '_' . $program->title . '/text.txt');
         if ($content == null) return back()->with('error', 'لا توجد ملفات الشهادة. يجب رفع الملفات أولا');
-        $trainerName = $program->trainers[0]->name;
+        $trainerName = $program->trainers[0]->name??'';
         $content = $this->replaceTokensWithValues($content, [
             $participant->name,
             $organization->user->name,

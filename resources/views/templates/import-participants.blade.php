@@ -1,11 +1,12 @@
 @extends('layouts.master')
 @section('main')
     <div class="container-fluid w-75 py-5">
-
-        <form id="template-form" action="{{ route('template.importParticipants.post', $programId) }}"
+        <form  action="{{ route('template.importParticipants.post', $program->id) }}"
             enctype="multipart/form-data" method="POST" class="row g-4 row-cols-md-1">
+            <h1 class="text-decoration-underline text-center ">إضافة مجموعة من المشاركين للدورة {{$program->title}}</h1>
             @csrf
 
+            {{-- <p>ملاحظة</p> --}}
             <div class="input-group custom-file-button mt-0">
                 <label class="input-group-text" for="file">الملف</label>
                 <input type="file" class="form-control" name="file" id="file" accept=".xls, .xlsx, .csv">

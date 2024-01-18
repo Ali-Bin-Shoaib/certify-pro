@@ -73,9 +73,12 @@ class ProgramController extends Controller
             ->where('programs.id', $id)
             ->get('programs.*')
             ->first();
-        if (!$program)
+
+        if (!$program) {
             return back()->with('error', 'الدورة غير موجودة.');
-        return view('programs.show', compact('program'));
+        }
+        $participants=$program->participants()->paginate(10);
+        return view('programs.show', compact('program','participants'));
     }
 
 

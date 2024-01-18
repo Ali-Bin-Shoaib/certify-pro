@@ -72,7 +72,8 @@ class TemplateController extends Controller
     }
     public function importParticipantsForm(string $programId)
     {
-        return view('templates.import-participants', compact('programId'));
+        $program = Program::find($programId);
+        return view('templates.import-participants', compact('program'));
     }
     public function importParticipants(Request $request, $programId)
     {
