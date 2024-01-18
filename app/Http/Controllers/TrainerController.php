@@ -41,15 +41,28 @@ class TrainerController extends Controller
     public function show(string $id)
     {
 
-        $trainer = Trainer::find($id);
-        return view('trainers.show', compact('trainer'));
+        $trainer = Trainer::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('trainers.id', $id)
+            ->get('trainers.*')
+            ->first();
+
+        if ($trainer)
+            return view('trainers.show', compact('trainer'));
+        return back()->with('error', 'هذا المدرب غير موجود');
     }
 
 
     public function edit(string $id)
     {
-        $trainer = Trainer::find($id);
-        return view('trainers.edit', compact('trainer'));
+        $trainer = Trainer::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('trainers.id', $id)
+            ->get('trainers.*')
+            ->first();
+        if ($trainer)
+            return view('trainers.edit', compact('trainer'));
+        return back()->with('error', 'هذا المدرب غير موجود');
     }
 
 
@@ -60,7 +73,11 @@ class TrainerController extends Controller
             'gender' => 'required',
             'phone' => 'required',
         ]);
-        $trainer = Trainer::find($id);
+        $trainer = Trainer::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('trainers.id', $id)
+            ->get('trainers.*')
+            ->first();
         if ($trainer) {
             $trainer->update($request->all());
             return redirect()->route('trainers.index')->with('success', 'تم تحديث البيانات بنجاح');
@@ -71,7 +88,11 @@ class TrainerController extends Controller
 
     public function destroy(string $id)
     {
-        $trainer = Trainer::find($id);
+        $trainer = Trainer::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('trainers.id', $id)
+            ->get('trainers.*')
+            ->first();
         if ($trainer) {
             $trainer->delete();
             return redirect()->route('trainers.index')->with('success', 'تم حذف البيانات بنجاح');

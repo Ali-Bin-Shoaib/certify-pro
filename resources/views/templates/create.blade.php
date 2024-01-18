@@ -2,8 +2,8 @@
 @section('main')
     <div class="container-fluid w-75 py-5">
 
-        <form id="template-form" action="{{ route('template.store', $programId) }}" enctype="multipart/form-data" method="POST"
-            class="row g-4 row-cols-md-1">
+        <form id="template-form" action="{{ route('template.store', $programId) }}" enctype="multipart/form-data"
+            method="POST" class="row g-4 row-cols-md-1">
             @csrf
             <h1 class="text-decoration-underline text-center">ملفات الشهادة</h1>
 
@@ -35,7 +35,7 @@
                 <button type="button" onclick="submitForm()" class="btn-solid-reg w-50">تأكيد</button>
             </div>
 
-     
+
         </form>
     </div>
 @endsection

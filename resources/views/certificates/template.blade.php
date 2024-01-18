@@ -150,7 +150,7 @@ display: block;
                 <td class="signature-td  "
                     style="background-image: url('{{ public_path($templateImages[0]) }}');background-repeat:no-repeat;">
                     <small class="border-top-dashed">
-                        التوقيع</small>
+                        {{ $trainerName ?? 'التوقيع' }}</small>
                 </td>
             </tr>
         </table>

@@ -81,16 +81,20 @@ class CertificateController extends Controller
         $qrCode = $this->qrGenerate($url, $certificateId);
         $content = Storage::get($storage . $program->id . '_' . $program->title . '/text.txt');
         if ($content == null) return back()->with('error', 'لا توجد ملفات الشهادة. يجب رفع الملفات أولا');
+        $trainerName = $program->trainers[0]->name;
         $content = $this->replaceTokensWithValues($content, [
             $participant->name,
             $organization->user->name,
-            $program->title, $program->location,
+            $program->title,
+            $program->location,
             date('Y/m/d ', strtotime($program->start_date)),
-            date('Y/m/d ', strtotime($program->end_date)), '', ''
+            date('Y/m/d ', strtotime($program->end_date)),
+            '',
+            '',
 
         ]);
         $document->WriteHTML(view('certificates.template', compact(
-            ['program', 'organization', 'qrCode', 'participantId', 'certificateId', 'templateImages', 'content']
+            ['program', 'organization', 'qrCode', 'participantId', 'certificateId', 'templateImages', 'content','trainerName']
         )));
         return $document->Output();
     }
@@ -138,15 +142,13 @@ class CertificateController extends Controller
                 ->join('programs', 'programs.member_id', 'programs.member_id')
                 ->where('programs.id', $program->id)
                 ->get('organizations.*')->first();
-            // $organization = Organization::find($organizationId);
-            // dd($organization);
             if ($certificate && $program && $organization && $certificate)
                 return view('certificates.certified', compact(['program', 'participant', 'certificate', 'organization']));
             else
                 return view('certificates.uncertified');
         } catch (\Throwable $th) {
             //throw $th;
-            return back()->with('error', 'حصل خطأ في جلب بيانات الشهادة .');
+            return back()->with('error', 'خطأ. لا يوجد شهادة بهذا الرقم.');
         }
     }
 

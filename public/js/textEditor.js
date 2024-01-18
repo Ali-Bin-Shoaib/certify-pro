@@ -17,17 +17,17 @@ $('#editor').trumbowyg({
 $('#editor').trumbowyg(
 	'html',
 	`
-<h3 style="text-align: center;">شهادة مشاركة</h3>
-<h3 style="text-align: center; ">تشهد <span >{اسم_المنظمة}</span> بأنّ&nbsp;</h3>
-<h2 style="text-align: center; "><span >{اسم_المشارك}</span></h2>
-<h3 style="text-align: center; ">&nbsp;قد شارك في دورة <span >{اسم_الدورة}</span> المقامة في
-    <span >{الموقع}</span> بتاريخ
-    <span >{تاريخ_البداية} إلى {تاريخ_النهاية}</span>&nbsp;
-</h3>
-<p><br></p>
-<h2 style="text-align: left; >&nbsp; {التوقيع}</h2>
-<h2 style="text-align: center; >{QR}</h2>
-
+<h3 style="text-align: center;"><span style="font-size: 65px;">شهادة مشاركة</span></h3><p><span style="font-size: 80px;"><br></span></p>
+<p style="text-align: center; "><span style="font-size: 35px;">تشهد {اسم_المنظمة} بأنّ&nbsp;</span></p>
+<h2 style="text-align: center; "><span><span style="font-size: 38px;">{اسم_المشارك}</span></span></h2>
+<p style="text-align: center;"><span style="font-size: 20px;">&nbsp;قد شارك في دورة <span>{اسم_الدورة}
+</span> المقامة في
+    <span>{الموقع}</span> بتاريخ
+    <span>{تاريخ_البداية} إلى {تاريخ_النهاية}</span>&nbsp;
+</span></p>
+<br>
+<br>
+<h2 style="text-align: center;">{QR}</h2>
         `
 );
 
