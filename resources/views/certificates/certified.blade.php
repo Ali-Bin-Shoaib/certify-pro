@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('main')
-    <div class="container-fluid w-75  border border-5 rounded-4  border-success pt-3 bg-certified "
-   >
+    <div class="container-fluid w-75  border border-5 rounded-4  border-success pt-3 bg-certified ">
         <img src="{{ asset('images/certified.png') }}" class="img-fluid mx-auto d-block" width="20%" alt="">
         {{-- <h1 class="text-success display-1 text-center fw-bolder text-decoration-underline">شهادة موثقة</h1> --}}
         <h1 class="text-decoration-underline text-center">معلومات الشهادة</h1>

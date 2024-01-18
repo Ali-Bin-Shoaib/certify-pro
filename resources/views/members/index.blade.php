@@ -30,7 +30,7 @@
                             <form action="{{ route('members.destroy', $member->id) }}" method="POST">
                                 @method('Delete')
                                 @csrf
-                                <button class="btn btn-danger btn-sm">
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من الحذف؟')">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>

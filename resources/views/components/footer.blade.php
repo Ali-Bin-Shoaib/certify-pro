@@ -3,7 +3,7 @@
 </footer> --}}
 
 <!-- Footer -->
-<div class="footer bg-gray border-top">
+<div class="footer bg-gray ">
     {{-- <img class="decoration-circles d-none d-md-block" src="{{ asset('images/decoration-circles.png') }}" alt="alternative"> --}}
     <div class="container">
         <div class="row">

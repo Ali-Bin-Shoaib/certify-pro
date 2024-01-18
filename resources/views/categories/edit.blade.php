@@ -17,9 +17,10 @@
             </div>
 
 
-            <div class="row g-5">
+            <div class="row g-5 gap-2">
                 <div class="col-md-3"></div>
-                <button class="col-md-6 btn-solid-sm">تحديث </button>
+                <button class="col-md-3 btn-solid-sm">تحديث </button>
+                <a  onclick="javascript:window.history.back();" class="col-md-3 btn btn-sm rounded-5 fw-bold btn-secondary">رجوع </a>
             </div>
             @if ($errors)
                 <ul class="mt-2">

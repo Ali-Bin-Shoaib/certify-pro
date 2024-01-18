@@ -12,8 +12,12 @@ body {
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	background-color: #fcfafb;
-	background: url('../images/header-background.jpg') center center ;
-    /* background-attachment: fixed; */
+	background: url('../images/header-background.jpg') center center;
+	/* background-attachment: fixed; */
+}
+.container-fluid{
+	background-color: #fcfafb;
+    padding-bottom: 0 !important;
 
 }
 

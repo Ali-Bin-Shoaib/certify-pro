@@ -44,16 +44,18 @@ class ParticipantController extends Controller
 
     public function store(Request $request, string $programId = null)
     {
-        // dd($programId);
         try {
             $request->validate([
                 "name" => "required",
                 "email" => "required",
                 'gender' => 'required',
-                'phone' => 'required',
+                "phone" => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
                 'program_id' => $programId ? 'nullable' : 'required',
             ]);
-            // dd($request->all());
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+        // try {
             if (!$programId && $request->has('program_id'))
                 $programId = $request->input('program_id');
             // $programId = $programId ? $programId : $request->input('program_id');
@@ -68,7 +70,6 @@ class ParticipantController extends Controller
             $participant['member_id'] = Auth::user()->member->id;
             $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
             try {
-                // dd();
                 $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
             } catch (\Throwable $th) {
                 // return back()->with('error', $th->getMessage());
@@ -76,9 +77,9 @@ class ParticipantController extends Controller
             }
 
             return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'بيانات غير صحيحة');
-        }
+        // } catch (\Throwable $th) {
+        //     return back()->with('error', 'بيانات غير صحيحة');
+        // }
     }
 
 

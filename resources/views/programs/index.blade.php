@@ -54,7 +54,8 @@
                                                     action="{{ route('programs.destroy', $program->id) }} ">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="nav-link">
+                                                    <button class="nav-link"
+                                                        onclick="return confirm('هل أنت متأكد من الحذف؟')">
                                                         <i class="fa fa-trash"></i> حذف
                                                     </button>
                                                 </form>

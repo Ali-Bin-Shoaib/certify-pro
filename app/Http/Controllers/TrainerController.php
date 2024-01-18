@@ -11,9 +11,9 @@ class TrainerController extends Controller
 
     public function index()
     {
-        $trainers = Trainer::join("members","member_id","members.id")
-        ->where("members.organization_id", Auth::user()->member->organization_id)
-        ->get('trainers.*');
+        $trainers = Trainer::join("members", "member_id", "members.id")
+            ->where("members.organization_id", Auth::user()->member->organization_id)
+            ->get('trainers.*');
         return view("trainers.index", compact("trainers"));
     }
 
@@ -28,8 +28,7 @@ class TrainerController extends Controller
     {
         $request->validate([
             "name" => "required",
-            'gender' => 'required',
-            'phone' => 'required',
+            'gender' => 'required', "phone" => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
         ]);
 
         $trainer = $request->all();

@@ -38,7 +38,7 @@ class OrganizationController extends Controller
                 "address" => "required",
             ]);
         } catch (\Throwable $th) {
-            return back()->with("error", "خطأ في إدخال البيانات");
+            return back()->with("error", $th->getMessage());
         }
         $organization = Organization::where('id', Auth::user()->organization->id)->first();
         $user = User::find(Auth::user()->id);
