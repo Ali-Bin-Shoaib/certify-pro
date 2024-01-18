@@ -56,27 +56,26 @@ class ParticipantController extends Controller
             return back()->with('error', $th->getMessage());
         }
         // try {
-            if (!$programId && $request->has('program_id'))
-                $programId = $request->input('program_id');
-            // $programId = $programId ? $programId : $request->input('program_id');
-            if (!$programId)
-                return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
-            $program = Program::find($programId);
-            if (!$program)
-                return redirect()->back()->with("error", "الدورة غير موجودة.");
+        if (!$programId && $request->has('program_id'))
+            $programId = $request->input('program_id');
+        if (!$programId)
+            return redirect()->back()->with("error", "اختر دورة لإضافة مشارك إليها.");
+        $program = Program::find($programId);
+        if (!$program)
+            return redirect()->back()->with("error", "الدورة غير موجودة.");
 
 
-            $participant = $request->except(['program_id']);
-            $participant['member_id'] = Auth::user()->member->id;
-            $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
-            try {
-                $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
-            } catch (\Throwable $th) {
-                // return back()->with('error', $th->getMessage());
-                return back()->with('error', ' المشارك مضاف مسبقا لهذه الدورة.');
-            }
+        $participant = $request->except(['program_id']);
+        $participant['member_id'] = Auth::user()->member->id;
+        $participant = Participant::updateOrCreate(['email' => $participant['email']], $participant);
+        try {
+            $program->participants()->attach($participant->id, ['created_at' => now(), 'updated_at' => now()]);
+        } catch (\Throwable $th) {
+            // return back()->with('error', $th->getMessage());
+            return back()->with('error', ' المشارك مضاف مسبقا لهذه الدورة.');
+        }
 
-            return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');
+        return redirect()->route('programs.show', $program->id)->with('success', 'تمت الإضافة بنجاح');
         // } catch (\Throwable $th) {
         //     return back()->with('error', 'بيانات غير صحيحة');
         // }
@@ -89,8 +88,6 @@ class ParticipantController extends Controller
             ->where('organization_id', Auth::user()->member->organization_id)
             ->where('participants.id', $id)
             ->get(['participants.*'])->first();
-        // dd($participant->programs);
-        // dd($participant);
         if (!$participant)
             return redirect()->back()->with('error', 'لا يمكن إيجاد هذا المشارك.');
         return view('participants.show', compact('participant'));
@@ -99,7 +96,13 @@ class ParticipantController extends Controller
 
     public function edit(string $id)
     {
-        $participant = Participant::find($id);
+        $participant = Participant::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('participants.id', $id)
+            ->get(['participants.*'])->first();
+        if (!$participant)
+            return redirect()->back()->with('error', 'لا يمكن إيجاد هذا المشارك.');
+
         return view('participants.edit', compact('participant'));
     }
 
@@ -112,7 +115,10 @@ class ParticipantController extends Controller
             'gender' => 'required',
             'phone' => 'required',
         ]);
-        $participant = Participant::find($id);
+        $participant = Participant::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('participants.id', $id)
+            ->get(['participants.*'])->first();
         if ($participant) {
             $participant->update($request->all());
 
@@ -123,7 +129,10 @@ class ParticipantController extends Controller
 
     public function destroy(string $id)
     {
-        $participant = Participant::find($id);
+        $participant = Participant::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('participants.id', $id)
+            ->get(['participants.*'])->first();
         if ($participant) {
             $participant->delete();
             return redirect()->route('participants.index')->with('success', 'تم حذف البيانات بنجاح');
