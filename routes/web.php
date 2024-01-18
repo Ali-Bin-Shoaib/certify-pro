@@ -38,8 +38,8 @@ Route::get('/certificate-verify/{certificateId?}', [CertificateController::class
 
 Route::group(['middleware' => 'organization'], function () {
 
-    Route::get('organizations/edit',[OrganizationController::class, 'edit'])->name('organization.edit');
-    Route::post('organizations/update',[OrganizationController::class, 'update'])->name('organization.update');
+    Route::get('organizations/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
+    Route::post('organizations/update', [OrganizationController::class, 'update'])->name('organization.update');
     Route::resource('members', MemberController::class);
 });
 
@@ -56,11 +56,14 @@ Route::group(['middleware' => 'member'], function () {
 
     Route::get('/certificate/{programId}/{participantId}', [CertificateController::class, 'certificateGenerate'])->name('certificateGenerate');
     Route::get('/certificate-preview/{programId}/{participantId}', [CertificateController::class, 'certificatePreview'])->name('certificatePreview');
+
     Route::get('template/create/{programId}', [TemplateController::class, 'create'])->name('template.create');
     Route::post('template/store/{programId}', [TemplateController::class, 'store'])->name('template.store');
     Route::get('template/edit/{programId}', [TemplateController::class, 'edit'])->name('template.edit');
     Route::put('template/update/{programId}', [TemplateController::class, 'update'])->name('template.update');
     Route::delete('template/{programId}', [TemplateController::class, 'destroy'])->name('template.destroy');
+    Route::get('/import-participants/{programId}', [TemplateController::class, 'importParticipantsForm'])->name('template.importParticipants.get');
+    Route::post('/import-participants/{programId}', [TemplateController::class, 'importParticipants'])->name('template.importParticipants.post');
     // Route::get('/certificate-verify/{certificateId?}', [CertificateController::class, 'certificateVerify'])->name('certificateVerify');
 });
 

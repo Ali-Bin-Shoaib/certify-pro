@@ -47,7 +47,8 @@
             <a class="btn-solid-reg " href="{{ route('participants.create', ['programId' => $program->id]) }}">
                 إضافة مشارك للدورة</a>
             {{-- <a href="{{route('partici')}}" class="btn-solid-reg ">تحميل بيانات من ملف إكسل</a> --}}
-            <a href="" class="btn-solid-reg ">تحميل بيانات من ملف إكسل</a>
+            <a href="{{ route('template.importParticipants.get',$program->id) }}" class="btn-solid-reg ">تحميل بيانات المشاركين من ملف
+                إكسل</a>
 
         </div>
         <table class="table table-bordered table-hover m-0 mt-3 shdow-sm">

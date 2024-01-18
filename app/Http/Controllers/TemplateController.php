@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ParticipantImport;
+use App\Imports\ParticipantsImport;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-// use Intervention\Image\Facades\Image;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TemplateController extends Controller
 {
@@ -66,5 +69,34 @@ class TemplateController extends Controller
     }
     public function destroy(Request $request, string $programId)
     {
+    }
+    public function importParticipantsForm(string $programId)
+    {
+        return view('templates.import-participants', compact('programId'));
+    }
+    public function importParticipants(Request $request, $programId)
+    {
+        // Program::query()->where('id',$programId)->all
+        // Program::where('')
+        try {
+            $request->validate([
+                'file' => 'required|mimes:xlsx, csv, xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            ]);
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+
+        // $data = Excel::import(new ParticipantsImport, request()->file('file'));
+        // try {
+            // dd($request->file('file'));
+            Excel::import(new ParticipantsImport($programId), $request->file('file'));
+            return redirect()->back()->with('success', 'تم حفظ بيانات المشاركين.');
+            // dd($data);
+        // } catch (\Throwable $th) {
+            // return back()->with('error', $th->getMessage());
+        // }
+        // $data = Excel::import(new ParticipantsImport, $request->file('file'));
+        // dd($data);
+
     }
 }
