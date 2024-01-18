@@ -57,9 +57,11 @@ class ProgramController extends Controller
         // dd($request->all(), $newTrainer);
         $program = Program::create($newProgram);
         $trainer = Trainer::create($newTrainer);
-        $program->trainers()->attach($trainer);
-
-        return redirect()->route('programs.index')->with('success', 'تم إضافة معلومات الدورة بنجاح');
+        if ($program && $trainer) {
+            $program->trainers()->attach($trainer);
+            return redirect()->route('programs.index')->with('success', 'تم إضافة معلومات الدورة بنجاح');
+        } else
+            return back()->with('error', 'حصل خطأ. فشلت العملية');
     }
 
 
@@ -79,11 +81,15 @@ class ProgramController extends Controller
 
     public function edit(string $id)
     {
-        $program = Program::find($id);
+        $program = Program::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('programs.id', $id)
+            ->get('programs.*')
+            ->first();
         $categories = Category::join('members', 'categories.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
             ->get('categories.*');
-            
+
         return view('programs.edit', compact('program', 'categories'));
     }
 
@@ -97,24 +103,32 @@ class ProgramController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
         ]);
-        $program = Program::find($id);
+        $program = Program::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('programs.id', $id)
+            ->get('programs.*')
+            ->first();
         // $toUpdate['member_id'] = Auth::user()->id ?? $program->member_id;;
         $program->update($request->all());
-        return redirect()->route('programs.index')->with('success', 'program is updated successfully');
+        return redirect()->route('programs.index')->with('success', 'تم تحديث البيانات بنجاح');
     }
 
 
     public function destroy(string $id)
     {
-        $toDelete = Program::find($id);
-        if ($toDelete != null) {
-            if ($toDelete->delete()) {
-                return redirect()->route('programs.index')->with('success', 'program deleted successfully.');
+        $program = Program::join('members', 'member_id', 'members.id')
+            ->where('organization_id', Auth::user()->member->organization_id)
+            ->where('programs.id', $id)
+            ->get('programs.*')
+            ->first();
+        if ($program != null) {
+            if ($program->delete()) {
+                return redirect()->route('programs.index')->with('success', 'تم الحذف بنجاح.');
             } else {
-                return redirect()->route('programs.index')->with('error', 'can\'t delete program with id ' . $id);
+                return redirect()->route('programs.index')->with('error', 'لم تتم عملية الحذف.');
             }
         } else {
-            return redirect()->route('programs.index')->with('error', 'program with id ' . $id . 'dose not exist.');
+            return redirect()->route('programs.index')->with('error', 'لم تتم عملية الحذف الدورة غير موجودة');
         }
     }
 }
