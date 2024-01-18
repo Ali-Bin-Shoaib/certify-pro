@@ -4,7 +4,7 @@
     <div class="container-fluid w-75 py-5 ">
         <h1 class="text-decoration-underline text-center ">معلومات المشارك</h1>
 
-        <div class="container form-bg row  py-5 shadow-sm overflow-hidden ">
+        <div class="container form-bg row  py-5 shadow-sm overflow-hidden mx-auto">
 
             <h5 class=" col-md-5">تمت الإضافة بواسطة: </h5>
             <b class="col-md-7 fs-4">{{ $participant->member->user->name ?? '' }}</b>
@@ -37,12 +37,12 @@
                 <form action="{{ route('participants.destroy', $participant->id) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <button class="btn btn-sm btn-danger text-white"><i class="fa fa-trash "></i></button>
+                    <button class="btn btn-sm btn-danger text-white" onclick="return confirm('هل أنت متأكد من الحذف؟')"><i class="fa fa-trash "></i></button>
                 </form>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid w-75 py-5 ">
         <h1 class="text-decoration-underline text-center ">الدورات التي حضرها المشارك</h1>
 
         <table class="table table-bordered table-hover m-0 mt-3 ">

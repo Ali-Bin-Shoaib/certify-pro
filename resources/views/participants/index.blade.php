@@ -5,7 +5,8 @@
     <div class="container-fluid w-75 py-5">
         <h1 class="text-center text-decoration-underline">المشاركين</h1>
         <a class="btn-solid-sm" href="{{ route('participants.create') }}"> <i class="fa fa-plus"></i> إضافة مشارك</a>
-        <table class="table table-bordered table-hover m-0 mt-3 ">
+        <div class="table-responsive-md">
+                    <table class="table table-bordered table-hover m-0 mt-3 ">
             <thead class="table-secondary ">
                 <th>#</th>
                 <th>الاسم</th>
@@ -31,7 +32,7 @@
                             <form action="{{ route('participants.destroy', $participant->id) }}" method="POST">
                                 @method('Delete')
                                 @csrf
-                                <button class="btn btn-danger btn-sm">
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من الحذف؟')">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
@@ -44,5 +45,7 @@
             </tbody>
             <tfoot></tfoot>
         </table>
+
+        </div>
     </div>
 @endsection

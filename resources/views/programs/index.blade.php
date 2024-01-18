@@ -27,9 +27,8 @@
                         @endphp
                         @foreach ($programs as $program)
                             <tr>
-                                {{-- <td>{{ ++$i }}</td> --}}
-                                <td>{{ $program->id }}</td>
-                                {{-- <td>{{ $program->participants->count() }}</td> --}}
+                                <td>{{ ++$i }}</td>
+                                {{-- <td>{{ $program->id }}</td> --}}
                                 <td>{{ $program->title }}</td>
                                 <td>{{ $program->location }}</td>
                                 <td>{{ $program->category->title ?? '' }}</td>
@@ -38,7 +37,6 @@
                                 <td class="d-flex align-items-center justify-content-center gap-1">
 
 
-                                    <!-- Example single danger button -->
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary dropdown-toggle"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,15 +63,7 @@
                                                     <i class="fa fa-info-circle"></i> تفاصيل
                                                 </a>
                                             </li>
-                                            {{--  <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                       <li>
-                                            <a class="dropdown-item"
-                                                href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
-                                                الشهادة</a>
 
-                                        </li> --}}
 
                                             <li>
                                                 <hr class="dropdown-divider">
@@ -83,10 +73,7 @@
                                                         class="fa fa-print"></i>
                                                     إضافة مشاركين
                                                 </a></li>
-                                            {{-- <li> <a class="dropdown-item {{ $program->participants->count() == 0 ? 'disabled' : '' }}"
-                                            title="إصدار الشهادات" href=""><i class="fa fa-print"></i> إصدار
-                                            الشهادات</a>
-                                    </li> --}}
+
                                         </ul>
                                     </div>
 

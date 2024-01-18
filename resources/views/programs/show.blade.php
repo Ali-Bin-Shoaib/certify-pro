@@ -87,7 +87,7 @@
                                             action="{{ route('participants.destroy', $participant->id) }} ">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="nav-link">
+                                            <button class="nav-link" onclick="return confirm('هل أنت متأكد من الحذف؟')">
                                                 <i class="fa fa-trash"></i> حذف
                                             </button>
                                         </form>
@@ -98,14 +98,14 @@
                                         </a>
                                     </li>
 
-                                    <li>
+                                    {{-- <li>
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
                                         <a class="dropdown-item"
                                             href="{{ route('template.create', ['programId' => $program->id]) }}">قالب
                                             الشهادة</a>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
