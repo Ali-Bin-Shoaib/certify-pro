@@ -82,3 +82,5 @@ php artisan serve
 - **simple-qrcode** to generate QR code for each certificate.
 - **Bootstrap** for styling html.
 - **Fontawesome** to use icons.
+
+### deployed at <a href="https://binshoaib.hadramout-bootcamps.com/" target="_blank">cerity pro</a>
