@@ -86,4 +86,4 @@ php artisan serve
 - **Toastr** for nice notification popup.
 - **Trumbowyg** for using rich text editor.
 
-### deployed at <a href="https://binshoaib.hadramout-bootcamps.com/" target="_blank">cerity pro</a>
+### Deployed at <a href="https://binshoaib.hadramout-bootcamps.com/" target="_blank">cerity pro</a>
