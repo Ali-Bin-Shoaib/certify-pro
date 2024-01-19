@@ -83,4 +83,4 @@ php artisan serve
 - **Bootstrap** for styling html.
 - **Fontawesome** to use icons.
 
-### deployed at <a href="https://binshoaib.hadramout-bootcamps.com/" target="_blank">cerity pro</a>
+### Deployed at <a href="https://binshoaib.hadramout-bootcamps.com/" target="_blank">cerity pro</a>
