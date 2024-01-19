@@ -68,8 +68,8 @@ class CertificateController extends Controller
             return back()->with('error', $th->getMessage());
         }
         try {
-            $storage = 'public/uploads/';
-            $images = Storage::files($storage . $program->id . '_' . $program->title);
+            $filePath = 'public/uploads/';
+            $images = Storage::files($filePath . $program->id . '_' . $program->title);
             $templateImages = [];
             foreach ($images as $key => $image) {
                 $templateImages[] = str_replace('public', 'storage', $image);
@@ -79,7 +79,7 @@ class CertificateController extends Controller
             return back()->with('error', $th->getMessage());
         }
         $qrCode = $this->qrGenerate($url, $certificateId);
-        $content = Storage::get($storage . $program->id . '_' . $program->title . '/text.txt');
+        $content = Storage::get($filePath . $program->id . '_' . $program->title . '/text.txt');
         if ($content == null) return back()->with('error', 'لا توجد ملفات الشهادة. يجب رفع الملفات أولا');
         $trainerName = $program->trainers[0]->name??'';
         $content = $this->replaceTokensWithValues($content, [

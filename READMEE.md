@@ -1,0 +1,79 @@
+
+# Certify Pro
+
+This is a platform that allow any education authority to generate certificates for participants in a program with custom design for each certificate.
+
+
+
+# Development Environment
+
+Clone the repo to your local computer:
+```shell
+git clone https://github.com/Ali-Bin-Shoaib/certify-pro.git
+```
+Navigate to the cloned project folder:
+```shell
+cd certify-pro
+```
+Install the dependencies:
+```shell
+composer install
+```
+copy `.env.example` file and rename the copy to `.env`. This file is not in the repo because it is sensitive:
+```shell
+cp .env.expample .env
+```
+
+Configure the database information in the `.env` file (`DB_*`).
+```js
+DB_DATABASE=yourdatabase_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+Sets the `APP_KEY` value in your `.env` file:
+```shell
+php artisan key:generate
+```
+
+Create the `database/migrations` schema:
+```shell
+php artisan migrate
+//OR to drop all existing tables
+php artisan migrate:fresh
+```
+
+Seed the database with fake data. 
+Note: there will be a user with email of `asdf@asdf.asdf` and password of `asdfasdf`, you can login directly with it. 
+```bash
+php artisan db:seed
+```
+
+Generate a link folder (shortcut) on the public directory to serve the client with files that located on a private directory.
+```bash
+php artisan storage:link
+```
+
+Install all dependencies:
+```shell
+npm install
+```
+
+Run Vite, to hot module reloading (HMR):
+```shell
+npm run dev
+```
+
+In a separate terminal run the Laravel app:
+```shell
+php artisan serve
+```
+
+# Powered by
+
+- **Laravel** as a backend.
+- **Inertia** as a glow between the backend and frontend.
+- **React** as a frontend (Typescript).
+- **Tailwind** as a salt and black pepper for React.
+- **Breeze** to create a starting scaffold of the above (Welcome, Login, Register, ...etc) pages.
+- **React Icons** to use icons from different libraries in React.
