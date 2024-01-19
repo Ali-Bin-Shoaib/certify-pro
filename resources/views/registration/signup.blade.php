@@ -1,9 +1,10 @@
 @extends('layouts.master')
 @section('title', 'إنشاء حساب')
 @section('main')
-    <div class="basic-1">
+    <div class=" basic-1 bg-gray"
+        style="background-image: url({{ asset('images/header-background.jpg') }});background-size:contain">
 
-    <div class="container-fluid w-75 py-5">
+    <div class="container-fluid w-75 py-5 ">
             <h3 class="text-center text-decoration-underline">معلومات المنظمة</h3>
             <form method="POST" action="{{ route('signup') }}" class="container w-75 shadow-sm my-3">
                 @csrf

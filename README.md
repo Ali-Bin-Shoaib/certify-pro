@@ -76,11 +76,14 @@ php artisan serve
 
 # Powered by
 
-- **Laravel** as a backend.
+- **Laravel** PHP framework as a backend.
 - **MPDF** to generate pdf from html.
-- **Laravel-Excel** to import data from excel file to database.
+- **Laravel-Excel** to import data from excel file and store it into database.
 - **simple-qrcode** to generate QR code for each certificate.
 - **Bootstrap** for styling html.
-- **Fontawesome** to use icons.
+- **Fontawesome** for using modern icons.
+- **JQuery** for manulife DOM elements easily.
+- **Toastr** for nice notification popup.
+- **Trumbowyg** for using rich text editor.
 
 ### deployed at <a href="https://binshoaib.hadramout-bootcamps.com/" target="_blank">cerity pro</a>

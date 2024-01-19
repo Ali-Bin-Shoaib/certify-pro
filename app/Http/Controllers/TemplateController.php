@@ -30,9 +30,9 @@ class TemplateController extends Controller
     {
         try {
             $request->validate([
-                'template-image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048|dimensions:max_width=1125,max_height=800',
-                'signature-image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048|dimensions:max_width=200,max_height=105',
-                'template-text' => 'nullable'
+                'template-image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048|dimensions:max_width=1125,max_height=800',
+                'signature-image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048|dimensions:max_width=200,max_height=105',
+                'template-text' => 'required'
             ]);
         } catch (\Throwable $th) {
             //throw $th;
@@ -41,23 +41,28 @@ class TemplateController extends Controller
         }
         $program = Program::find($programId);
         try {
-            $template = $request->file('template-image');
-
-            $templateName = 'template.' . $template->extension();
-            $signature = $request->file('signature-image');
-            $signatureName = 'signature.' . $template->extension();
-
+            if ($request->hasFile('template-image')) {
+                $template = $request->file('template-image');
+                $templateName = 'template.' . $template->extension();
+            }
+            if ($request->hasFile('signature-image')) {
+                $signature = $request->file('signature-image');
+                $signatureName = 'signature.' . $template->extension();
+            }
             $text = $request->input('template-text');
             $textName = 'text.txt';
 
             $folderName = 'uploads/' . $program->id . '_' . $program->title;
 
-            if (is_dir(public_path('storage/' . $folderName)))
+            if (isset($template) && isset($signature) && is_dir(public_path('storage/' . $folderName)))
                 Storage::deleteDirectory('public/' . $folderName);
+            if (!Storage::exists(public_path('storage/' . $folderName)))
+                Storage::makeDirectory(($folderName));
+            if (isset($template))
+                $template->storeAs(($folderName), $templateName, 'public');
+            if (isset($signature))
+                $signature->storeAs(($folderName), $signatureName, 'public');
 
-            Storage::makeDirectory(($folderName));
-            $template->storeAs(($folderName), $templateName, 'public');
-            $signature->storeAs(($folderName), $signatureName, 'public');
             Storage::put('public/' . $folderName . '/' . $textName, $text);
 
             return redirect()->route('programs.show',  $program->id)->with('success', 'تم حفظ الملفات بنجاح');
@@ -89,12 +94,17 @@ class TemplateController extends Controller
 
         // $data = Excel::import(new ParticipantsImport, request()->file('file'));
         // try {
-            // dd($request->file('file'));
+        // dd($request->file('file'));
+        try {
             Excel::import(new ParticipantsImport($programId), $request->file('file'));
             return redirect()->back()->with('success', 'تم حفظ بيانات المشاركين.');
-            // dd($data);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error', 'توجد مشكلة في الملف . بعض الحقول مفقودة');
+        }
+        // dd($data);
         // } catch (\Throwable $th) {
-            // return back()->with('error', $th->getMessage());
+        // return back()->with('error', $th->getMessage());
         // }
         // $data = Excel::import(new ParticipantsImport, $request->file('file'));
         // dd($data);

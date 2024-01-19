@@ -24,7 +24,8 @@ class ParticipantsImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
-        // dd($row);
+        // try {
+        if ($row['name'] == null) return null;
         $participant = new Participant([
             'name'     => $row['name'],
             'gender'    => $row['gender'],
@@ -43,12 +44,17 @@ class ParticipantsImport implements ToModel, WithHeadingRow
         // ]);
         $participant->save();
         $participant->programs()->attach($this->programId);
+        // dd($participant);
         // ProgramParticipant::create([
         //     'participant_id' => $participant->id,
         //     'program_id' => $this->programId,
         // ]);
         // dd($participant);
+        // return $participant;
 
+        // } catch (\Throwable $th) {
 
+        //     return back()->with('error', $th->getMessage());
+        // }
     }
 }

@@ -2,8 +2,8 @@
 @section('main')
     <div class="container-fluid w-75 py-5">
 
-        <form id="template-form" action="{{ route('template.store', $programId) }}" enctype="multipart/form-data"
-            method="POST" class="row g-4 row-cols-md-1">
+        <form id="template-form" action="{{ route('template.store', $programId) }}" enctype="multipart/form-data" method="POST"
+            class="row g-4 row-cols-md-1">
             @csrf
             <h1 class="text-decoration-underline text-center">ملفات الشهادة</h1>
 
@@ -24,8 +24,10 @@
                     وعرض 200 بكسل.</span> لتغير أبعاد الصورة <a href="https://imageresizer.com/" target="_black">اضغط
                     هنا</a></small>
 
-            <div class="col" id="text-editor">
+            <div class="col mt-0" id="text-editor">
+
                 <div>
+                    <small class="fw-bold  "> <span class="text-danger"> *ملاحظة: يرجى عدم التلاعب بما داخل الأفواس  مثل اسم_المنظمة حتى</small>
 
                     <textarea id="editor" class="form-control" name="template-text"> </textarea>
                 </div>
