@@ -68,6 +68,12 @@ Generate a link folder (shortcut) on the public directory to serve the client wi
 php artisan storage:link
 ```
 
+Run the server
+
+```bash
+php artisan serve
+```
+
 # Powered by
 
 - **Laravel** as a backend.
