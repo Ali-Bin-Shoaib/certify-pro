@@ -24,7 +24,6 @@ class ParticipantsImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
-        // try {
         if ($row['name'] == null) return;
         if(Participant::where('email', $row['email'])->first() != null) return;
         $participant = new Participant([
@@ -33,29 +32,9 @@ class ParticipantsImport implements ToModel, WithHeadingRow
             'email' => $row['email'],
             'phone' => $row['phone'],
             'member_id' => Auth::user()->member->id,
-            // 'program_id'=> $this->programId,
         ]);
-        // Participant::create([
-        //     'name'     => $row['name'],
-        //     'gender'    => $row['gender'],
-        //     'email' => $row['email'],
-        //     'phone' => $row['phone'],
-        //     'member_id' => Auth::user()->member->id,
-        //     // 'program_id'=> $this->programId,
-        // ]);
+
         $participant->save();
         $participant->programs()->attach($this->programId);
-        // dd($participant);
-        // ProgramParticipant::create([
-        //     'participant_id' => $participant->id,
-        //     'program_id' => $this->programId,
-        // ]);
-        // dd($participant);
-        // return $participant;
-
-        // } catch (\Throwable $th) {
-
-        //     return back()->with('error', $th->getMessage());
-        // }
     }
 }
