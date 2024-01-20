@@ -82,8 +82,6 @@ class TemplateController extends Controller
     }
     public function importParticipants(Request $request, $programId)
     {
-        // Program::query()->where('id',$programId)->all
-        // Program::where('')
         try {
             $request->validate([
                 'file' => 'required|mimes:xlsx, csv, xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -92,22 +90,12 @@ class TemplateController extends Controller
             return back()->with('error', $th->getMessage());
         }
 
-        // $data = Excel::import(new ParticipantsImport, request()->file('file'));
-        // try {
-        // dd($request->file('file'));
         try {
-            Excel::import(new ParticipantsImport($programId), $request->file('file'));
+           $data= Excel::import(new ParticipantsImport($programId), $request->file('file'));
+           dd($data);
             return redirect()->back()->with('success', 'تم حفظ بيانات المشاركين.');
         } catch (\Throwable $th) {
-            //throw $th;
-            return back()->with('error', 'توجد مشكلة في الملف . بعض الحقول مفقودة');
+            return back()->with('error', 'توجد مشكلة في بعض الصفوف إما الحقول المطلوبة فارغة أو موجودة مسبقا.');
         }
-        // dd($data);
-        // } catch (\Throwable $th) {
-        // return back()->with('error', $th->getMessage());
-        // }
-        // $data = Excel::import(new ParticipantsImport, $request->file('file'));
-        // dd($data);
-
     }
 }
