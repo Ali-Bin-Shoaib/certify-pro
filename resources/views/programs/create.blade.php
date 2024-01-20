@@ -48,6 +48,21 @@
             </div>
             <h4 class="text-decoration-underline">معلومات المدرب </h4>
             <div class="row g-3 my-3">
+                <label class=" form-label col-md-2" for="name">اختر مدرب </label>
+                <div class="col-md-9  pe-0">
+                    <select name="selectedTrainer" id="selectedTrainer" class="form-control ">
+                        <option disabled selected value="">اختر مدرب </option>
+                        @foreach ($trainers as $trainer)
+                            <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                        @endforeach
+                    </select>
+
+                </div>
+                <div class="input-group-append col-md-1 pe-0">
+                    <button class="btn btn-secondary" type="button" id="clearButton">مسح</button>
+                </div>
+            </div>
+            <div class="row g-3 my-3">
                 <label class="col-md-2 form-label" for="name">اسم المدرب</label>
                 <div class="col-md-10">
                     <input class=" form-control" type="text" name="name" id="name" required>
@@ -71,15 +86,6 @@
             </div>
 
 
-            {{-- <div class="row g-3 my-2">
-                <div class="col-md-1"></div>
-                <div class="form-check col-md-9">
-                    <input class="form-check-input" type="checkbox" id="addParticipants" name="addParticipants">
-                    <label class="form-check-label" for="addParticipants">
-                        إضافة مشاركين للدورة؟
-                    </label>
-                </div>
-            </div> --}}
 
             <div class="row g-5">
                 <div class="col-md-3"></div>
@@ -87,47 +93,42 @@
             </div>
         </form>
     </div>
-    {{-- <script>
-        $(function() {
-            //   const addParticipants = $('#addParticipants');
-            $('#addParticipants').on('click', function() {
-                console.log($('#addParticipants').val());
-                if ($('#addParticipants').val() == 'on')
-                    showNumberInput();
-                // showParticipantInput();
-                else
-                    hideParticipantInput();
-            });
+    <script>
+        $('#selectedTrainer').on('change', function() {
+            var trainerId = $(this).val();
+            disableTrainerInputs(trainerId);
+        });
 
-            function showNumberInput() {
-                $('#addParticipants').parent().parent().after(`
-                            <div class="row g-3 my-3" participantNumber>
-                <label class="col-md-2 form-label" for="participantsNumber">أدخل عدد المشاركين </label>
-                <div class=" col-md-10 d-flex">
+        function disableTrainerInputs(trainerId) {
+            @foreach ($trainers as $trainer)
+                if ({{ $trainer->id }} == trainerId) {
+                    $('#name').val(`{{ $trainer->name }}`)
+                    $('#phone').val(`{{ $trainer->phone }}`)
+                    $('#gender ').val('{{ $trainer->gender }}');
+                    $('#name,#gender,#phone').prop({
+                        readonly: true,
+                        disabled: true
+                    });;
+                }
+            @endforeach
 
-                    <input class="form-control " type="text" name="participantsNumber"  id="participantsNumber" required>
-                    <button class="btn btn-danger" id> delete</button>
-                </div>
-            </div>
+        }
 
-                `)
-                // console.log($('addParticipants').parent())
-            }
+        function enableTrainerInputs() {
+            $('#selectedTrainer').val('');
+            $('#name').val('')
+            $('#phone').val('')
+            $('#gender ').val('');
+            $('#name,#gender,#phone').prop({
+                readonly: false,
+                disabled: false
+            });;
 
-            function deleteElement() {
-                this.parent().parent().remove();
-            }
 
-            function showParticipantInput() {
-                const participantsContainer = document.querySelect('#participantsContainer');
-                // participantsContainer.innerHTML = ``
+        }
+        $("#clearButton").on("click", function() {
 
-            }
-
-            function hideParticipantInput() {
-                $(`[name='name[]']`).remove();
-            }
-
-        })
-    </script> --}}
+            enableTrainerInputs();
+        });
+    </script>
 @endsection

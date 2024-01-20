@@ -27,37 +27,58 @@ class ProgramController extends Controller
         $categories = Category::join('members', 'categories.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
             ->get('categories.*');
-        return view('programs.create', compact('categories'));
+        $trainers = Trainer::join('members', 'members.id', 'trainers.member_id')
+            ->where('members.organization_id', Auth::user()->member->organization_id)
+            ->get('trainers.*');
+
+        return view('programs.create', compact('categories', 'trainers'));
     }
 
 
     public function store(Request $request)
     {
+        $trainer=null;
         try {
-            $this->validate($request, [
-                //program data
-                'title' => 'required',
-                'category_id' => 'required',
-                'location' => 'required',
-                'start_date' => 'required',
-                'end_date' => 'required',
-                //trainer data
-                'name' => 'required',
-                'gender' => 'required',
-                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
-            ]);
+            if (!$request->has('selectedTrainer')) {
+                $this->validate($request, [
+                    //program data
+                    'title' => 'required',
+                    'category_id' => 'required',
+                    'location' => 'required',
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                    //trainer data
+                    'name' => 'required',
+                    'gender' => 'required',
+                    'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9',
+                ]);
+            } else {
+                $this->validate($request, [
+                    'title' => 'required',
+                    'category_id' => 'required',
+                    'location' => 'required',
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                    'selectedTrainer' => 'required',
+                ]);
+                $trainer = Trainer::join('members', 'trainers.member_id', 'members.id')
+                    ->where('members.organization_id', Auth::user()->member->organization_id)
+                    ->get('trainers.*')
+                    ->first();
+            }
         } catch (\Throwable $th) {
-            // throw $th;
             return back()->with('error', $th->getMessage());
         }
 
         $newProgram = $request->only(['title', 'category_id', 'location', 'start_date', 'end_date']);
-        $newTrainer = $request->only(['name', 'gender', 'phone']);
         $newProgram['member_id'] = Auth::user()->member->id;
-        $newTrainer['member_id'] = Auth::user()->member->id;
-        // dd($request->all(), $newTrainer);
         $program = Program::create($newProgram);
-        $trainer = Trainer::create($newTrainer);
+        // dd($trainer);
+        if (!$trainer) {
+            $newTrainer = $request->only(['name', 'gender', 'phone']);
+            $newTrainer['member_id'] = Auth::user()->member->id;
+            $trainer = Trainer::create($newTrainer);
+        }        // dd($request->all(), $newTrainer);
         if ($program && $trainer) {
             $program->trainers()->attach($trainer);
             return redirect()->route('programs.index')->with('success', 'تم إضافة معلومات الدورة بنجاح');
