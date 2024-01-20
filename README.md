@@ -25,7 +25,7 @@ composer install
 copy `.env.example` file and rename the copy to `.env`. This file is not in the repo because it is sensitive:
 
 ```shell
-cp .env.expample .env
+cp .env.example .env
 ```
 
 Configure the database information in the `.env` file (`DB_*`).
