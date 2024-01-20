@@ -68,10 +68,10 @@
                         class="text-black fw-bold fs-6" rel="external" target="_blank">Certify Pro</a></p>
             </div> <!-- end of col -->
 
-            <div class="col-lg-3 col-md-12 col-sm-12">
+            {{-- <div class="col-lg-3 col-md-12 col-sm-12">
                 <p class="p-small statement"> <a class="fw-bold fs-6 text-black" href="https://github.com/ali-bin-shoaib"
                         target="_blank"> علي بن شعيب</a>Developed by  </p>
-            </div> <!-- end of col -->
+            </div> <!-- end of col --> --}}
         </div> <!-- enf of row -->
     </div> <!-- end of container -->
 </div> <!-- end of copyright -->

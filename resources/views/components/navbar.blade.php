@@ -61,25 +61,22 @@
         @auth
 
             {{-- < class="nav-item ms-3 py-1"> --}}
-            @if (Auth::user()->role === 'organization')
-                <div class="btn-group">
-                    <button type="button" class="btn-solid-sm dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        {{ Auth::user()->name }}
-                    </button>
-                    <ul class="dropdown-menu">
+            <div class="btn-group">
+                <button type="button" class="btn-solid-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </button>
+                <ul class="dropdown-menu">
+                    @if (Auth::user()->role === 'organization')
                         <li>
                             <a class="dropdown-item"
                                 href="{{ route('organization.edit', Auth::user()->organization->id) }}">تعديل البانات</a>
                         </li>
-                        <li> <a class="dropdown-item d-flex align-items-center justifiy-content-center gap-1 ms-0 "
-                                href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
-                        </li>
-
-
-                    </ul>
-                </div>
-            @endif
+                    @endif
+                    <li> <a class="dropdown-item d-flex align-items-center justifiy-content-center gap-1 ms-0 "
+                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                    </li>
+                </ul>
+            </div>
             {{-- <div>نوع الحساب: {{ Auth::user()->role }}</div>
                 <div><b>الاسم: {{ Auth::user()->name }}</b></div> --}}
 
@@ -93,8 +90,8 @@
                         href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
                 @else
                     @if (Auth::user()->role == 'member')
-                        <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
-                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
+                        {{-- <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
+                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a> --}}
                     @endif
                 @endguest
             @endif

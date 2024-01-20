@@ -65,9 +65,9 @@
                 <th></th>
             </thead>
             <tbody class="table-group-divider">
-                @foreach ($participants as $participant)
+                @foreach ($participants as $key=> $participant)
                     <tr>
-                        <td>{{ $participant->id }}</td>
+                        <td>{{ $key+1 }}</td>
                         <td>{{ $participant->name }}</td>
                         <td>{{ $participant->email }}</td>
                         <td>{{ $participant->phone }}</td>
