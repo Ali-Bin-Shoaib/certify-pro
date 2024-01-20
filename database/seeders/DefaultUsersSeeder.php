@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
-class DefaultAdminSeeder extends Seeder
+class DefaultUsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -57,9 +57,7 @@ class DefaultAdminSeeder extends Seeder
                 'job_title' => fake()->randomElement(['مدير', 'نائب مدير', 'رئيس قسم', 'مدير مشروع', 'منسق', 'عضو']),
 
             ]);
-
         } catch (\Throwable $th) {
-            
         }
     }
 }

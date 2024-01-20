@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('member_id')->constrained('members', 'id')->cascadeOnDelete();
             $table->string('name');
             $table->enum('gender', ['ذكر', 'أنثى']);
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('phone', 25);
             $table->timestamps();
         });

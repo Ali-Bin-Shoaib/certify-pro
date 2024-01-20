@@ -14,7 +14,7 @@ class TrainerSeeder extends Seeder
     public function run(): void
     {
         try {
-            Trainer::factory()->count(20)->create();
+            Trainer::factory()->count(10)->create();
 
         } catch (\Throwable $th) {
             //throw $th;

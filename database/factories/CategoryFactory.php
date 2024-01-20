@@ -29,7 +29,7 @@ class CategoryFactory extends Factory
 
         return [
             'title' => $title,
-            'member_id' => Member::pluck('id')->random()
+            'member_id' => 1
         ];
     }
 }

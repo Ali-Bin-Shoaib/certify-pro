@@ -25,7 +25,7 @@ class ParticipantFactory extends Factory
             $name = fake()->name('female');
 
         return [
-            'member_id' => Member::pluck('id')->random(),
+            'member_id' => 1,
             'name' => $name,
             'gender' => $gender,
             'email' => fake()->unique()->email(),

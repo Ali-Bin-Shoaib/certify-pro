@@ -24,7 +24,7 @@ class TrainerFactory extends Factory
             $name = fake()->name('female');
 
         return [
-            'member_id' => Member::pluck('id')->random(),
+            'member_id' => 1,
             'name' => fake()->name,
             'gender' => $gender,
             'phone' => fake()->phoneNumber(),

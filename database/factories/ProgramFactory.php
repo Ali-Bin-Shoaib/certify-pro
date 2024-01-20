@@ -20,7 +20,7 @@ class ProgramFactory extends Factory
     {
         $startDate = fake()->dateTimeBetween("now", "+10 months");
         return [
-            'member_id' => Member::pluck('id')->random(),
+            'member_id' => 1,
             'category_id' => Category::pluck('id')->random(),
             'title' => fake()->word,
             'location' => fake()->address(),

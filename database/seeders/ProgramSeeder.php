@@ -14,7 +14,7 @@ class ProgramSeeder extends Seeder
     public function run(): void
     {
         try {
-            Program::factory()->count(30)->create();
+            Program::factory()->count(10)->create();
 
         } catch (\Throwable $th) {
             //throw $th;

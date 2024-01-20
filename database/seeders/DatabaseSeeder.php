@@ -20,16 +20,16 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            DefaultAdminSeeder::class,
-            UserSeeder::class,
-            OrganizationSeeder::class,
-            MemberSeeder::class,
+            DefaultUsersSeeder::class,
+            // UserSeeder::class,
+            // OrganizationSeeder::class,
+            // MemberSeeder::class,
             CategorySeeder::class,
             TrainerSeeder::class,
             ProgramSeeder::class,
             ParticipantSeeder::class,
-            ProgramParticipantSeeder::class,
-            ProgramTrainerSeeder::class,
+            // ProgramParticipantSeeder::class,
+            // ProgramTrainerSeeder::class,
         ]);
     }
 }

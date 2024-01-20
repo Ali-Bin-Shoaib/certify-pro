@@ -14,7 +14,7 @@ class ParticipantSeeder extends Seeder
     public function run(): void
     {
         try {
-            Participant::factory()->count(30)->create();
+            Participant::factory()->count(10)->create();
         } catch (\Throwable $th) {
             //throw $th;
         }
