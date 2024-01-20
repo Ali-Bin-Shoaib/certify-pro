@@ -16,7 +16,8 @@ class ProgramController extends Controller
     {
         $programs = Program::join('members', 'programs.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
-            ->get(['programs.*']);
+            ->select('programs.*')
+            ->paginate(10);
         return view('programs.index', compact('programs'));
     }
 
@@ -77,8 +78,8 @@ class ProgramController extends Controller
         if (!$program) {
             return back()->with('error', 'الدورة غير موجودة.');
         }
-        $participants=$program->participants()->paginate(10);
-        return view('programs.show', compact('program','participants'));
+        $participants = $program->participants()->paginate(10);
+        return view('programs.show', compact('program', 'participants'));
     }
 
 

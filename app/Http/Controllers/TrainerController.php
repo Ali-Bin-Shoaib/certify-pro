@@ -13,7 +13,8 @@ class TrainerController extends Controller
     {
         $trainers = Trainer::join("members", "member_id", "members.id")
             ->where("members.organization_id", Auth::user()->member->organization_id)
-            ->get('trainers.*');
+            ->select('trainers.*')
+            ->paginate(10);
         return view("trainers.index", compact("trainers"));
     }
 

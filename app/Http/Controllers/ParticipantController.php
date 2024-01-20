@@ -14,6 +14,7 @@ class ParticipantController extends Controller
     {
         $participants = Participant::join('members', 'member_id', 'members.id')
             ->where('organization_id', Auth::user()->member->organization_id)
+            ->select('participants.*')
             ->paginate(10);
         return view("participants.index", compact("participants"));
     }
@@ -88,9 +89,11 @@ class ParticipantController extends Controller
             ->where('organization_id', Auth::user()->member->organization_id)
             ->where('participants.id', $id)
             ->get(['participants.*'])->first();
+            $programs = $participant->programs()->paginate(10);
+            // dd($participant->programs);
         if (!$participant)
             return redirect()->back()->with('error', 'لا يمكن إيجاد هذا المشارك.');
-        return view('participants.show', compact('participant'));
+        return view('participants.show', compact('participant', 'programs'));
     }
 
 

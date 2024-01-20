@@ -13,8 +13,8 @@ class CategoryController extends Controller
     {
         $categories = Category::join('members', 'member_id',  'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
-            ->get(['categories.*'])
-            ->sortby('categories.created_at');
+            ->select(['categories.*'])
+        ->paginate(10);
         return view("categories.index", compact("categories"));
     }
     public function create()
