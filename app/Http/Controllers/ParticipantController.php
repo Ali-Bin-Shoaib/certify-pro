@@ -14,7 +14,7 @@ class ParticipantController extends Controller
     {
         $participants = Participant::join('members', 'member_id', 'members.id')
             ->where('organization_id', Auth::user()->member->organization_id)
-            ->get(['participants.*'])->sortby('participants.created_at');
+            ->paginate(10);
         return view("participants.index", compact("participants"));
     }
 

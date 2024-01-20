@@ -27,7 +27,7 @@
             <div class="col mt-0" id="text-editor">
 
                 <div>
-                    <small class="fw-bold  "> <span class="text-danger"> *ملاحظة: يرجى عدم التلاعب بما داخل الأفواس  مثل اسم_المنظمة حتى</small>
+                    <small class="fw-bold  "> <span class="text-danger"> *ملاحظة: يرجى عدم تعديل الأقواس أو ما بداخلها كي لا يحصل أي خطأ</small>
 
                     <textarea id="editor" class="form-control" name="template-text"> </textarea>
                 </div>
