@@ -25,7 +25,8 @@ class ParticipantsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // try {
-        if ($row['name'] == null) return null;
+        if ($row['name'] == null) return;
+        if(Participant::where('email', $row['email'])->first() != null) return;
         $participant = new Participant([
             'name'     => $row['name'],
             'gender'    => $row['gender'],
