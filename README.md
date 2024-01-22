@@ -1,4 +1,4 @@
-<img src="/public/favicon.ico" width="15%"/>  # Certify Pro
+# Certify Pro شهادة برو <img src="/public/favicon.ico" width="15%"/>
 
 
 This is a platform that allow any education authority to generate certificates for participants in a program with custom design for each certificate.
