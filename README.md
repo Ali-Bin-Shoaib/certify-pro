@@ -1,4 +1,4 @@
-    <img src="/public/favicon.ico" width="15%"/>
+<img src="/public/favicon.ico" width="15%"/>
 
  #Certify Pro شهادة برو 
 
