@@ -37,13 +37,13 @@ class ProgramController extends Controller
 
     public function store(Request $request)
     {
-        $trainer=null;
+        $trainer = null;
         try {
             if (!$request->has('selectedTrainer')) {
                 $this->validate($request, [
                     //program data
                     'title' => 'required',
-                    'category_id' => 'required',
+                    'category_id' => 'nullable',
                     'location' => 'required',
                     'start_date' => 'required',
                     'end_date' => 'required',
@@ -55,7 +55,7 @@ class ProgramController extends Controller
             } else {
                 $this->validate($request, [
                     'title' => 'required',
-                    'category_id' => 'required',
+                    'category_id' => 'nullable',
                     'location' => 'required',
                     'start_date' => 'required',
                     'end_date' => 'required',
@@ -121,21 +121,31 @@ class ProgramController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'category_id' => 'required',
-            'location' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ]);
-        $program = Program::join('members', 'member_id', 'members.id')
-            ->where('organization_id', Auth::user()->member->organization_id)
-            ->where('programs.id', $id)
-            ->get('programs.*')
-            ->first();
-        // $toUpdate['member_id'] = Auth::user()->id ?? $program->member_id;;
-        $program->update($request->all());
-        return redirect()->route('programs.index')->with('success', 'تم تحديث البيانات بنجاح');
+        try {
+            $this->validate($request, [
+                'title' => 'required',
+                'category_id' => 'nullable',
+                'location' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error', $th->getMessage());
+        }
+        try {
+            $program = Program::join('members', 'member_id', 'members.id')
+                ->where('organization_id', Auth::user()->member->organization_id)
+                ->where('programs.id', $id)
+                ->get('programs.*')
+                ->first();
+            // $toUpdate['member_id'] = Auth::user()->id ?? $program->member_id;;
+            $program->update($request->all());
+            return redirect()->route('programs.index')->with('success', 'تم تحديث البيانات بنجاح');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error', 'حصل خطأ عند تعديل البيانات.');
+        }
     }
 
 

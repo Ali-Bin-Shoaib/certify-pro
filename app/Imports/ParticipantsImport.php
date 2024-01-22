@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Participant;
+use App\Models\ProgramParticipant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -11,6 +12,7 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Validators\Failure;
 
 class ParticipantsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailure
 {
@@ -32,21 +34,28 @@ class ParticipantsImport implements ToModel, WithHeadingRow, WithValidation, Ski
     {
         // if ($row['name'] == null) return;
         // if (Participant::where('email', $row['email'])->first() != null) return;
-        $participant = new Participant([
-            'name'     => $row['name'],
-            'gender'    => $row['gender'],
-            'email' => $row['email'],
-            'phone' => $row['phone'],
-            'member_id' => Auth::user()->member->id,
-        ]);
-        $participant->save();
-        $participant->programs()->attach($this->programId);
+        $participant = Participant::where("email", $row["email"])->first();
+        if (!$participant) {
+            $participant = new Participant([
+                'name'     => $row['name'],
+                'gender'    => $row['gender'],
+                'email' => $row['email'],
+                'phone' => $row['phone'],
+                'member_id' => Auth::user()->member->id,
+            ]);
+            $participant->save();
+        }
+        if (!ProgramParticipant::where('program_id', $this->programId)
+            ->where('participant_id', $participant->id)
+            ->exists())
+            $participant->programs()
+                ->attach($this->programId);
         return $participant;
     }
     public function rules(): array
     {
         return [
-            'email' => [Rule::unique('participants', 'email'), 'required', 'string', 'email'],
+            'email' => ['required', 'string', 'email'],
             'name' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'phone' => ['required'],
@@ -62,16 +71,18 @@ class ParticipantsImport implements ToModel, WithHeadingRow, WithValidation, Ski
             // }
         ];
     }
-    // public function onError(\Throwable $e)
-    // {
-    //     // Handle the exception how you'd like.
-    //     return back()->with('errors', $e->getMessage());
-    // }
+    public function onError(\Throwable $e)
+    {
+        // Handle the exception how you'd like.
+        dd($e);
+    }
 
-    // public function onFailure(Failure ...$failures)
-    // {
-    //     // Handle the failures how you'd like.
-    //     // dd($failures);
-    //     return back()->with('error', $failures);
-    // }
+    public function onFailure(Failure ...$failures)
+    {
+        // Handle the failures how you'd like.
+        // dd($failures);
+        $participant = Participant::where('email', $this->programId)->first();
+        if ($participant)
+            $participant->programs()->attach($this->programId);
+    }
 }

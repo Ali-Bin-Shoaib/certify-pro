@@ -104,7 +104,7 @@ class TemplateController extends Controller
                 return back()->with('error', $errorMsg);
             }            // Excel::import(new ParticipantsImport($programId), $request->file('file'));
             //    dd($data);
-            return redirect()->back()->with('success', 'تم حفظ بيانات المشاركين.');
+            return redirect(route('programs.show', $programId))->with('success', 'تم حفظ بيانات المشاركين.');
         } catch (\Throwable $th) {
             // return back()->with('error', 'توجد مشكلة في بعض الصفوف إما الحقول المطلوبة فارغة أو موجودة مسبقا.');
             return back()->with('error', $th->getMessage());

@@ -124,7 +124,9 @@ class MemberController extends Controller
         if ($member === null)
             return redirect()->route('members.index')->with('error', 'خطأ لم يتم الحذف. العضو غير موجود');
         try {
-            $member->delete();
+            $user = User::find($member->user_id);
+            $user->delete();
+            // $member->delete();
             return redirect()->route('members.index')->with('success', 'تم الحذف بنجاح.');
         } catch (\Throwable $th) {
             return back()->with('error', 'حصل خطأ لم تتم عملية الحذف.');
