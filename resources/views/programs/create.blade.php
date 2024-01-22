@@ -4,6 +4,13 @@
     <div class="container-fluid w-75 py-5">
         <h1 class="text-decoration-underline text-center">إضافة دورة</h1>
         <form method="POST" action="{{ route('programs.store') }}" class="container w-75 shadow-sm my-5 p-5 form-bg">
+            {{-- Session::get('error'); --}}
+            {{-- @if ($errors)
+
+                @foreach ($errors as $error)
+
+                @endforeach
+            @endif --}}
             @csrf
             <h4 class="text-decoration-underline">معلومات الدورة</h4>
             <div class="row g-3 my-3">

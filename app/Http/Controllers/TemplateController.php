@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Imports\UsersImport;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\Failure;
+use Symfony\Component\VarDumper\VarDumper;
 
 class TemplateController extends Controller
 {
@@ -37,7 +40,7 @@ class TemplateController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             // return back()->with('error', $th->getMessage());
-            return back()->with('error', 'أبعاد صورة قالب الشهادة أو التوقيع أكبر من المطلوب. \n يرجي تعديل أبعاد الصورة.');
+            return back()->withErrors('error', 'أبعاد صورة قالب الشهادة أو التوقيع أكبر من المطلوب. \n يرجي تعديل أبعاد الصورة.');
         }
         $program = Program::find($programId);
         try {
@@ -91,11 +94,58 @@ class TemplateController extends Controller
         }
 
         try {
-           $data= Excel::import(new ParticipantsImport($programId), $request->file('file'));
-           dd($data);
+            $import = new ParticipantsImport($programId);
+            $import->import($request->file);
+            // dd($import);
+            $failures = $import->failures();
+            if ($failures->count() > 0) {
+                $errorMsg = $this->getErrorMsg($failures);
+                // dd($errorMsg);
+                return back()->with('error', $errorMsg);
+            }            // Excel::import(new ParticipantsImport($programId), $request->file('file'));
+            //    dd($data);
             return redirect()->back()->with('success', 'تم حفظ بيانات المشاركين.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'توجد مشكلة في بعض الصفوف إما الحقول المطلوبة فارغة أو موجودة مسبقا.');
+            // return back()->with('error', 'توجد مشكلة في بعض الصفوف إما الحقول المطلوبة فارغة أو موجودة مسبقا.');
+            return back()->with('error', $th->getMessage());
         }
+    }
+    private function getErrorMsg(Collection|Failure|array $failures)
+    {
+        $errors = [];
+        $errorMsg = 'لم تتم إضافة بعض المشاركين. توجد مشكلة في الصفوف التالية:: ';
+        $rows = [];
+        foreach ($failures as $failure) {
+            $flag = false;
+            foreach ($failure->values() as  $value) {
+                if ($value != null) {
+                    $flag = true;
+                    break;
+                }
+            }
+            if ($flag)
+                $errors[] = [
+                    'row' => $failure->row(), 'attribute' => $failure->attribute()
+                ];
+        }
+
+        $resultArray = [];
+
+        foreach ($errors as $error) {
+            $attribute = $error['attribute'];
+            $row = $error['row'];
+            if (!isset($resultArray[$attribute])) {
+                $resultArray[$attribute] = [];
+            }
+            $resultArray[$attribute][] = $row;
+            $errorMsg .= ' ' . $row . ', ';
+        }
+        //to show what rows have a problem in what column "name, email, gender, phone"
+        // foreach ($resultArray as $key => $value) {
+        //     // if ($key)
+        //         // $errorMsg .= $key .' ' . implode(', ', $value) . '\n';
+        //         $errorMsg .=  implode(', ', $value) . ' ';
+        // }
+        return $errorMsg;
     }
 }
