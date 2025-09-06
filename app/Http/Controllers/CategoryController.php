@@ -89,6 +89,6 @@ class CategoryController extends Controller
             $category->delete();
             return redirect()->route('categories.index')->with('success', 'تم حذف البيانات بنجاح');
         }
-        return back()->with('error', 'عملية الحذف فشلت. لا يمكن العثور على البانات ');
+        return back()->with('error', 'عملية الحذف فشلت. لا يمكن العثور على البيانات ');
     }
 }

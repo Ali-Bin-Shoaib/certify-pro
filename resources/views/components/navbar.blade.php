@@ -69,7 +69,7 @@
                     @if (Auth::user()->role === 'organization')
                         <li>
                             <a class="dropdown-item"
-                                href="{{ route('organization.edit', Auth::user()->organization->id) }}">تعديل البانات</a>
+                                href="{{ route('organization.edit', Auth::user()->organization->id) }}">تعديل البيانات</a>
                         </li>
                     @endif
                     <li> <a class="dropdown-item d-flex align-items-center justifiy-content-center gap-1 ms-0 "

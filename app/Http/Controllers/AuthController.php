@@ -52,7 +52,7 @@ class AuthController extends Controller
                 try {
                     $user->delete();
                     $organization->delete();
-                    return  back()->with('error', ' حصل خطأ عند عملية إنشاء حساب. تم حذف البانات السابقة. ');
+                    return  back()->with('error', ' حصل خطأ عند عملية إنشاء حساب. تم حذف البيانات السابقة. ');
                 } catch (\Throwable $th) {
                     return  back()->with('error', 'حصل خطأ عند عملية إنشاء الحساب .');
                 }
