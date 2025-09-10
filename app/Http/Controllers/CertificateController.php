@@ -160,7 +160,7 @@ class CertificateController extends Controller
         );
         return $generatedQrCode;
     }
-    public function certificateVerify(Request $request, string|null $certificateId )
+    public function certificateVerify(Request $request, string|null $certificateId =null)
     {
         if ($certificateId === null && $request->input("certificate_id") === null)
             return view("certificates.verify");
