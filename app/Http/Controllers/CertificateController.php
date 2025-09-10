@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Mpdf\Mpdf;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
+
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -18,6 +21,47 @@ class CertificateController extends Controller
 {
     public function certificateGenerate(Request $request, string $programId, string $participantId)
     {
+                // Define the custom font directory
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        // Point to your public/Fonts directory
+        $customFontDir = base_path('public/fonts/Tajawal/'); // You can also use base_path('public/Fonts')
+
+        // Merge with existing font directories
+        $fontDirs = array_merge($fontDirs, [
+            $customFontDir,
+        ]);
+
+        // Define the custom font data
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $fontData['tajawal'] = [ // Use a lowercase, unique name for your font
+            'R' => 'Tajawal-Regular.ttf', // Adjust filename based on your actual files
+            'B' => 'Tajawal-Bold.ttf',
+            'I' => 'Tajawal-Light.ttf', // Assuming Light is italic equivalent for this example
+                        'useOTL' => 0xFF, // This is the key line to enable OpenType font features
+            'useKashida' => 75, // Adjust this value (0-100) for justification style
+
+            // Add other styles as needed (e.g., 'BI' for bold-italic)
+        ];
+
+        // Initialize mPDF with custom font settings
+             $document = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4-L',
+            'margin_left' => 30,
+            'margin_right' => 30,
+            'margin_top' => 40,
+            'margin_bottom' => 0,
+            'fontDir' => $fontDirs,
+            'fontdata' => $fontData,
+            // 'default_font' => 'tajawal' // Set your custom font as default if desired
+
+
+        ]);
+
         $program = Program::join('members', 'programs.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
             ->where('programs.id', $programId)
@@ -33,14 +77,6 @@ class CertificateController extends Controller
         if (!$program || !$organization || !$participant)
             return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
 
-        $document = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4-L',
-            'margin_left' => 30,
-            'margin_right' => 30,
-            'margin_top' => 40,
-            'margin_bottom' => 0,
-        ]);
 
         $url = "http://127.0.0.1:8000/certificate-verify/";
 
@@ -124,7 +160,7 @@ class CertificateController extends Controller
         );
         return $generatedQrCode;
     }
-    public function certificateVerify(Request $request, string $certificateId = null)
+    public function certificateVerify(Request $request, string|null $certificateId )
     {
         if ($certificateId === null && $request->input("certificate_id") === null)
             return view("certificates.verify");

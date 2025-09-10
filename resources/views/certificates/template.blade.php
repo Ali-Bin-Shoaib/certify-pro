@@ -11,7 +11,7 @@
 <style>
     body,
     body * {
-        font-family: 'Tajawal';
+        font-family: 'tajawal';
         direction: rtl !important;
     }
 
