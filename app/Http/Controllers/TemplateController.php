@@ -98,27 +98,34 @@ class TemplateController extends Controller
     {
         try {
             $request->validate([
-                'file' => 'required|mimes:xlsx, csv, xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                'file' => 'required|mimes:xlsx,csv,xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|max:2048'
             ]);
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('error', 'خطأ في التحقق من الملف: ' . $th->getMessage());
         }
 
         try {
             $import = new ParticipantsImport($programId);
             $import->import($request->file);
-            // dd($import);
+
             $failures = $import->failures();
+            $importedCount = $import->getImportedCount();
+
+            \Log::info('Import completed. Imported count: ' . $importedCount . ', Failures: ' . $failures->count());
+
             if ($failures->count() > 0) {
                 $errorMsg = $this->getErrorMsg($failures);
-                // dd($errorMsg);
-                return back()->with('error', $errorMsg);
-            }            // Excel::import(new ParticipantsImport($programId), $request->file('file'));
-            //    dd($data);
-            return redirect(route('programs.show', $programId))->with('success', 'تم حفظ بيانات المشاركين.');
+                return back()->with('error', 'تم استيراد ' . $importedCount . ' مشارك بنجاح، ولكن حدثت أخطاء في بعض الصفوف: ' . $errorMsg);
+            }
+
+            if ($importedCount > 0) {
+                return redirect(route('programs.show', $programId))->with('success', 'تم استيراد ' . $importedCount . ' مشارك بنجاح.');
+            } else {
+                return back()->with('warning', 'لم يتم استيراد أي مشاركين. قد تكون جميع المشاركين موجودين مسبقاً في هذا البرنامج.');
+            }
         } catch (\Throwable $th) {
-            // return back()->with('error', 'توجد مشكلة في بعض الصفوف إما الحقول المطلوبة فارغة أو موجودة مسبقا.');
-            return back()->with('error', $th->getMessage());
+            \Log::error('Import participants error: ' . $th->getMessage());
+            return back()->with('error', 'حدث خطأ أثناء استيراد المشاركين: ' . $th->getMessage());
         }
     }
     private function getErrorMsg(Collection|Failure|array $failures)
