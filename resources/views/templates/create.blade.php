@@ -11,18 +11,18 @@
                 <label class="input-group-text" for="template-image">قالب الشهادة</label>
                 <input type="file" class="form-control" name="template-image" id="template-image" accept="image/*">
             </div>
-            <small class="fw-bold mt-0 ms-3 mb-5 "> <span class="text-danger"> * ملاحظة :يجب أن تكون الأبعاد بطول 793 بكسل
-                    وعرض 1116 بكسل.</span> لتغير أبعاد الصورة <a href="https://imageresizer.com/" target="_black">اضغط
-                    هنا</a></small>
+            <small class="fw-bold mt-0 ms-3 mb-5 text-success">
+                <i class="fas fa-info-circle"></i> يمكنك رفع صورة بأي أبعاد، سيتم تعديلها تلقائياً للتناسب مع متطلبات النظام
+            </small>
 
 
             <div class="input-group custom-file-button mt-0">
                 <label class="input-group-text" for="signature-image">التوقيع</label>
                 <input type="file" class="form-control" name="signature-image" id="signature-image" accept="image/*">
             </div>
-            <small class="fw-bold mt-0 ms-3 mb-5 "> <span class="text-danger"> * ملاحظة :يجب أن تكون الأبعاد بطول 103 بكسل
-                    وعرض 200 بكسل.</span> لتغير أبعاد الصورة <a href="https://imageresizer.com/" target="_black">اضغط
-                    هنا</a></small>
+            <small class="fw-bold mt-0 ms-3 mb-5 text-success">
+                <i class="fas fa-info-circle"></i> يمكنك رفع صورة بأي أبعاد، سيتم تعديلها تلقائياً للتناسب مع متطلبات النظام
+            </small>
 
             <div class="col mt-0" id="text-editor">
 

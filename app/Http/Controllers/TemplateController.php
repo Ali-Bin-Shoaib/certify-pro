@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ParticipantImport;
 use App\Imports\ParticipantsImport;
 use App\Models\Program;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -33,46 +34,56 @@ class TemplateController extends Controller
     {
         try {
             $request->validate([
-                'template-image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048|dimensions:max_width=1125,max_height=800',
-                'signature-image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048|dimensions:max_width=200,max_height=105',
+                'template-image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'signature-image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'template-text' => 'required'
             ]);
         } catch (\Throwable $th) {
-            //throw $th;
-            // return back()->with('error', $th->getMessage());
-            return back()->withErrors('error', 'أبعاد صورة قالب الشهادة أو التوقيع أكبر من المطلوب. \n يرجي تعديل أبعاد الصورة.');
+            return back()->with('error', $th->getMessage());
         }
+
         $program = Program::find($programId);
+        $imageService = new ImageService();
+
         try {
+            $folderName = 'uploads/' . $program->id . '_' . $program->title;
+            // Clean up existing directory if it exists
+            if (Storage::exists('public/' . $folderName)) {
+                Storage::deleteDirectory('public/' . $folderName);
+            }
+
+            // Create the directory
+            Storage::makeDirectory('public/' . $folderName);
+
+            // Handle template image upload and resize
             if ($request->hasFile('template-image')) {
                 $template = $request->file('template-image');
-                $templateName = 'template.' . $template->extension();
+                $templateExtension = $template->getClientOriginalExtension();
+                $templateName = 'template.' . $templateExtension;
+
+                // Resize and save template image
+                $imageService->resizeTemplateImage($template, $folderName, $templateName);
             }
+
+            // Handle signature image upload and resize
             if ($request->hasFile('signature-image')) {
                 $signature = $request->file('signature-image');
-                $signatureName = 'signature.' . $template->extension();
+                $signatureExtension = $signature->getClientOriginalExtension();
+                $signatureName = 'signature.' . $signatureExtension;
+
+                // Resize and save signature image
+                $imageService->resizeSignatureImage($signature, $folderName, $signatureName);
             }
+
+            // Save template text
             $text = $request->input('template-text');
             $textName = 'text.txt';
-
-            $folderName = 'uploads/' . $program->id . '_' . $program->title;
-
-            if (isset($template) && isset($signature) && is_dir(public_path('storage/' . $folderName)))
-                Storage::deleteDirectory('public/' . $folderName);
-            if (!Storage::exists(public_path('storage/' . $folderName)))
-                Storage::makeDirectory(($folderName));
-            if (isset($template))
-                $template->storeAs(($folderName), $templateName, 'public');
-            if (isset($signature))
-                $signature->storeAs(($folderName), $signatureName, 'public');
-
             Storage::put('public/' . $folderName . '/' . $textName, $text);
 
-            return redirect()->route('programs.show',  $program->id)->with('success', 'تم حفظ الملفات بنجاح');
-            // $request->image->move(public_path('images'), $folderName);
+            return redirect()->route('programs.show', $program->id)->with('success', 'تم حفظ الملفات بنجاح');
+
         } catch (\Throwable $th) {
-            //throw $th;
-            return back()->with('error', $th->getMessage());
+            return back()->with('error', 'حدث خطأ أثناء حفظ الملفات: ' . $th->getMessage());
         }
     }
     public function destroy(Request $request, string $programId)

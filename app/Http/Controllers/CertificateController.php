@@ -47,8 +47,8 @@ class CertificateController extends Controller
             // Add other styles as needed (e.g., 'BI' for bold-italic)
         ];
 
-        // Initialize mPDF with custom font settings
-             $document = new Mpdf([
+        // Initialize mPDF with optimized settings for better performance
+        $document = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
             'margin_left' => 30,
@@ -57,9 +57,18 @@ class CertificateController extends Controller
             'margin_bottom' => 0,
             'fontDir' => $fontDirs,
             'fontdata' => $fontData,
-            // 'default_font' => 'tajawal' // Set your custom font as default if desired
-
-
+            'default_font' => 'tajawal',
+            'tempDir' => storage_path('app/tmp'),
+            'allow_charset_conversion' => false,
+            'autoScriptToLang' => false,
+            'autoLangToFont' => false,
+            'useSubstitutions' => false,
+            'simpleTables' => true,
+            'packTableData' => true,
+            'use_kwt' => true,
+            'autoPadding' => true,
+            'shrink_tables_to_fit' => 1,
+            'keep_table_proportions' => true,
         ]);
 
         $program = Program::join('members', 'programs.member_id', 'members.id')
@@ -107,12 +116,38 @@ class CertificateController extends Controller
             $filePath = 'public/uploads/';
             $images = Storage::files($filePath . $program->id . '_' . $program->title);
             $templateImages = [];
-            foreach ($images as $key => $image) {
-                $templateImages[] = str_replace('public', 'storage', $image);
+
+            // Separate template and signature images
+            $templateImage = null;
+            $signatureImage = null;
+
+            foreach ($images as $image) {
+                // Get the full path to the image file
+                $fullImagePath = Storage::path($image);
+                if (str_contains($image, 'template.')) {
+                    $templateImage = $fullImagePath;
+                } elseif (str_contains($image, 'signature.')) {
+                    $signatureImage = $fullImagePath;
+                }
             }
+
+            // Ensure we have the required images
+            if (!$templateImage) {
+                return back()->with('error', 'لا توجد صورة قالب الشهادة. يجب رفع الملفات أولا');
+            }
+            if (!$signatureImage) {
+                return back()->with('error', 'لا توجد صورة التوقيع. يجب رفع الملفات أولا');
+            }
+
+            // Create array with proper structure: [0] = signature, [1] = template
+            $templateImages = [$signatureImage, $templateImage];
+
+            // Debug: Log image paths for troubleshooting
+            \Log::info('Template Image Path: ' . $templateImage);
+            \Log::info('Signature Image Path: ' . $signatureImage);
+
         } catch (\Throwable $th) {
-            //throw $th;
-            return back()->with('error', $th->getMessage());
+            return back()->with('error', 'خطأ في قراءة ملفات الشهادة: ' . $th->getMessage());
         }
         $qrCode = $this->qrGenerate($url, $certificateId);
         $content = Storage::get($filePath . $program->id . '_' . $program->title . '/text.txt');
@@ -149,16 +184,29 @@ class CertificateController extends Controller
     // }
     public function qrGenerate(string $url, string $certificateId)
     {
-        // dd($certificateId);
         $qrValue = $url . $certificateId;
-        // QrCode::format('png');
-        $generatedQrCode = (string) QrCode::size(100)->color(51, 51, 51)->generate($qrValue);
-        $generatedQrCode = str_replace(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-            "<xml version=\"1.0\" encoding=\"UTF-8\">",
-            $generatedQrCode
-        );
-        return $generatedQrCode;
+
+        try {
+            // Generate QR code as SVG with optimized settings
+            $generatedQrCode = (string) QrCode::size(80)
+                ->color(51, 51, 51)
+                ->format('svg')
+                ->errorCorrection('M')
+                ->margin(1)
+                ->generate($qrValue);
+
+            // Fix XML declaration for better compatibility
+            $generatedQrCode = str_replace(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+                "<xml version=\"1.0\" encoding=\"UTF-8\">",
+                $generatedQrCode
+            );
+
+            return $generatedQrCode;
+        } catch (\Throwable $th) {
+            // Fallback: return a simple text representation
+            return '<div style="text-align:center; font-size:12px; color:#333;">QR Code Error</div>';
+        }
     }
     public function certificateVerify(Request $request, string|null $certificateId =null)
     {

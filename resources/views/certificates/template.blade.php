@@ -126,8 +126,7 @@ display: block;
 </style>
 
 
-<body {{-- style="background-image: url('{{ public_path('images/test3.jpg') }}'); margin: 0; padding: 0; box-sizing: border-box;"> --}} {{-- style="background-image: url('{{public_path('storage/uploads/3_quia/template.jpg')}}'); margin: 0; padding: 0; box-sizing: border-box;"> --}}
-    style="background-image: url('{{ public_path($templateImages[1]) }}');background-repeat:no-repeat; margin: 0; padding: 0; box-sizing: border-box;">
+<body style="background-image: url('{{ isset($templateImages[1]) ? $templateImages[1] : '' }}');background-repeat:no-repeat; background-size: cover; margin: 0; padding: 0; box-sizing: border-box;">
 
 
 
@@ -148,7 +147,7 @@ display: block;
 
                 </td>
                 <td class="signature-td  "
-                    style="background-image: url('{{ public_path($templateImages[0]) }}');background-repeat:no-repeat;">
+                    style="background-image: url('{{ isset($templateImages[0]) ? $templateImages[0] : '' }}');background-repeat:no-repeat; background-size: contain; background-position: center bottom;">
                     <small class="border-top-dashed">
                         {{ $trainerName ?? 'التوقيع' }}</small>
                 </td>

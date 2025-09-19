@@ -17,6 +17,7 @@ class ProgramController extends Controller
         $programs = Program::join('members', 'programs.member_id', 'members.id')
             ->where('members.organization_id', Auth::user()->member->organization_id)
             ->select('programs.*')
+            ->orderBy('programs.created_at', 'desc')
             ->paginate(10);
         return view('programs.index', compact('programs'));
     }
