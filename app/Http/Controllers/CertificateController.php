@@ -87,8 +87,8 @@ class CertificateController extends Controller
             return redirect()->back()->with('error', 'خطأ. الدورة غير موجودة.');
 
 
-        $url = "http://127.0.0.1:8000/certificate-verify/";
-
+        $url =  env('APP_URL') . '/certificate-verify/';
+dd($url);
         try {
             $certificate = ProgramParticipant::where("program_id", $program->id)
                 ->where('participant_id', $participant->id)
