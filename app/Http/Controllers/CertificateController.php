@@ -88,7 +88,6 @@ class CertificateController extends Controller
 
 
         $url =  env('APP_URL') . '/certificate-verify/';
-dd($url);
         try {
             $certificate = ProgramParticipant::where("program_id", $program->id)
                 ->where('participant_id', $participant->id)
