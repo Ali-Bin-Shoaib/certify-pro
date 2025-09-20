@@ -1,24 +1,15 @@
-<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm "
+<nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light p-0 py-3 shadow-sm"
     aria-label="Main navigation">
-    <div class="container-fluid mx-5 px-5">
-        <!-- Image Logo -->
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0 d-flex flex-row align-items-center"
+            href="{{ route('home') }}">
+            <img src="{{ asset('favicon.ico') }}" alt="Logo" width="40" height="40"
+                class="d-inline-block align-text-top me-2">
+            <span class="d-none d-sm-inline">{{ config('app.name') }}</span>
+        </a>
 
-        {{-- <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('images/logo.ico') }}" alt="Logo" width="30" height="24"
-                class="d-inline-block align-text-top">
-            certify pro
-        </a> --}}
-        <!-- Text Logo - Use this if you don't have a graphic logo -->
-        <ul class="navbar-nav ms-auto navbar-nav-scroll">
-            <li class="nav-item">
-                <a class="navbar-brand nav-link logo-text text-capitalize m-0 px-0 d-flex flex-row align-items-center justify-content-center"
-                    href="{{ route('home') }}"> <img src="{{ asset('favicon.ico') }}" alt="Logo" width="60"
-                        height="60" class="d-inline-block align-text-top">
-                    {{ config('app.name') }}
-                </a>
-            </li>
-        </ul>
-
+        <!-- Mobile Menu Toggle -->
         <button class="navbar-toggler p-0 border-0 z-index-3" type="button" id="navbarSideCollapse"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,9 +17,6 @@
 
         <div class="navbar-collapse offcanvas-collapse fs-6" id="navbarsExampleDefault">
             <ul class="navbar-nav ms-auto navbar-nav-scroll">
-                {{-- <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">الصفحة الرئيسية</a>
-                </li> --}}
                 @auth
                     @if (Auth::user()->role === 'organization' || Auth::user()->role == 'admin')
                         <li class="nav-item">
@@ -47,10 +35,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index') }}">التصنيفات</a>
                         </li>
-
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="{{ route('pdf') }}">توليد الشهادة</a>
-                        </li> --}}
                     @endif
                 @endauth
                 <li class="nav-item">
@@ -58,44 +42,38 @@
                 </li>
             </ul>
         </div> <!-- end of navbar-collapse -->
-        @auth
-
-            {{-- < class="nav-item ms-3 py-1"> --}}
-            <div class="btn-group">
-                <button type="button" class="btn-solid-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ Auth::user()->name }}
-                </button>
-                <ul class="dropdown-menu">
-                    @if (Auth::user()->role === 'organization')
+        <!-- User Actions -->
+        <div class="d-flex align-items-center gap-2">
+            @auth
+                <div class="btn-group">
+                    <button type="button" class="btn-solid-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="d-none d-sm-inline">{{ Auth::user()->name }}</span>
+                        <span class="d-sm-none">{{ Str::limit(Auth::user()->name, 10) }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        @if (Auth::user()->role === 'organization')
+                            <li>
+                                <a class="dropdown-item" href="{{ route('organization.edit', Auth::user()->organization->id) }}">
+                                    <i class="fa fa-edit me-2"></i>تعديل البيانات
+                                </a>
+                            </li>
+                        @endif
                         <li>
-                            <a class="dropdown-item"
-                                href="{{ route('organization.edit', Auth::user()->organization->id) }}">تعديل البيانات</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}">
+                                <i class="fa fa-sign-out-alt me-2"></i>تسجيل الخروج
+                            </a>
                         </li>
-                    @endif
-                    <li> <a class="dropdown-item d-flex align-items-center justifiy-content-center gap-1 ms-0 "
-                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a>
-                    </li>
-                </ul>
-            </div>
-            {{-- <div>نوع الحساب: {{ Auth::user()->role }}</div>
-                <div><b>الاسم: {{ Auth::user()->name }}</b></div> --}}
-
-        @endauth
-        <span class="nav-item">
-
-            @if (!str_contains(url()->current(), 'login'))
-                @guest
-
-                    <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
-                        href="{{ route('login') }}">تسجيل الدخول <i class="bi bi-box-arrow-in-right fs-5"></i></a>
-                @else
-                    @if (Auth::user()->role == 'member')
-                        {{-- <a class="btn-solid-sm d-flex align-items-center justifiy-content-center gap-1 ms-0 "
-                            href="{{ route('logout') }}">تسجيل الخروج <i class="bi bi-box-arrow-in-left fs-5"></i></a> --}}
-                    @endif
-                @endguest
-            @endif
-        </span>
+                    </ul>
+                </div>
+            @else
+                @if (!str_contains(url()->current(), 'login'))
+                    <a class="btn-solid-sm d-flex align-items-center gap-1" href="{{ route('login') }}">
+                        <i class="fa fa-sign-in-alt"></i>
+                        <span class="d-none d-sm-inline">تسجيل الدخول</span>
+                    </a>
+                @endif
+            @endauth
+        </div>
     </div> <!-- end of container -->
 </nav> <!-- end of navbar -->
 <!-- end of navigation -->
